@@ -46,35 +46,54 @@ const App = () => {
     { level: 'Advanced', description: 'Proficient in implementing complex machine learning algorithms (e.g., random forests, gradient boosting, neural networks) using libraries like scikit-learn, TensorFlow, or PyTorch.', weight: 0, active: false },
   ];
 
-  // State to manage which skill group is active (backend or data science)
-  const [activeGroup, setActiveGroup] = useState('backend');
+ const pythonSkills = [
+    { level: "Beginner", description: "Basic understanding of Python syntax and standard library.", weight: 5, active: true },
+    { level: "Intermediate", description: "Experience with Python frameworks like Flask, Django, or FastAPI.", weight: 5, active: true },
+    { level: "Advanced", description: "Proficient in writing optimized Python code for performance-critical applications.", weight: 0, active: false },
+  ];
+
+  const sqlSkills = [
+    { level: "Beginner", description: "Basic knowledge of SQL syntax and queries.", weight: 5, active: true },
+    { level: "Intermediate", description: "Proficient in designing relational database schemas and writing complex joins.", weight: 5, active: true },
+    { level: "Advanced", description: "Experience with database optimization, indexing, and stored procedures.", weight: 0, active: false },
+  ];
+
+  const [activeGroup, setActiveGroup] = useState("backend");
   const [skills, setSkills] = useState(backendSkills);
 
-  // Function to toggle between backend and data science
   const toggleGroup = (group) => {
-    if (group === 'backend') {
-      setSkills(backendSkills);
-    } else if (group === 'dataScience') {
-      setSkills(dataScienceSkills);
+    switch (group) {
+      case "backend":
+        setSkills(backendSkills);
+        break;
+      case "dataScience":
+        setSkills(dataScienceSkills);
+        break;
+      case "python":
+        setSkills(pythonSkills);
+        break;
+      case "sql":
+        setSkills(sqlSkills);
+        break;
+      default:
+        break;
     }
     setActiveGroup(group);
   };
 
-  // Calculate total score based on active skills
   const totalScore = skills.reduce((sum, skill) => (skill.active ? sum + skill.weight : sum), 0);
 
   return (
     <div>
       <div>
-        {/* Toggle between backend and data science */}
-        <button onClick={() => toggleGroup('backend')} disabled={activeGroup === 'backend'}>Backend Skills</button>
-        <button onClick={() => toggleGroup('dataScience')} disabled={activeGroup === 'dataScience'}>Data Science Skills</button>
+        <button onClick={() => toggleGroup("backend")} disabled={activeGroup === "backend"}>Backend Skills</button>
+        <button onClick={() => toggleGroup("dataScience")} disabled={activeGroup === "dataScience"}>Data Science Skills</button>
+        <button onClick={() => toggleGroup("python")} disabled={activeGroup === "python"}>Python Skills</button>
+        <button onClick={() => toggleGroup("sql")} disabled={activeGroup === "sql"}>SQL Skills</button>
       </div>
 
-      {/* Total score display */}
       <div className="score">Total Score: {totalScore} / {skills.length * 5}</div>
 
-      {/* Skills table */}
       <table>
         <thead>
           <tr>
@@ -86,7 +105,7 @@ const App = () => {
         </thead>
         <tbody>
           {skills.map((skill, index) => (
-            <tr key={index} className={skill.active ? '' : 'inactive'}>
+            <tr key={index} className={skill.active ? "" : "inactive"}>
               <td>{skill.level}</td>
               <td>{skill.description}</td>
               <td className="weight">{skill.weight}</td>
