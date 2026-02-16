@@ -42,7 +42,7 @@ const App = () => {
 
   const dataScienceSkills = [
     { level: 'Beginner', description: 'Basic understanding of statistics and data analysis.', weight: 5, active: true },
-    { level: 'Intermediate', description: 'Proficient in data wrangling: loading, cleaning, and transforming data using libraries like Pandas, NumPy, or R's dplyr.', weight: 5, active: true },
+    { level: 'Intermediate', description: 'Proficient in data wrangling: loading, cleaning, and transforming data using libraries like Pandas, NumPy, or R\'s dplyr.', weight: 5, active: true },
     { level: 'Advanced', description: 'Proficient in implementing complex machine learning algorithms (e.g., random forests, gradient boosting, neural networks) using libraries like scikit-learn, TensorFlow, or PyTorch.', weight: 0, active: false },
   ];
 
@@ -56,6 +56,27 @@ const App = () => {
     { level: "Beginner", description: "Basic knowledge of SQL syntax and queries.", weight: 5, active: true },
     { level: "Intermediate", description: "Proficient in designing relational database schemas and writing complex joins.", weight: 5, active: true },
     { level: "Advanced", description: "Experience with database optimization, indexing, and stored procedures.", weight: 0, active: false },
+  ];
+
+  const llmSkills = [
+    { level: "Beginner", description: "Basic understanding of LLMs, their capabilities, and common use cases (e.g., ChatGPT, Claude, GPT-4).", weight: 5, active: true },
+    { level: "Beginner", description: "Ability to write effective prompts to get desired outputs from LLMs.", weight: 5, active: true },
+    { level: "Beginner", description: "Familiarity with API-based LLM services (OpenAI API, Anthropic API, etc.).", weight: 5, active: true },
+    { level: "Beginner", description: "Understanding of tokens, context windows, and basic API parameters (temperature, max_tokens).", weight: 5, active: true },
+    { level: "Intermediate", description: "Experience integrating LLM APIs into applications with proper error handling and rate limiting.", weight: 5, active: true },
+    { level: "Intermediate", description: "Knowledge of prompt engineering techniques (few-shot learning, chain-of-thought, role prompting).", weight: 5, active: true },
+    { level: "Intermediate", description: "Understanding of embeddings and vector databases for semantic search and RAG (Retrieval-Augmented Generation).", weight: 5, active: true },
+    { level: "Intermediate", description: "Ability to implement streaming responses and handle long-running LLM requests.", weight: 5, active: true },
+    { level: "Intermediate", description: "Experience with function calling / tool use to extend LLM capabilities.", weight: 5, active: true },
+    { level: "Advanced", description: "Proficient in building RAG systems with document chunking, embedding strategies, and retrieval optimization.", weight: 0, active: false },
+    { level: "Advanced", description: "Experience fine-tuning or customizing LLMs for specific domains or tasks.", weight: 0, active: false },
+    { level: "Advanced", description: "Knowledge of LLM evaluation metrics, benchmarking, and testing strategies.", weight: 0, active: false },
+    { level: "Advanced", description: "Implementing multi-agent systems or orchestrating multiple LLM calls for complex workflows.", weight: 0, active: false },
+    { level: "Advanced", description: "Understanding of LLM security concerns (prompt injection, data leakage, content filtering).", weight: 0, active: false },
+    { level: "Expert", description: "Expertise in LLM architecture, attention mechanisms, and transformer models.", weight: 0, active: false },
+    { level: "Expert", description: "Experience with local LLM deployment, quantization, and optimization techniques.", weight: 0, active: false },
+    { level: "Expert", description: "Building production-grade LLM applications with monitoring, cost optimization, and scalability.", weight: 0, active: false },
+    { level: "Expert", description: "Contributing to open-source LLM frameworks or developing custom LLM solutions.", weight: 0, active: false },
   ];
 
   const [activeGroup, setActiveGroup] = useState("backend");
@@ -74,6 +95,9 @@ const App = () => {
         break;
       case "sql":
         setSkills(sqlSkills);
+        break;
+      case "llm":
+        setSkills(llmSkills);
         break;
       default:
         break;
@@ -132,6 +156,12 @@ const App = () => {
             onClick={() => toggleGroup("sql")}
           >
             SQL
+          </button>
+          <button 
+            className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
+            onClick={() => toggleGroup("llm")}
+          >
+            LLM
           </button>
         </nav>
 
