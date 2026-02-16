@@ -1,32 +1,367 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: border-box;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
+.app-container {
   min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 1rem;
+}
+
+.app-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 2rem;
+}
+
+.app-header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  margin: 0;
+  opacity: 0.95;
+  font-weight: 300;
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.skill-tabs {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  flex-wrap: wrap;
+  gap: 0;
+  background: #f8f9fa;
+  border-bottom: 2px solid #e9ecef;
+  padding: 1rem 1rem 0 1rem;
+}
+
+.tab-button {
+  flex: 1;
+  min-width: 120px;
+  padding: 1rem 1.5rem;
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #6c757d;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tab-button:hover {
+  color: #495057;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.tab-button.active {
+  color: #667eea;
+  border-bottom-color: #667eea;
+  background: white;
+}
+
+.score-card {
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.score-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.score-label {
+  font-size: 1rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+.score-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  flex: 1;
+  text-align: center;
+}
+
+.score-percentage {
+  font-size: 2rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: white;
+  border-radius: 50px;
+  transition: width 0.4s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.skills-table-container {
+  overflow-x: auto;
+  padding: 2rem;
+}
+
+.skills-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.skills-table thead {
+  background: #f8f9fa;
+}
+
+.skills-table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.skills-table th.col-level,
+.skills-table th.col-weight,
+.skills-table th.col-toggle {
+  text-align: center;
+}
+
+.skill-row {
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.skill-row:hover {
+  background-color: #f8f9fa;
+}
+
+.skill-row.inactive {
+  opacity: 0.5;
+}
+
+.skill-row.inactive:hover {
+  opacity: 0.7;
+}
+
+.skills-table td {
+  padding: 1rem;
+}
+
+.col-level {
+  width: 140px;
+  text-align: center;
+}
+
+.col-description {
+  text-align: left;
+}
+
+.col-weight {
+  width: 80px;
+  text-align: center;
+  font-weight: 600;
+  color: #667eea;
+  font-size: 1.1rem;
+}
+
+.col-toggle {
+  width: 80px;
+  text-align: center;
+}
+
+.level-badge {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.level-beginner {
+  background: #d4edda;
+  color: #155724;
+}
+
+.level-intermediate {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.level-advanced {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.level-expert {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.checkbox-wrapper {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 24px;
+  width: 24px;
+  background-color: #fff;
+  border: 2px solid #ced4da;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.checkbox-wrapper:hover .checkmark {
+  border-color: #667eea;
+}
+
+.checkbox-wrapper input:checked ~ .checkmark {
+  background-color: #667eea;
+  border-color: #667eea;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 11px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-wrapper input:checked ~ .checkmark:after {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 2rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .skill-tabs {
+    padding: 0.5rem;
+  }
+
+  .tab-button {
+    min-width: 100px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .score-card {
+    padding: 1.5rem;
+  }
+
+  .score-value {
+    font-size: 2rem;
+  }
+
+  .score-percentage {
+    font-size: 1.5rem;
+    padding: 0.4rem 1rem;
+  }
+
+  .skills-table-container {
+    padding: 1rem;
+  }
+
+  .skills-table th,
+  .skills-table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .col-level {
+    width: 100px;
+  }
+
+  .level-badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 1rem 0.5rem;
+  }
+
+  .app-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .skill-tabs {
+    flex-direction: column;
+  }
+
+  .tab-button {
+    width: 100%;
+  }
+
+  .score-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .skills-table th,
+  .skills-table td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.85rem;
   }
 }
