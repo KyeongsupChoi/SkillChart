@@ -1,131 +1,166 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const FlowerVisualization = ({ score, maxScore }) => {
-  const percentage = (score / maxScore) * 100;
+const NightingaleRoseChart = ({ skills }) => {
   const centerX = 150;
   const centerY = 150;
-  
-  // Calculate number of layers based on percentage (1-7 layers)
-  const numLayers = Math.max(1, Math.min(7, Math.ceil(percentage / 15)));
-  let totalPetals = 0;
+  const maxRadius = 120;
 
-  const getColor = (layerIndex, petalIndex, petalsInLayer) => {
-    const hue = ((layerIndex * 50 + petalIndex * (360 / petalsInLayer)) % 360);
-    const saturation = 65 + (percentage / 100) * 30;
-    const lightness = 45 + layerIndex * 5;
-    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+  // Count skills by level
+  const levelCounts = {
+    'Beginner': { count: 0, points: 0, active: 0 },
+    'Intermediate': { count: 0, points: 0, active: 0 },
+    'Advanced': { count: 0, points: 0, active: 0 },
+    'Expert': { count: 0, points: 0, active: 0 }
   };
 
-  const getGradientId = (layerIndex, petalIndex) => {
-    return `petalGradient-${layerIndex}-${petalIndex}`;
+  skills.forEach(skill => {
+    if (levelCounts[skill.level]) {
+      levelCounts[skill.level].count++;
+      levelCounts[skill.level].points += skill.weight;
+      if (skill.active) {
+        levelCounts[skill.level].active++;
+      }
+    }
+  });
+
+  const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  const colors = {
+    'Beginner': { fill: '#d4edda', stroke: '#28a745', gradient: ['#d4edda', '#a3d9a5'] },
+    'Intermediate': { fill: '#cce5ff', stroke: '#007bff', gradient: ['#cce5ff', '#80bdff'] },
+    'Advanced': { fill: '#fff3cd', stroke: '#ffc107', gradient: ['#fff3cd', '#ffd454'] },
+    'Expert': { fill: '#f8d7da', stroke: '#dc3545', gradient: ['#f8d7da', '#f1aeb5'] }
   };
 
-  const layers = [];
-  const gradients = [];
+  // Find max count for scaling
+  const maxCount = Math.max(...levels.map(level => levelCounts[level].count), 1);
 
-  // Build layers from outside to inside (so inner layers appear on top)
-  for (let layer = numLayers - 1; layer >= 0; layer--) {
-    const petalsInLayer = Math.max(5, 8 - layer); // Outer layers have more petals
-    const layerRadius = 35 + layer * 15; // Distance from center
-    const petalLength = 25 + layer * 5; // Outer petals are longer
-    const petalWidth = 12 + layer * 3;
-    const rotation = layer * 15; // Rotate each layer for staggered effect
+  const createWedgePath = (startAngle, endAngle, radius) => {
+    const startRad = (startAngle - 90) * Math.PI / 180;
+    const endRad = (endAngle - 90) * Math.PI / 180;
+    
+    const x1 = centerX + radius * Math.cos(startRad);
+    const y1 = centerY + radius * Math.sin(startRad);
+    const x2 = centerX + radius * Math.cos(endRad);
+    const y2 = centerY + radius * Math.sin(endRad);
+    
+    const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+    
+    return `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+  };
 
-    for (let i = 0; i < petalsInLayer; i++) {
-      const angle = (360 / petalsInLayer) * i + rotation;
-      const angleRad = (angle * Math.PI) / 180;
-      
-      const baseX = centerX + layerRadius * Math.cos(angleRad);
-      const baseY = centerY + layerRadius * Math.sin(angleRad);
-      
-      const color = getColor(layer, i, petalsInLayer);
-      const gradientId = getGradientId(layer, i);
-      
-      // Create gradient for each petal
-      gradients.push(
-        <linearGradient key={gradientId} id={gradientId} x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stopColor={color} stopOpacity="0.9" />
-          <stop offset="50%" stopColor={color} stopOpacity="1" />
-          <stop offset="100%" stopColor={color} stopOpacity="0.7" />
-        </linearGradient>
+  const wedges = [];
+  const labels = [];
+  const anglePerSegment = 360 / levels.length;
+
+  levels.forEach((level, index) => {
+    const startAngle = index * anglePerSegment;
+    const endAngle = (index + 1) * anglePerSegment;
+    const midAngle = (startAngle + endAngle) / 2;
+    
+    const data = levelCounts[level];
+    const radius = (data.count / maxCount) * maxRadius;
+    const activeRadius = (data.active / maxCount) * maxRadius;
+    
+    const gradientId = `gradient-${level}`;
+    
+    // Inactive portion (total count)
+    if (data.count > 0) {
+      wedges.push(
+        <g key={`wedge-${level}`}>
+          <defs>
+            <radialGradient id={gradientId}>
+              <stop offset="0%" stopColor={colors[level].gradient[0]} />
+              <stop offset="100%" stopColor={colors[level].gradient[1]} />
+            </radialGradient>
+          </defs>
+          <path
+            d={createWedgePath(startAngle, endAngle, radius)}
+            fill={`url(#${gradientId})`}
+            stroke={colors[level].stroke}
+            strokeWidth="2"
+            opacity="0.4"
+          />
+        </g>
       );
+    }
 
-      // Create petal path for more natural shape
-      const petalPath = `
-        M ${baseX},${baseY}
-        Q ${baseX + petalWidth * Math.cos(angleRad + Math.PI/2)},${baseY + petalWidth * Math.sin(angleRad + Math.PI/2)}
-          ${baseX + petalLength * Math.cos(angleRad)},${baseY + petalLength * Math.sin(angleRad)}
-        Q ${baseX + petalWidth * Math.cos(angleRad - Math.PI/2)},${baseY + petalWidth * Math.sin(angleRad - Math.PI/2)}
-          ${baseX},${baseY}
-        Z
-      `;
-
-      layers.push(
+    // Active portion
+    if (data.active > 0) {
+      wedges.push(
         <path
-          key={`petal-${layer}-${i}`}
-          d={petalPath}
+          key={`wedge-active-${level}`}
+          d={createWedgePath(startAngle, endAngle, activeRadius)}
           fill={`url(#${gradientId})`}
-          stroke={color}
-          strokeWidth="0.5"
-          opacity={0.9 - layer * 0.05}
+          stroke={colors[level].stroke}
+          strokeWidth="2.5"
+          opacity="0.95"
           style={{
-            filter: `drop-shadow(0 ${2 + layer}px ${3 + layer * 2}px rgba(0,0,0,${0.15 + layer * 0.05}))`,
+            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
           }}
         />
       );
-      totalPetals++;
     }
-  }
+
+    // Labels
+    const labelRadius = maxRadius + 25;
+    const labelAngle = (midAngle - 90) * Math.PI / 180;
+    const labelX = centerX + labelRadius * Math.cos(labelAngle);
+    const labelY = centerY + labelRadius * Math.sin(labelAngle);
+    
+    labels.push(
+      <g key={`label-${level}`}>
+        <text
+          x={labelX}
+          y={labelY}
+          textAnchor="middle"
+          fill="white"
+          fontSize="12"
+          fontWeight="700"
+          style={{ textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}
+        >
+          {level}
+        </text>
+        <text
+          x={labelX}
+          y={labelY + 14}
+          textAnchor="middle"
+          fill="rgba(255,255,255,0.9)"
+          fontSize="10"
+          fontWeight="600"
+        >
+          {data.active}/{data.count}
+        </text>
+      </g>
+    );
+  });
 
   return (
     <div className="flower-container">
       <svg width="300" height="300" viewBox="0 0 300 300">
-        <defs>
-          {gradients}
-        </defs>
+        {/* Background circles for reference */}
+        <circle cx={centerX} cy={centerY} r={maxRadius * 0.25} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+        <circle cx={centerX} cy={centerY} r={maxRadius * 0.5} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+        <circle cx={centerX} cy={centerY} r={maxRadius * 0.75} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+        <circle cx={centerX} cy={centerY} r={maxRadius} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
         
-        {/* Background circle */}
-        <circle cx={centerX} cy={centerY} r="140" fill="rgba(255,255,255,0.03)" />
+        {/* Wedges */}
+        {wedges}
         
-        {/* Petals (rendered from outside to inside) */}
-        {layers}
-        
-        {/* Center of flower with texture */}
+        {/* Center circle */}
         <circle 
           cx={centerX} 
           cy={centerY} 
-          r="18" 
-          fill="url(#centerGradient)"
-          style={{
-            filter: 'drop-shadow(0 3px 8px rgba(0,0,0,0.3))',
-          }}
+          r="20" 
+          fill="rgba(255,255,255,0.2)"
+          stroke="rgba(255,255,255,0.5)"
+          strokeWidth="2"
         />
-        <defs>
-          <radialGradient id="centerGradient">
-            <stop offset="0%" stopColor="#FFD700" />
-            <stop offset="70%" stopColor="#FFA500" />
-            <stop offset="100%" stopColor="#FF8C00" />
-          </radialGradient>
-        </defs>
         
-        {/* Center details */}
-        {[...Array(12)].map((_, i) => {
-          const angle = (i * 30 * Math.PI) / 180;
-          const dotRadius = 10;
-          return (
-            <circle
-              key={`dot-${i}`}
-              cx={centerX + dotRadius * Math.cos(angle)}
-              cy={centerY + dotRadius * Math.sin(angle)}
-              r="1.5"
-              fill="#8B4513"
-              opacity="0.6"
-            />
-          );
-        })}
+        {/* Labels */}
+        {labels}
       </svg>
-      <div className="flower-score-label">{numLayers} layers • {totalPetals} petals</div>
+      <div className="flower-score-label">Nightingale Rose Chart</div>
     </div>
   );
 };
@@ -321,7 +356,7 @@ const App = () => {
                   ></div>
                 </div>
               </div>
-              <FlowerVisualization score={totalScore} maxScore={maxScore} />
+              <NightingaleRoseChart skills={skills} />
             </div>
           </div>
         </div>

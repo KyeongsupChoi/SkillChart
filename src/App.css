@@ -147,28 +147,34 @@
   gap: 0.75rem;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
   border-radius: 16px;
-  padding: 1.5rem 1rem;
+  padding: 1.5rem 1rem 1rem 1rem;
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .flower-container svg {
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.12));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
   transition: transform 0.3s ease;
 }
 
 .flower-container:hover svg {
-  transform: scale(1.02);
+  transform: scale(1.03) rotate(2deg);
+}
+
+.flower-container svg text {
+  pointer-events: none;
+  user-select: none;
 }
 
 .flower-score-label {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
   text-transform: uppercase;
   letter-spacing: 1.5px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  margin-top: 0.25rem;
 }
 
 .skills-table-container {
