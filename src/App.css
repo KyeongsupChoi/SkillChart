@@ -68,6 +68,19 @@
   color: white;
 }
 
+.score-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.score-info-wrapper {
+  flex: 1;
+  min-width: 300px;
+}
+
 .score-info {
   display: flex;
   align-items: center;
@@ -114,6 +127,29 @@
   border-radius: 50px;
   transition: width 0.4s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.flower-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.flower-container svg {
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+}
+
+.flower-score-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .skills-table-container {
@@ -311,6 +347,15 @@
     padding: 1.5rem;
   }
 
+  .score-content {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .score-info-wrapper {
+    min-width: 100%;
+  }
+
   .score-value {
     font-size: 2rem;
   }
@@ -318,6 +363,15 @@
   .score-percentage {
     font-size: 1.5rem;
     padding: 0.4rem 1rem;
+  }
+
+  .flower-container {
+    width: 100%;
+  }
+
+  .flower-container svg {
+    width: 100%;
+    height: auto;
   }
 
   .skills-table-container {
@@ -363,6 +417,10 @@
   .score-info {
     flex-direction: column;
     text-align: center;
+  }
+
+  .flower-container svg {
+    max-width: 250px;
   }
 
   .skills-table th,
