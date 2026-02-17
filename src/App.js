@@ -3,43 +3,96 @@ import './App.css';
 
 const FlowerVisualization = ({ score, maxScore }) => {
   const percentage = (score / maxScore) * 100;
-  const numPetals = Math.max(5, Math.floor(percentage / 2)); // 5 to 50 petals based on percentage
   const centerX = 150;
   const centerY = 150;
-  const goldenAngle = 137.5; // Golden angle in degrees for natural spiral
 
-  const getColor = (index, total) => {
-    const hue = (index / total) * 360;
-    const saturation = 70 + (percentage / 100) * 30; // More vibrant as score increases
-    const lightness = 50 + Math.sin(index / 5) * 10;
+  // Calculate number of petal layers based on percentage (2-7 layers)
+  const numLayers = Math.max(2, Math.min(7, Math.floor((percentage / 100) * 7)));
+  
+  const getColor = (layerIndex, totalLayers) => {
+    const progress = layerIndex / totalLayers;
+    const hue = 320 + (progress * 60); // Rose colors from magenta to red
+    const saturation = 65 + (percentage / 100) * 25;
+    const lightness = 35 + progress * 25;
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   };
 
+  const createPetalPath = (cx, cy, size, rotation) => {
+    const controlPoint1X = cx + size * 0.3;
+    const controlPoint1Y = cy - size * 0.8;
+    const controlPoint2X = cx + size * 0.8;
+    const controlPoint2Y = cy - size * 0.3;
+    const endX = cx;
+    const endY = cy - size;
+    
+    return `
+      M ${cx} ${cy}
+      Q ${controlPoint1X} ${controlPoint1Y}, ${endX} ${endY}
+      Q ${controlPoint2X} ${controlPoint2Y}, ${cx} ${cy}
+      Z
+    `;
+  };
+
   const petals = [];
-  for (let i = 0; i < numPetals; i++) {
-    const angle = (i * goldenAngle * Math.PI) / 180;
-    const radius = 10 + i * 2.2; // Linear spiral for better spacing
-    const petalSize = 6 + (i / numPetals) * 6; // Smaller, more consistent petal sizes
+  
+  // Create layers of petals from outside to inside
+  for (let layer = numLayers - 1; layer >= 0; layer--) {
+    const layerRadius = 20 + layer * 15;
+    const petalsInLayer = 5 + layer;
+    const angleStep = (Math.PI * 2) / petalsInLayer;
+    const layerRotationOffset = layer * 20;
     
-    const x = centerX + radius * Math.cos(angle);
-    const y = centerY + radius * Math.sin(angle);
+    for (let i = 0; i < petalsInLayer; i++) {
+      const angle = i * angleStep + (layerRotationOffset * Math.PI / 180);
+      const x = centerX + Math.cos(angle) * layerRadius;
+      const y = centerY + Math.sin(angle) * layerRadius;
+      const petalSize = 25 + layer * 5;
+      const rotation = (angle * 180 / Math.PI) + 90;
+      
+      petals.push(
+        <g key={`layer-${layer}-petal-${i}`}>
+          <path
+            d={createPetalPath(x, y, petalSize, rotation)}
+            fill={getColor(layer, numLayers)}
+            stroke="rgba(0,0,0,0.15)"
+            strokeWidth="1"
+            transform={`rotate(${rotation} ${x} ${y})`}
+            style={{
+              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+            }}
+          />
+        </g>
+      );
+    }
+  }
+
+  // Leaves
+  const leaves = [];
+  const leafPositions = [
+    { angle: -30, distance: 95 },
+    { angle: -90, distance: 95 },
+  ];
+
+  leafPositions.forEach((pos, idx) => {
+    const angle = (pos.angle * Math.PI) / 180;
+    const x = centerX + Math.cos(angle) * pos.distance;
+    const y = centerY + Math.sin(angle) * pos.distance;
     
-    petals.push(
+    leaves.push(
       <ellipse
-        key={i}
+        key={`leaf-${idx}`}
         cx={x}
         cy={y}
-        rx={petalSize}
-        ry={petalSize * 1.8}
-        fill={getColor(i, numPetals)}
-        opacity={0.85}
-        transform={`rotate(${(angle * 180) / Math.PI + 90} ${x} ${y})`}
+        rx="18"
+        ry="35"
+        fill="hsl(140, 60%, 30%)"
+        transform={`rotate(${pos.angle + 90} ${x} ${y})`}
         style={{
-          filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.25))',
+          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
         }}
       />
     );
-  }
+  });
 
   return (
     <div className="flower-container">
@@ -47,27 +100,41 @@ const FlowerVisualization = ({ score, maxScore }) => {
         {/* Background circle */}
         <circle cx={centerX} cy={centerY} r="140" fill="rgba(255,255,255,0.05)" />
         
+        {/* Leaves */}
+        {leaves}
+        
         {/* Petals */}
         {petals}
         
-        {/* Center of flower */}
+        {/* Center of rose */}
         <circle 
           cx={centerX} 
           cy={centerY} 
-          r="10" 
-          fill="#FFD700"
+          r="15" 
+          fill="hsl(340, 70%, 25%)"
           style={{
-            filter: 'drop-shadow(0 2px 6px rgba(255,215,0,0.5))',
+            filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))',
           }}
         />
-        <circle cx={centerX} cy={centerY} r="6" fill="#FFA500" />
+        <circle cx={centerX} cy={centerY} r="8" fill="hsl(340, 60%, 20%)" />
       </svg>
-      <div className="flower-score-label">{numPetals} petals</div>
+      <div className="flower-score-label">{numLayers} layers</div>
     </div>
   );
 };
 
 const App = () => {
+  const [isScrolled, setIsScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const backendSkills = [
     { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, Java, Ruby)', weight: 1, active: true },
     { level: 'Beginner', description: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', weight: 1, active: true },
@@ -208,7 +275,7 @@ const App = () => {
   return (
     <div className="app-container">
       <div className="content-wrapper">
-        <div className="sticky-header">
+        <div className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
           <nav className="skill-tabs">
             <h1 className="tab-title">SkillChart</h1>
             <button 

@@ -25,6 +25,51 @@
   background: white;
   border-radius: 12px 12px 0 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.sticky-header.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sticky-header.scrolled .skill-tabs {
+  padding: 0.5rem 1rem 0 1rem;
+}
+
+.sticky-header.scrolled .tab-title {
+  font-size: 1.25rem;
+  padding: 0.75rem 1rem;
+}
+
+.sticky-header.scrolled .tab-button {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+}
+
+.sticky-header.scrolled .score-card {
+  padding: 1rem 1.5rem;
+}
+
+.sticky-header.scrolled .score-value {
+  font-size: 1.75rem;
+}
+
+.sticky-header.scrolled .score-percentage {
+  font-size: 1.5rem;
+  padding: 0.4rem 1rem;
+}
+
+.sticky-header.scrolled .flower-container {
+  padding: 0.75rem;
+}
+
+.sticky-header.scrolled .flower-container svg {
+  width: 200px;
+  height: 200px;
+}
+
+.sticky-header.scrolled .flower-score-label {
+  font-size: 0.8rem;
 }
 
 .skill-tabs {
@@ -36,6 +81,7 @@
   padding: 1rem 1rem 0 1rem;
   align-items: center;
   border-radius: 12px 12px 0 0;
+  transition: padding 0.3s ease;
 }
 
 .tab-title {
@@ -45,6 +91,7 @@
   margin: 0;
   padding: 1rem 1.5rem;
   white-space: nowrap;
+  transition: all 0.3s ease;
 }
 
 .tab-button {
@@ -77,6 +124,7 @@
   padding: 2rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  transition: padding 0.3s ease;
 }
 
 .score-content {
@@ -114,6 +162,7 @@
   font-weight: 700;
   flex: 1;
   text-align: center;
+  transition: font-size 0.3s ease;
 }
 
 .score-percentage {
@@ -122,6 +171,7 @@
   background: rgba(255, 255, 255, 0.2);
   padding: 0.5rem 1.5rem;
   border-radius: 50px;
+  transition: all 0.3s ease;
 }
 
 .progress-bar {
@@ -149,10 +199,12 @@
   border-radius: 12px;
   padding: 1rem;
   backdrop-filter: blur(10px);
+  transition: padding 0.3s ease;
 }
 
 .flower-container svg {
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+  transition: all 0.3s ease;
 }
 
 .flower-score-label {
@@ -161,6 +213,7 @@
   color: rgba(255, 255, 255, 0.9);
   text-transform: uppercase;
   letter-spacing: 1px;
+  transition: font-size 0.3s ease;
 }
 
 .skills-table-container {
@@ -392,6 +445,22 @@
     height: auto;
   }
 
+  .sticky-header.scrolled .score-card {
+    padding: 1rem;
+  }
+
+  .sticky-header.scrolled .score-value {
+    font-size: 1.5rem;
+  }
+
+  .sticky-header.scrolled .score-percentage {
+    font-size: 1.25rem;
+  }
+
+  .sticky-header.scrolled .flower-container svg {
+    max-width: 180px;
+  }
+
   .skills-table-container {
     padding: 1rem;
   }
@@ -451,5 +520,18 @@
   .skills-table td {
     padding: 0.5rem 0.25rem;
     font-size: 0.85rem;
+  }
+
+  .sticky-header.scrolled .tab-title {
+    font-size: 1.1rem;
+    padding: 0.5rem;
+  }
+
+  .sticky-header.scrolled .score-card {
+    padding: 0.75rem;
+  }
+
+  .sticky-header.scrolled .flower-container svg {
+    max-width: 150px;
   }
 }
