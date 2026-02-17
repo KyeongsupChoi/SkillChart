@@ -4,23 +4,32 @@ import './App.css';
 const NightingaleRoseChart = ({ skills }) => {
   const centerX = 150;
   const centerY = 150;
-  const minRadius = 30;
-  const maxRadius = 130;
+  const centerRadius = 25;
+  const ringWidth = 25;
 
-  // Color mapping by level
+  // Color mapping by level with gradients
   const colors = {
-    'Beginner': { base: '#4ade80', light: '#86efac', dark: '#22c55e' },
-    'Intermediate': { base: '#60a5fa', light: '#93c5fd', dark: '#3b82f6' },
-    'Advanced': { base: '#fbbf24', light: '#fcd34d', dark: '#f59e0b' },
-    'Expert': { base: '#f87171', light: '#fca5a5', dark: '#ef4444' }
+    'Beginner': { base: '#86efac', light: '#bbf7d0', dark: '#4ade80', veryLight: '#d1fae5' },
+    'Intermediate': { base: '#93c5fd', light: '#bfdbfe', dark: '#60a5fa', veryLight: '#dbeafe' },
+    'Advanced': { base: '#fcd34d', light: '#fde68a', dark: '#fbbf24', veryLight: '#fef3c7' },
+    'Expert': { base: '#fca5a5', light: '#fecaca', dark: '#f87171', veryLight: '#fee2e2' }
   };
 
-  // Calculate max weight for scaling
-  const maxWeight = Math.max(...skills.map(s => s.weight), 1);
-  
-  // Total angle for all skills
-  const totalAngle = 360;
-  const anglePerSkill = totalAngle / skills.length;
+  // Group skills by level
+  const levelGroups = {
+    'Beginner': [],
+    'Intermediate': [],
+    'Advanced': [],
+    'Expert': []
+  };
+
+  skills.forEach((skill, index) => {
+    if (levelGroups[skill.level]) {
+      levelGroups[skill.level].push({ ...skill, originalIndex: index });
+    }
+  });
+
+  const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
   const createWedgePath = (startAngle, endAngle, innerRadius, outerRadius) => {
     const startRad = (startAngle - 90) * Math.PI / 180;
@@ -49,57 +58,58 @@ const NightingaleRoseChart = ({ skills }) => {
 
   const wedges = [];
   const gradients = [];
-  let currentAngle = 0;
   
-  // Group skills by level for layer calculation
-  const levelGroups = { 'Beginner': [], 'Intermediate': [], 'Advanced': [], 'Expert': [] };
-  skills.forEach((skill, index) => {
-    if (levelGroups[skill.level]) {
-      levelGroups[skill.level].push({ ...skill, originalIndex: index });
-    }
-  });
+  // Create concentric rings for each level
+  levels.forEach((level, levelIndex) => {
+    const skillsInLevel = levelGroups[level];
+    if (skillsInLevel.length === 0) return;
 
-  // Create spiral by rendering skills in order, with inner radius based on cumulative index
-  skills.forEach((skill, index) => {
-    const startAngle = currentAngle;
-    const endAngle = currentAngle + anglePerSkill;
+    const innerRadius = centerRadius + (levelIndex * ringWidth);
+    const outerRadius = innerRadius + ringWidth;
     
-    // Calculate radius based on weight and spiral position
-    const radiusMultiplier = Math.sqrt(skill.weight / maxWeight);
-    const spiralOffset = (index / skills.length) * (maxRadius - minRadius);
-    const innerRadius = minRadius + spiralOffset;
-    const outerRadius = innerRadius + (maxRadius - minRadius) * radiusMultiplier * 0.4;
+    // Calculate total weight in this level for proportional sizing
+    const totalWeight = skillsInLevel.reduce((sum, skill) => sum + skill.weight, 0);
     
-    const color = colors[skill.level];
-    const gradientId = `gradient-${index}`;
+    let currentAngle = 0;
     
-    // Create gradient
-    gradients.push(
-      <radialGradient key={gradientId} id={gradientId}>
-        <stop offset="0%" stopColor={color.light} />
-        <stop offset="100%" stopColor={color.base} />
-      </radialGradient>
-    );
+    skillsInLevel.forEach((skill, skillIndex) => {
+      // Angle proportional to weight
+      const angleSize = (skill.weight / totalWeight) * 360;
+      const startAngle = currentAngle;
+      const endAngle = currentAngle + angleSize;
+      
+      const color = colors[level];
+      const gradientId = `gradient-${level}-${skillIndex}`;
+      
+      // Create gradient for this segment
+      gradients.push(
+        <radialGradient key={gradientId} id={gradientId} cx="30%" cy="30%">
+          <stop offset="0%" stopColor={color.veryLight} />
+          <stop offset="50%" stopColor={color.light} />
+          <stop offset="100%" stopColor={color.base} />
+        </radialGradient>
+      );
 
-    // Create wedge
-    wedges.push(
-      <path
-        key={`wedge-${index}`}
-        d={createWedgePath(startAngle, endAngle, innerRadius, outerRadius)}
-        fill={skill.active ? `url(#${gradientId})` : 'rgba(200, 200, 200, 0.3)'}
-        stroke={skill.active ? color.dark : 'rgba(150, 150, 150, 0.5)'}
-        strokeWidth={skill.active ? "1.5" : "1"}
-        opacity={skill.active ? "0.95" : "0.4"}
-        style={{
-          filter: skill.active ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.25))' : 'none',
-          transition: 'all 0.3s ease',
-        }}
-      >
-        <title>{`${skill.level}: ${skill.description.substring(0, 50)}... (Weight: ${skill.weight})`}</title>
-      </path>
-    );
-    
-    currentAngle = endAngle;
+      // Create wedge
+      wedges.push(
+        <path
+          key={`wedge-${level}-${skillIndex}`}
+          d={createWedgePath(startAngle, endAngle, innerRadius, outerRadius)}
+          fill={skill.active ? `url(#${gradientId})` : 'rgba(180, 180, 180, 0.25)'}
+          stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 0.4)'}
+          strokeWidth={skill.active ? "1.5" : "1"}
+          opacity={skill.active ? "0.95" : "0.35"}
+          style={{
+            filter: skill.active ? 'drop-shadow(0 1px 3px rgba(0,0,0,0.2))' : 'none',
+            transition: 'all 0.3s ease',
+          }}
+        >
+          <title>{`${level} (Weight: ${skill.weight}): ${skill.description.substring(0, 60)}...`}</title>
+        </path>
+      );
+      
+      currentAngle = endAngle;
+    });
   });
 
   // Count stats by level
@@ -127,47 +137,39 @@ const NightingaleRoseChart = ({ skills }) => {
           {gradients}
         </defs>
         
-        {/* Background circles for reference */}
-        {[0.25, 0.5, 0.75, 1].map((factor, i) => (
-          <circle 
-            key={`circle-${i}`}
-            cx={centerX} 
-            cy={centerY} 
-            r={minRadius + (maxRadius - minRadius) * factor} 
-            fill="none" 
-            stroke="rgba(255,255,255,0.08)" 
-            strokeWidth="0.5"
-            strokeDasharray="2,3"
-          />
-        ))}
-        
-        {/* Wedges */}
+        {/* Wedges (rings) */}
         {wedges}
         
         {/* Center circle */}
         <circle 
           cx={centerX} 
           cy={centerY} 
-          r={minRadius} 
-          fill="rgba(255,255,255,0.15)"
-          stroke="rgba(255,255,255,0.4)"
+          r={centerRadius} 
+          fill="url(#centerGradient)"
+          stroke="rgba(255,255,255,0.5)"
           strokeWidth="2"
         />
+        <defs>
+          <radialGradient id="centerGradient">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.3)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0.15)" />
+          </radialGradient>
+        </defs>
         
         {/* Center text */}
         <text
           x={centerX}
-          y={centerY - 5}
+          y={centerY - 3}
           textAnchor="middle"
           fill="white"
-          fontSize="14"
+          fontSize="16"
           fontWeight="700"
         >
           {skills.length}
         </text>
         <text
           x={centerX}
-          y={centerY + 8}
+          y={centerY + 11}
           textAnchor="middle"
           fill="rgba(255,255,255,0.9)"
           fontSize="9"

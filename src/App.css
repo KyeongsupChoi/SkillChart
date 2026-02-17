@@ -169,11 +169,14 @@
 
 .flower-container svg path {
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .flower-container svg path:hover {
   opacity: 1 !important;
-  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)) brightness(1.1);
+  filter: drop-shadow(0 3px 8px rgba(0,0,0,0.5)) brightness(1.15);
+  transform: scale(1.02);
+  transform-origin: center;
 }
 
 .flower-score-label {
