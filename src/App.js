@@ -5,136 +5,132 @@ const FlowerVisualization = ({ score, maxScore }) => {
   const percentage = (score / maxScore) * 100;
   const centerX = 150;
   const centerY = 150;
-
-  // Calculate number of petal layers based on percentage (2-7 layers)
-  const numLayers = Math.max(2, Math.min(7, Math.floor((percentage / 100) * 7)));
   
-  const getColor = (layerIndex, totalLayers) => {
-    const progress = layerIndex / totalLayers;
-    const hue = 320 + (progress * 60); // Rose colors from magenta to red
-    const saturation = 65 + (percentage / 100) * 25;
-    const lightness = 35 + progress * 25;
+  // Calculate number of layers based on percentage (1-7 layers)
+  const numLayers = Math.max(1, Math.min(7, Math.ceil(percentage / 15)));
+  let totalPetals = 0;
+
+  const getColor = (layerIndex, petalIndex, petalsInLayer) => {
+    const hue = ((layerIndex * 50 + petalIndex * (360 / petalsInLayer)) % 360);
+    const saturation = 65 + (percentage / 100) * 30;
+    const lightness = 45 + layerIndex * 5;
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
   };
 
-  const createPetalPath = (cx, cy, size, rotation) => {
-    const controlPoint1X = cx + size * 0.3;
-    const controlPoint1Y = cy - size * 0.8;
-    const controlPoint2X = cx + size * 0.8;
-    const controlPoint2Y = cy - size * 0.3;
-    const endX = cx;
-    const endY = cy - size;
-    
-    return `
-      M ${cx} ${cy}
-      Q ${controlPoint1X} ${controlPoint1Y}, ${endX} ${endY}
-      Q ${controlPoint2X} ${controlPoint2Y}, ${cx} ${cy}
-      Z
-    `;
+  const getGradientId = (layerIndex, petalIndex) => {
+    return `petalGradient-${layerIndex}-${petalIndex}`;
   };
 
-  const petals = [];
-  
-  // Create layers of petals from outside to inside
+  const layers = [];
+  const gradients = [];
+
+  // Build layers from outside to inside (so inner layers appear on top)
   for (let layer = numLayers - 1; layer >= 0; layer--) {
-    const layerRadius = 20 + layer * 15;
-    const petalsInLayer = 5 + layer;
-    const angleStep = (Math.PI * 2) / petalsInLayer;
-    const layerRotationOffset = layer * 20;
-    
+    const petalsInLayer = Math.max(5, 8 - layer); // Outer layers have more petals
+    const layerRadius = 35 + layer * 15; // Distance from center
+    const petalLength = 25 + layer * 5; // Outer petals are longer
+    const petalWidth = 12 + layer * 3;
+    const rotation = layer * 15; // Rotate each layer for staggered effect
+
     for (let i = 0; i < petalsInLayer; i++) {
-      const angle = i * angleStep + (layerRotationOffset * Math.PI / 180);
-      const x = centerX + Math.cos(angle) * layerRadius;
-      const y = centerY + Math.sin(angle) * layerRadius;
-      const petalSize = 25 + layer * 5;
-      const rotation = (angle * 180 / Math.PI) + 90;
+      const angle = (360 / petalsInLayer) * i + rotation;
+      const angleRad = (angle * Math.PI) / 180;
       
-      petals.push(
-        <g key={`layer-${layer}-petal-${i}`}>
-          <path
-            d={createPetalPath(x, y, petalSize, rotation)}
-            fill={getColor(layer, numLayers)}
-            stroke="rgba(0,0,0,0.15)"
-            strokeWidth="1"
-            transform={`rotate(${rotation} ${x} ${y})`}
-            style={{
-              filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
-            }}
-          />
-        </g>
+      const baseX = centerX + layerRadius * Math.cos(angleRad);
+      const baseY = centerY + layerRadius * Math.sin(angleRad);
+      
+      const color = getColor(layer, i, petalsInLayer);
+      const gradientId = getGradientId(layer, i);
+      
+      // Create gradient for each petal
+      gradients.push(
+        <linearGradient key={gradientId} id={gradientId} x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor={color} stopOpacity="0.9" />
+          <stop offset="50%" stopColor={color} stopOpacity="1" />
+          <stop offset="100%" stopColor={color} stopOpacity="0.7" />
+        </linearGradient>
       );
+
+      // Create petal path for more natural shape
+      const petalPath = `
+        M ${baseX},${baseY}
+        Q ${baseX + petalWidth * Math.cos(angleRad + Math.PI/2)},${baseY + petalWidth * Math.sin(angleRad + Math.PI/2)}
+          ${baseX + petalLength * Math.cos(angleRad)},${baseY + petalLength * Math.sin(angleRad)}
+        Q ${baseX + petalWidth * Math.cos(angleRad - Math.PI/2)},${baseY + petalWidth * Math.sin(angleRad - Math.PI/2)}
+          ${baseX},${baseY}
+        Z
+      `;
+
+      layers.push(
+        <path
+          key={`petal-${layer}-${i}`}
+          d={petalPath}
+          fill={`url(#${gradientId})`}
+          stroke={color}
+          strokeWidth="0.5"
+          opacity={0.9 - layer * 0.05}
+          style={{
+            filter: `drop-shadow(0 ${2 + layer}px ${3 + layer * 2}px rgba(0,0,0,${0.15 + layer * 0.05}))`,
+          }}
+        />
+      );
+      totalPetals++;
     }
   }
-
-  // Leaves
-  const leaves = [];
-  const leafPositions = [
-    { angle: -30, distance: 95 },
-    { angle: -90, distance: 95 },
-  ];
-
-  leafPositions.forEach((pos, idx) => {
-    const angle = (pos.angle * Math.PI) / 180;
-    const x = centerX + Math.cos(angle) * pos.distance;
-    const y = centerY + Math.sin(angle) * pos.distance;
-    
-    leaves.push(
-      <ellipse
-        key={`leaf-${idx}`}
-        cx={x}
-        cy={y}
-        rx="18"
-        ry="35"
-        fill="hsl(140, 60%, 30%)"
-        transform={`rotate(${pos.angle + 90} ${x} ${y})`}
-        style={{
-          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))',
-        }}
-      />
-    );
-  });
 
   return (
     <div className="flower-container">
       <svg width="300" height="300" viewBox="0 0 300 300">
+        <defs>
+          {gradients}
+        </defs>
+        
         {/* Background circle */}
-        <circle cx={centerX} cy={centerY} r="140" fill="rgba(255,255,255,0.05)" />
+        <circle cx={centerX} cy={centerY} r="140" fill="rgba(255,255,255,0.03)" />
         
-        {/* Leaves */}
-        {leaves}
+        {/* Petals (rendered from outside to inside) */}
+        {layers}
         
-        {/* Petals */}
-        {petals}
-        
-        {/* Center of rose */}
+        {/* Center of flower with texture */}
         <circle 
           cx={centerX} 
           cy={centerY} 
-          r="15" 
-          fill="hsl(340, 70%, 25%)"
+          r="18" 
+          fill="url(#centerGradient)"
           style={{
-            filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.4))',
+            filter: 'drop-shadow(0 3px 8px rgba(0,0,0,0.3))',
           }}
         />
-        <circle cx={centerX} cy={centerY} r="8" fill="hsl(340, 60%, 20%)" />
+        <defs>
+          <radialGradient id="centerGradient">
+            <stop offset="0%" stopColor="#FFD700" />
+            <stop offset="70%" stopColor="#FFA500" />
+            <stop offset="100%" stopColor="#FF8C00" />
+          </radialGradient>
+        </defs>
+        
+        {/* Center details */}
+        {[...Array(12)].map((_, i) => {
+          const angle = (i * 30 * Math.PI) / 180;
+          const dotRadius = 10;
+          return (
+            <circle
+              key={`dot-${i}`}
+              cx={centerX + dotRadius * Math.cos(angle)}
+              cy={centerY + dotRadius * Math.sin(angle)}
+              r="1.5"
+              fill="#8B4513"
+              opacity="0.6"
+            />
+          );
+        })}
       </svg>
-      <div className="flower-score-label">{numLayers} layers</div>
+      <div className="flower-score-label">{numLayers} layers • {totalPetals} petals</div>
     </div>
   );
 };
 
 const App = () => {
-  const [isScrolled, setIsScrolled] = React.useState(false);
-
-  React.useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const backendSkills = [
     { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, Java, Ruby)', weight: 1, active: true },
     { level: 'Beginner', description: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', weight: 1, active: true },
@@ -275,7 +271,7 @@ const App = () => {
   return (
     <div className="app-container">
       <div className="content-wrapper">
-        <div className={`sticky-header ${isScrolled ? 'scrolled' : ''}`}>
+        <div className="sticky-header">
           <nav className="skill-tabs">
             <h1 className="tab-title">SkillChart</h1>
             <button 
