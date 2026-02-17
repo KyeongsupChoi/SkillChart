@@ -124,15 +124,26 @@ const App = () => {
     }
   };
 
+  const getLevelRowClass = (level) => {
+    switch (level) {
+      case 'Beginner':
+        return 'level-beginner-row';
+      case 'Intermediate':
+        return 'level-intermediate-row';
+      case 'Advanced':
+        return 'level-advanced-row';
+      case 'Expert':
+        return 'level-expert-row';
+      default:
+        return '';
+    }
+  };
+
   return (
     <div className="app-container">
-      <header className="app-header">
-        <h1>SkillChart</h1>
-        <p className="subtitle">Evaluate and communicate your development skills</p>
-      </header>
-
       <div className="content-wrapper">
         <nav className="skill-tabs">
+          <h1 className="tab-title">SkillChart</h1>
           <button 
             className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
             onClick={() => toggleGroup("backend")}
@@ -191,7 +202,7 @@ const App = () => {
             </thead>
             <tbody>
               {skills.map((skill, index) => (
-                <tr key={index} className={skill.active ? "skill-row" : "skill-row inactive"}>
+                <tr key={index} className={`skill-row ${getLevelRowClass(skill.level)} ${skill.active ? "" : "inactive"}`}>
                   <td className="col-level">
                     <span className={`level-badge ${getLevelColor(skill.level)}`}>
                       {skill.level}
