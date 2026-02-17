@@ -202,32 +202,32 @@ const NightingaleRoseChart = ({ skills }) => {
 
 const App = () => {
   const backendSkills = [
-    { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, Java, Ruby)', weight: 1, active: true },
-    { level: 'Beginner', description: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', weight: 1, active: true },
-    { level: 'Beginner', description: 'Ability to set up a simple server using frameworks like Flask, Express, or Django.', weight: 1, active: true },
-    { level: 'Beginner', description: 'Basic understanding of databases (SQL or NoSQL) and how to perform CRUD operations (Create, Read, Update, Delete).', weight: 1, active: true },
-    { level: 'Beginner', description: 'Awareness of RESTful API concepts and how to create simple endpoints.', weight: 1, active: true },
-    { level: 'Beginner', description: 'Setting up a simple web server that responds to HTTP requests.', weight: 1, active: true },
-    { level: 'Beginner', description: 'Implementing basic user authentication and handling form data.', weight: 1, active: true },
-    { level: 'Beginner', description: 'Writing API endpoints that interact with a database.', weight: 1, active: true },
-    { level: 'Beginner', description: 'Implementing data validation and error handling for user input before storing it in the database, ensuring data integrity and security.', weight: 1, active: true },
-    { level: 'Intermediate', description: 'Proficient in designing and implementing RESTful APIs with CRUD functionality.', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Understanding of relational databases (e.g., MySQL, PostgreSQL) and NoSQL databases (e.g., MongoDB, Redis), including schema design, relationships, and indexing.', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Familiar with middleware, routing, and handling file uploads.', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Knowledge of authentication methods like OAuth, JWT, and sessions.', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Experience with version control systems (e.g., Git) and basic knowledge of continuous integration and deployment (CI/CD).', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Developing an API for user management (e.g., authentication, authorization).', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Setting up middleware for logging, error handling, and security in a web application.', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Connecting your backend with external services via APIs (e.g., payment gateways, third-party APIs).', weight: 2, active: true },
-    { level: 'Intermediate', description: 'Designing a relational database schema and optimizing queries.', weight: 2, active: true },
+    { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, Java, Ruby)', weight: 1, active: false },
+    { level: 'Beginner', description: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', weight: 1, active: false },
+    { level: 'Beginner', description: 'Ability to set up a simple server using frameworks like Flask, Express, or Django.', weight: 1, active: false },
+    { level: 'Beginner', description: 'Basic understanding of databases (SQL or NoSQL) and how to perform CRUD operations (Create, Read, Update, Delete).', weight: 1, active: false },
+    { level: 'Beginner', description: 'Awareness of RESTful API concepts and how to create simple endpoints.', weight: 1, active: false },
+    { level: 'Beginner', description: 'Setting up a simple web server that responds to HTTP requests.', weight: 1, active: false },
+    { level: 'Beginner', description: 'Implementing basic user authentication and handling form data.', weight: 1, active: false },
+    { level: 'Beginner', description: 'Writing API endpoints that interact with a database.', weight: 1, active: false },
+    { level: 'Beginner', description: 'Implementing data validation and error handling for user input before storing it in the database, ensuring data integrity and security.', weight: 1, active: false },
+    { level: 'Intermediate', description: 'Proficient in designing and implementing RESTful APIs with CRUD functionality.', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Understanding of relational databases (e.g., MySQL, PostgreSQL) and NoSQL databases (e.g., MongoDB, Redis), including schema design, relationships, and indexing.', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Familiar with middleware, routing, and handling file uploads.', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Knowledge of authentication methods like OAuth, JWT, and sessions.', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Experience with version control systems (e.g., Git) and basic knowledge of continuous integration and deployment (CI/CD).', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Developing an API for user management (e.g., authentication, authorization).', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Setting up middleware for logging, error handling, and security in a web application.', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Connecting your backend with external services via APIs (e.g., payment gateways, third-party APIs).', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Designing a relational database schema and optimizing queries.', weight: 2, active: false },
     { level: 'Advanced', description: 'Proficiency in implementing robust authentication and authorization mechanisms, such as Single Sign-On (SSO) and Role-Based Access Control (RBAC), to ensure secure access management.', weight: 4, active: false },
     { level: 'Advanced', description: 'Knowledge of microservices architecture and ability to design and develop microservices-based applications.', weight: 4, active: false },
     { level: 'Advanced', description: 'Proficient in using messaging queues (e.g., RabbitMQ, Kafka) for asynchronous processing and communication.', weight: 4, active: false },
     { level: 'Advanced', description: 'Experience with cloud infrastructure (e.g., AWS, Google Cloud, Azure), containerization (Docker), and orchestration tools (Kubernetes).', weight: 4, active: false },
     { level: 'Advanced', description: 'Understanding of caching strategies, load balancing, and scaling backend systems to handle high traffic.', weight: 4, active: false },
     { level: 'Advanced', description: 'Designing and deploying a microservices-based architecture with services that communicate asynchronously.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Setting up continuous integration/continuous deployment (CI/CD) pipelines for automated testing and deployment.', weight: 4, active: true },
-    { level: 'Advanced', description: 'Implementing caching strategies (e.g., Redis, Memcached) to optimize API performance.', weight: 4, active: true },
+    { level: 'Advanced', description: 'Setting up continuous integration/continuous deployment (CI/CD) pipelines for automated testing and deployment.', weight: 4, active: false },
+    { level: 'Advanced', description: 'Implementing caching strategies (e.g., Redis, Memcached) to optimize API performance.', weight: 4, active: false },
     { level: 'Expert', description: 'Mastery of distributed systems, including managing data consistency, eventual consistency, and CAP theorem implications.', weight: 8, active: false },
     { level: 'Expert', description: 'Expertise in backend architecture patterns (e.g., event-driven architecture, CQRS, serverless) for complex and high-traffic systems.', weight: 8, active: false },
     { level: 'Expert', description: 'Deep knowledge of security best practices, including encryption, secure communication, and data protection in large-scale applications.', weight: 8, active: false },
@@ -240,33 +240,33 @@ const App = () => {
   ];
 
   const dataScienceSkills = [
-    { level: 'Beginner', description: 'Basic understanding of statistics and data analysis.', weight: 1, active: true },
-    { level: 'Intermediate', description: 'Proficient in data wrangling: loading, cleaning, and transforming data using libraries like Pandas, NumPy, or R\'s dplyr.', weight: 2, active: true },
+    { level: 'Beginner', description: 'Basic understanding of statistics and data analysis.', weight: 1, active: false },
+    { level: 'Intermediate', description: 'Proficient in data wrangling: loading, cleaning, and transforming data using libraries like Pandas, NumPy, or R\'s dplyr.', weight: 2, active: false },
     { level: 'Advanced', description: 'Proficient in implementing complex machine learning algorithms (e.g., random forests, gradient boosting, neural networks) using libraries like scikit-learn, TensorFlow, or PyTorch.', weight: 4, active: false },
   ];
 
   const pythonSkills = [
-    { level: "Beginner", description: "Basic understanding of Python syntax and standard library.", weight: 1, active: true },
-    { level: "Intermediate", description: "Experience with Python frameworks like Flask, Django, or FastAPI.", weight: 2, active: true },
+    { level: "Beginner", description: "Basic understanding of Python syntax and standard library.", weight: 1, active: false },
+    { level: "Intermediate", description: "Experience with Python frameworks like Flask, Django, or FastAPI.", weight: 2, active: false },
     { level: "Advanced", description: "Proficient in writing optimized Python code for performance-critical applications.", weight: 4, active: false },
   ];
 
   const sqlSkills = [
-    { level: "Beginner", description: "Basic knowledge of SQL syntax and queries.", weight: 1, active: true },
-    { level: "Intermediate", description: "Proficient in designing relational database schemas and writing complex joins.", weight: 2, active: true },
+    { level: "Beginner", description: "Basic knowledge of SQL syntax and queries.", weight: 1, active: false },
+    { level: "Intermediate", description: "Proficient in designing relational database schemas and writing complex joins.", weight: 2, active: false },
     { level: "Advanced", description: "Experience with database optimization, indexing, and stored procedures.", weight: 4, active: false },
   ];
 
   const llmSkills = [
-    { level: "Beginner", description: "Basic understanding of LLMs, their capabilities, and common use cases (e.g., ChatGPT, Claude, GPT-4).", weight: 1, active: true },
-    { level: "Beginner", description: "Ability to write effective prompts to get desired outputs from LLMs.", weight: 1, active: true },
-    { level: "Beginner", description: "Familiarity with API-based LLM services (OpenAI API, Anthropic API, etc.).", weight: 1, active: true },
-    { level: "Beginner", description: "Understanding of tokens, context windows, and basic API parameters (temperature, max_tokens).", weight: 1, active: true },
-    { level: "Intermediate", description: "Experience integrating LLM APIs into applications with proper error handling and rate limiting.", weight: 2, active: true },
-    { level: "Intermediate", description: "Knowledge of prompt engineering techniques (few-shot learning, chain-of-thought, role prompting).", weight: 2, active: true },
-    { level: "Intermediate", description: "Understanding of embeddings and vector databases for semantic search and RAG (Retrieval-Augmented Generation).", weight: 2, active: true },
-    { level: "Intermediate", description: "Ability to implement streaming responses and handle long-running LLM requests.", weight: 2, active: true },
-    { level: "Intermediate", description: "Experience with function calling / tool use to extend LLM capabilities.", weight: 2, active: true },
+    { level: "Beginner", description: "Basic understanding of LLMs, their capabilities, and common use cases (e.g., ChatGPT, Claude, GPT-4).", weight: 1, active: false },
+    { level: "Beginner", description: "Ability to write effective prompts to get desired outputs from LLMs.", weight: 1, active: false },
+    { level: "Beginner", description: "Familiarity with API-based LLM services (OpenAI API, Anthropic API, etc.).", weight: 1, active: false },
+    { level: "Beginner", description: "Understanding of tokens, context windows, and basic API parameters (temperature, max_tokens).", weight: 1, active: false },
+    { level: "Intermediate", description: "Experience integrating LLM APIs into applications with proper error handling and rate limiting.", weight: 2, active: false },
+    { level: "Intermediate", description: "Knowledge of prompt engineering techniques (few-shot learning, chain-of-thought, role prompting).", weight: 2, active: false },
+    { level: "Intermediate", description: "Understanding of embeddings and vector databases for semantic search and RAG (Retrieval-Augmented Generation).", weight: 2, active: false },
+    { level: "Intermediate", description: "Ability to implement streaming responses and handle long-running LLM requests.", weight: 2, active: false },
+    { level: "Intermediate", description: "Experience with function calling / tool use to extend LLM capabilities.", weight: 2, active: false },
     { level: "Advanced", description: "Proficient in building RAG systems with document chunking, embedding strategies, and retrieval optimization.", weight: 4, active: false },
     { level: "Advanced", description: "Experience fine-tuning or customizing LLMs for specific domains or tasks.", weight: 4, active: false },
     { level: "Advanced", description: "Knowledge of LLM evaluation metrics, benchmarking, and testing strategies.", weight: 4, active: false },
@@ -342,43 +342,43 @@ const App = () => {
     <div className="app-container">
       <div className="content-wrapper">
         <div className="sticky-header">
-          <nav className="skill-tabs">
-            <h1 className="tab-title">SkillChart</h1>
-            <button 
-              className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
-              onClick={() => toggleGroup("backend")}
-            >
-              Backend
-            </button>
-            <button 
-              className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
-              onClick={() => toggleGroup("dataScience")}
-            >
-              Data Science
-            </button>
-            <button 
-              className={`tab-button ${activeGroup === "python" ? "active" : ""}`}
-              onClick={() => toggleGroup("python")}
-            >
-              Python
-            </button>
-            <button 
-              className={`tab-button ${activeGroup === "sql" ? "active" : ""}`}
-              onClick={() => toggleGroup("sql")}
-            >
-              SQL
-            </button>
-            <button 
-              className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
-              onClick={() => toggleGroup("llm")}
-            >
-              LLM
-            </button>
-          </nav>
+          <div className="header-grid">
+            <div className="header-left">
+              <nav className="skill-tabs">
+                <h1 className="tab-title">SkillChart</h1>
+                <button 
+                  className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
+                  onClick={() => toggleGroup("backend")}
+                >
+                  Backend
+                </button>
+                <button 
+                  className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
+                  onClick={() => toggleGroup("dataScience")}
+                >
+                  Data Science
+                </button>
+                <button 
+                  className={`tab-button ${activeGroup === "python" ? "active" : ""}`}
+                  onClick={() => toggleGroup("python")}
+                >
+                  Python
+                </button>
+                <button 
+                  className={`tab-button ${activeGroup === "sql" ? "active" : ""}`}
+                  onClick={() => toggleGroup("sql")}
+                >
+                  SQL
+                </button>
+                <button 
+                  className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
+                  onClick={() => toggleGroup("llm")}
+                >
+                  LLM
+                </button>
+              </nav>
 
-          <div className="score-card">
-            <div className="score-content">
-              <div className="score-info-wrapper">
+              <div className="score-section">
                 <div className="score-info">
                   <div className="score-label">Your Score</div>
                   <div className="score-value">{totalScore} / {maxScore}</div>
@@ -391,6 +391,9 @@ const App = () => {
                   ></div>
                 </div>
               </div>
+            </div>
+
+            <div className="header-right">
               <NightingaleRoseChart skills={skills} />
             </div>
           </div>
