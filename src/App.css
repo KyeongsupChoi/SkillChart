@@ -6,6 +6,7 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 2rem 1rem;
+  padding-bottom: 4rem;
 }
 
 .content-wrapper {
@@ -14,7 +15,16 @@
   background: white;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  position: relative;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: white;
+  border-radius: 12px 12px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .skill-tabs {
@@ -25,6 +35,7 @@
   border-bottom: 2px solid #e9ecef;
   padding: 1rem 1rem 0 1rem;
   align-items: center;
+  border-radius: 12px 12px 0 0;
 }
 
 .tab-title {
@@ -155,6 +166,8 @@
 .skills-table-container {
   overflow-x: auto;
   padding: 2rem;
+  background: white;
+  border-radius: 0 0 12px 12px;
 }
 
 .skills-table {
@@ -328,8 +341,13 @@
 }
 
 @media (max-width: 768px) {
+  .sticky-header {
+    border-radius: 8px 8px 0 0;
+  }
+
   .skill-tabs {
     padding: 0.5rem;
+    border-radius: 8px 8px 0 0;
   }
 
   .tab-title {
@@ -397,10 +415,16 @@
 @media (max-width: 480px) {
   .app-container {
     padding: 1rem 0.5rem;
+    padding-bottom: 3rem;
+  }
+
+  .sticky-header {
+    border-radius: 6px 6px 0 0;
   }
 
   .skill-tabs {
     flex-direction: column;
+    border-radius: 6px 6px 0 0;
   }
 
   .tab-title {

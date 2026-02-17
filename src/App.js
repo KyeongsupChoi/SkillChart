@@ -18,8 +18,8 @@ const FlowerVisualization = ({ score, maxScore }) => {
   const petals = [];
   for (let i = 0; i < numPetals; i++) {
     const angle = (i * goldenAngle * Math.PI) / 180;
-    const radius = 4 + Math.sqrt(i) * 3; // Spiral outward
-    const petalSize = 8 + (i / numPetals) * 12; // Larger petals as we go out
+    const radius = 10 + i * 2.2; // Linear spiral for better spacing
+    const petalSize = 6 + (i / numPetals) * 6; // Smaller, more consistent petal sizes
     
     const x = centerX + radius * Math.cos(angle);
     const y = centerY + radius * Math.sin(angle);
@@ -30,12 +30,12 @@ const FlowerVisualization = ({ score, maxScore }) => {
         cx={x}
         cy={y}
         rx={petalSize}
-        ry={petalSize * 1.5}
+        ry={petalSize * 1.8}
         fill={getColor(i, numPetals)}
-        opacity={0.8}
-        transform={`rotate(${(angle * 180) / Math.PI} ${x} ${y})`}
+        opacity={0.85}
+        transform={`rotate(${(angle * 180) / Math.PI + 90} ${x} ${y})`}
         style={{
-          filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+          filter: 'drop-shadow(0 1px 3px rgba(0,0,0,0.25))',
         }}
       />
     );
@@ -45,7 +45,7 @@ const FlowerVisualization = ({ score, maxScore }) => {
     <div className="flower-container">
       <svg width="300" height="300" viewBox="0 0 300 300">
         {/* Background circle */}
-        <circle cx={centerX} cy={centerY} r="140" fill="rgba(255,255,255,0.1)" />
+        <circle cx={centerX} cy={centerY} r="140" fill="rgba(255,255,255,0.05)" />
         
         {/* Petals */}
         {petals}
@@ -54,13 +54,13 @@ const FlowerVisualization = ({ score, maxScore }) => {
         <circle 
           cx={centerX} 
           cy={centerY} 
-          r="12" 
+          r="10" 
           fill="#FFD700"
           style={{
             filter: 'drop-shadow(0 2px 6px rgba(255,215,0,0.5))',
           }}
         />
-        <circle cx={centerX} cy={centerY} r="8" fill="#FFA500" />
+        <circle cx={centerX} cy={centerY} r="6" fill="#FFA500" />
       </svg>
       <div className="flower-score-label">{numPetals} petals</div>
     </div>
@@ -208,56 +208,58 @@ const App = () => {
   return (
     <div className="app-container">
       <div className="content-wrapper">
-        <nav className="skill-tabs">
-          <h1 className="tab-title">SkillChart</h1>
-          <button 
-            className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
-            onClick={() => toggleGroup("backend")}
-          >
-            Backend
-          </button>
-          <button 
-            className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
-            onClick={() => toggleGroup("dataScience")}
-          >
-            Data Science
-          </button>
-          <button 
-            className={`tab-button ${activeGroup === "python" ? "active" : ""}`}
-            onClick={() => toggleGroup("python")}
-          >
-            Python
-          </button>
-          <button 
-            className={`tab-button ${activeGroup === "sql" ? "active" : ""}`}
-            onClick={() => toggleGroup("sql")}
-          >
-            SQL
-          </button>
-          <button 
-            className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
-            onClick={() => toggleGroup("llm")}
-          >
-            LLM
-          </button>
-        </nav>
+        <div className="sticky-header">
+          <nav className="skill-tabs">
+            <h1 className="tab-title">SkillChart</h1>
+            <button 
+              className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
+              onClick={() => toggleGroup("backend")}
+            >
+              Backend
+            </button>
+            <button 
+              className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
+              onClick={() => toggleGroup("dataScience")}
+            >
+              Data Science
+            </button>
+            <button 
+              className={`tab-button ${activeGroup === "python" ? "active" : ""}`}
+              onClick={() => toggleGroup("python")}
+            >
+              Python
+            </button>
+            <button 
+              className={`tab-button ${activeGroup === "sql" ? "active" : ""}`}
+              onClick={() => toggleGroup("sql")}
+            >
+              SQL
+            </button>
+            <button 
+              className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
+              onClick={() => toggleGroup("llm")}
+            >
+              LLM
+            </button>
+          </nav>
 
-        <div className="score-card">
-          <div className="score-content">
-            <div className="score-info-wrapper">
-              <div className="score-info">
-                <div className="score-label">Your Score</div>
-                <div className="score-value">{totalScore} / {maxScore}</div>
-                <div className="score-percentage">{percentage}%</div>
+          <div className="score-card">
+            <div className="score-content">
+              <div className="score-info-wrapper">
+                <div className="score-info">
+                  <div className="score-label">Your Score</div>
+                  <div className="score-value">{totalScore} / {maxScore}</div>
+                  <div className="score-percentage">{percentage}%</div>
+                </div>
+                <div className="progress-bar">
+                  <div 
+                    className="progress-fill" 
+                    style={{ width: `${percentage}%` }}
+                  ></div>
+                </div>
               </div>
-              <div className="progress-bar">
-                <div 
-                  className="progress-fill" 
-                  style={{ width: `${percentage}%` }}
-                ></div>
-              </div>
+              <FlowerVisualization score={totalScore} maxScore={maxScore} />
             </div>
-            <FlowerVisualization score={totalScore} maxScore={maxScore} />
           </div>
         </div>
 
