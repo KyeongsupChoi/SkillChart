@@ -159,12 +159,21 @@
 }
 
 .flower-container:hover svg {
-  transform: scale(1.03) rotate(2deg);
+  transform: scale(1.02);
 }
 
 .flower-container svg text {
   pointer-events: none;
   user-select: none;
+}
+
+.flower-container svg path {
+  cursor: pointer;
+}
+
+.flower-container svg path:hover {
+  opacity: 1 !important;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)) brightness(1.1);
 }
 
 .flower-score-label {
@@ -175,6 +184,31 @@
   letter-spacing: 1.5px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin-top: 0.25rem;
+}
+
+.chart-legend {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
 .skills-table-container {
@@ -406,6 +440,15 @@
     height: auto;
   }
 
+  .chart-legend {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .legend-item {
+    font-size: 0.65rem;
+  }
+
   .skills-table-container {
     padding: 1rem;
   }
@@ -459,6 +502,15 @@
 
   .flower-container svg {
     max-width: 250px;
+  }
+
+  .chart-legend {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .legend-item {
+    font-size: 0.65rem;
   }
 
   .skills-table th,

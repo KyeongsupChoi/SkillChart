@@ -4,145 +4,142 @@ import './App.css';
 const NightingaleRoseChart = ({ skills }) => {
   const centerX = 150;
   const centerY = 150;
-  const maxRadius = 120;
+  const minRadius = 30;
+  const maxRadius = 130;
 
-  // Count skills by level
-  const levelCounts = {
-    'Beginner': { count: 0, points: 0, active: 0 },
-    'Intermediate': { count: 0, points: 0, active: 0 },
-    'Advanced': { count: 0, points: 0, active: 0 },
-    'Expert': { count: 0, points: 0, active: 0 }
-  };
-
-  skills.forEach(skill => {
-    if (levelCounts[skill.level]) {
-      levelCounts[skill.level].count++;
-      levelCounts[skill.level].points += skill.weight;
-      if (skill.active) {
-        levelCounts[skill.level].active++;
-      }
-    }
-  });
-
-  const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  // Color mapping by level
   const colors = {
-    'Beginner': { fill: '#d4edda', stroke: '#28a745', gradient: ['#d4edda', '#a3d9a5'] },
-    'Intermediate': { fill: '#cce5ff', stroke: '#007bff', gradient: ['#cce5ff', '#80bdff'] },
-    'Advanced': { fill: '#fff3cd', stroke: '#ffc107', gradient: ['#fff3cd', '#ffd454'] },
-    'Expert': { fill: '#f8d7da', stroke: '#dc3545', gradient: ['#f8d7da', '#f1aeb5'] }
+    'Beginner': { base: '#4ade80', light: '#86efac', dark: '#22c55e' },
+    'Intermediate': { base: '#60a5fa', light: '#93c5fd', dark: '#3b82f6' },
+    'Advanced': { base: '#fbbf24', light: '#fcd34d', dark: '#f59e0b' },
+    'Expert': { base: '#f87171', light: '#fca5a5', dark: '#ef4444' }
   };
 
-  // Find max count for scaling
-  const maxCount = Math.max(...levels.map(level => levelCounts[level].count), 1);
+  // Calculate max weight for scaling
+  const maxWeight = Math.max(...skills.map(s => s.weight), 1);
+  
+  // Total angle for all skills
+  const totalAngle = 360;
+  const anglePerSkill = totalAngle / skills.length;
 
-  const createWedgePath = (startAngle, endAngle, radius) => {
+  const createWedgePath = (startAngle, endAngle, innerRadius, outerRadius) => {
     const startRad = (startAngle - 90) * Math.PI / 180;
     const endRad = (endAngle - 90) * Math.PI / 180;
     
-    const x1 = centerX + radius * Math.cos(startRad);
-    const y1 = centerY + radius * Math.sin(startRad);
-    const x2 = centerX + radius * Math.cos(endRad);
-    const y2 = centerY + radius * Math.sin(endRad);
+    const x1 = centerX + innerRadius * Math.cos(startRad);
+    const y1 = centerY + innerRadius * Math.sin(startRad);
+    const x2 = centerX + outerRadius * Math.cos(startRad);
+    const y2 = centerY + outerRadius * Math.sin(startRad);
+    const x3 = centerX + outerRadius * Math.cos(endRad);
+    const y3 = centerY + outerRadius * Math.sin(endRad);
+    const x4 = centerX + innerRadius * Math.cos(endRad);
+    const y4 = centerY + innerRadius * Math.sin(endRad);
     
     const largeArc = endAngle - startAngle > 180 ? 1 : 0;
     
-    return `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArc} 1 ${x2} ${y2} Z`;
+    return `
+      M ${x1} ${y1}
+      L ${x2} ${y2}
+      A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x3} ${y3}
+      L ${x4} ${y4}
+      A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1} ${y1}
+      Z
+    `;
   };
 
   const wedges = [];
-  const labels = [];
-  const anglePerSegment = 360 / levels.length;
-
-  levels.forEach((level, index) => {
-    const startAngle = index * anglePerSegment;
-    const endAngle = (index + 1) * anglePerSegment;
-    const midAngle = (startAngle + endAngle) / 2;
-    
-    const data = levelCounts[level];
-    const radius = (data.count / maxCount) * maxRadius;
-    const activeRadius = (data.active / maxCount) * maxRadius;
-    
-    const gradientId = `gradient-${level}`;
-    
-    // Inactive portion (total count)
-    if (data.count > 0) {
-      wedges.push(
-        <g key={`wedge-${level}`}>
-          <defs>
-            <radialGradient id={gradientId}>
-              <stop offset="0%" stopColor={colors[level].gradient[0]} />
-              <stop offset="100%" stopColor={colors[level].gradient[1]} />
-            </radialGradient>
-          </defs>
-          <path
-            d={createWedgePath(startAngle, endAngle, radius)}
-            fill={`url(#${gradientId})`}
-            stroke={colors[level].stroke}
-            strokeWidth="2"
-            opacity="0.4"
-          />
-        </g>
-      );
+  const gradients = [];
+  let currentAngle = 0;
+  
+  // Group skills by level for layer calculation
+  const levelGroups = { 'Beginner': [], 'Intermediate': [], 'Advanced': [], 'Expert': [] };
+  skills.forEach((skill, index) => {
+    if (levelGroups[skill.level]) {
+      levelGroups[skill.level].push({ ...skill, originalIndex: index });
     }
+  });
 
-    // Active portion
-    if (data.active > 0) {
-      wedges.push(
-        <path
-          key={`wedge-active-${level}`}
-          d={createWedgePath(startAngle, endAngle, activeRadius)}
-          fill={`url(#${gradientId})`}
-          stroke={colors[level].stroke}
-          strokeWidth="2.5"
-          opacity="0.95"
-          style={{
-            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
-          }}
-        />
-      );
-    }
-
-    // Labels
-    const labelRadius = maxRadius + 25;
-    const labelAngle = (midAngle - 90) * Math.PI / 180;
-    const labelX = centerX + labelRadius * Math.cos(labelAngle);
-    const labelY = centerY + labelRadius * Math.sin(labelAngle);
+  // Create spiral by rendering skills in order, with inner radius based on cumulative index
+  skills.forEach((skill, index) => {
+    const startAngle = currentAngle;
+    const endAngle = currentAngle + anglePerSkill;
     
-    labels.push(
-      <g key={`label-${level}`}>
-        <text
-          x={labelX}
-          y={labelY}
-          textAnchor="middle"
-          fill="white"
-          fontSize="12"
-          fontWeight="700"
-          style={{ textShadow: '0 1px 3px rgba(0,0,0,0.3)' }}
-        >
-          {level}
-        </text>
-        <text
-          x={labelX}
-          y={labelY + 14}
-          textAnchor="middle"
-          fill="rgba(255,255,255,0.9)"
-          fontSize="10"
-          fontWeight="600"
-        >
-          {data.active}/{data.count}
-        </text>
-      </g>
+    // Calculate radius based on weight and spiral position
+    const radiusMultiplier = Math.sqrt(skill.weight / maxWeight);
+    const spiralOffset = (index / skills.length) * (maxRadius - minRadius);
+    const innerRadius = minRadius + spiralOffset;
+    const outerRadius = innerRadius + (maxRadius - minRadius) * radiusMultiplier * 0.4;
+    
+    const color = colors[skill.level];
+    const gradientId = `gradient-${index}`;
+    
+    // Create gradient
+    gradients.push(
+      <radialGradient key={gradientId} id={gradientId}>
+        <stop offset="0%" stopColor={color.light} />
+        <stop offset="100%" stopColor={color.base} />
+      </radialGradient>
     );
+
+    // Create wedge
+    wedges.push(
+      <path
+        key={`wedge-${index}`}
+        d={createWedgePath(startAngle, endAngle, innerRadius, outerRadius)}
+        fill={skill.active ? `url(#${gradientId})` : 'rgba(200, 200, 200, 0.3)'}
+        stroke={skill.active ? color.dark : 'rgba(150, 150, 150, 0.5)'}
+        strokeWidth={skill.active ? "1.5" : "1"}
+        opacity={skill.active ? "0.95" : "0.4"}
+        style={{
+          filter: skill.active ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.25))' : 'none',
+          transition: 'all 0.3s ease',
+        }}
+      >
+        <title>{`${skill.level}: ${skill.description.substring(0, 50)}... (Weight: ${skill.weight})`}</title>
+      </path>
+    );
+    
+    currentAngle = endAngle;
+  });
+
+  // Count stats by level
+  const stats = {
+    'Beginner': { active: 0, total: 0, points: 0 },
+    'Intermediate': { active: 0, total: 0, points: 0 },
+    'Advanced': { active: 0, total: 0, points: 0 },
+    'Expert': { active: 0, total: 0, points: 0 }
+  };
+
+  skills.forEach(skill => {
+    if (stats[skill.level]) {
+      stats[skill.level].total++;
+      stats[skill.level].points += skill.weight;
+      if (skill.active) {
+        stats[skill.level].active++;
+      }
+    }
   });
 
   return (
     <div className="flower-container">
       <svg width="300" height="300" viewBox="0 0 300 300">
+        <defs>
+          {gradients}
+        </defs>
+        
         {/* Background circles for reference */}
-        <circle cx={centerX} cy={centerY} r={maxRadius * 0.25} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-        <circle cx={centerX} cy={centerY} r={maxRadius * 0.5} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-        <circle cx={centerX} cy={centerY} r={maxRadius * 0.75} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
-        <circle cx={centerX} cy={centerY} r={maxRadius} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+        {[0.25, 0.5, 0.75, 1].map((factor, i) => (
+          <circle 
+            key={`circle-${i}`}
+            cx={centerX} 
+            cy={centerY} 
+            r={minRadius + (maxRadius - minRadius) * factor} 
+            fill="none" 
+            stroke="rgba(255,255,255,0.08)" 
+            strokeWidth="0.5"
+            strokeDasharray="2,3"
+          />
+        ))}
         
         {/* Wedges */}
         {wedges}
@@ -151,16 +148,52 @@ const NightingaleRoseChart = ({ skills }) => {
         <circle 
           cx={centerX} 
           cy={centerY} 
-          r="20" 
-          fill="rgba(255,255,255,0.2)"
-          stroke="rgba(255,255,255,0.5)"
+          r={minRadius} 
+          fill="rgba(255,255,255,0.15)"
+          stroke="rgba(255,255,255,0.4)"
           strokeWidth="2"
         />
         
-        {/* Labels */}
-        {labels}
+        {/* Center text */}
+        <text
+          x={centerX}
+          y={centerY - 5}
+          textAnchor="middle"
+          fill="white"
+          fontSize="14"
+          fontWeight="700"
+        >
+          {skills.length}
+        </text>
+        <text
+          x={centerX}
+          y={centerY + 8}
+          textAnchor="middle"
+          fill="rgba(255,255,255,0.9)"
+          fontSize="9"
+          fontWeight="600"
+        >
+          skills
+        </text>
       </svg>
-      <div className="flower-score-label">Nightingale Rose Chart</div>
+      <div className="chart-legend">
+        <div className="legend-item">
+          <span className="legend-color" style={{ backgroundColor: colors.Beginner.base }}></span>
+          <span>Beginner: {stats.Beginner.active}/{stats.Beginner.total}</span>
+        </div>
+        <div className="legend-item">
+          <span className="legend-color" style={{ backgroundColor: colors.Intermediate.base }}></span>
+          <span>Intermediate: {stats.Intermediate.active}/{stats.Intermediate.total}</span>
+        </div>
+        <div className="legend-item">
+          <span className="legend-color" style={{ backgroundColor: colors.Advanced.base }}></span>
+          <span>Advanced: {stats.Advanced.active}/{stats.Advanced.total}</span>
+        </div>
+        <div className="legend-item">
+          <span className="legend-color" style={{ backgroundColor: colors.Expert.base }}></span>
+          <span>Expert: {stats.Expert.active}/{stats.Expert.total}</span>
+        </div>
+      </div>
     </div>
   );
 };
