@@ -32,15 +32,16 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
     }
   });
 
-  const levels = ['Expert', 'Advanced', 'Intermediate', 'Beginner'];
+  const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
-  const createPetalPath = (startAngle, endAngle, innerRadius, outerRadius) => {
+  const createPetalPath = (startAngle, endAngle, innerRadius, outerRadius, layerIndex = 0) => {
     const startRad = (startAngle - 90) * Math.PI / 180;
     const endRad = (endAngle - 90) * Math.PI / 180;
     const midRad = ((startAngle + endAngle) / 2 - 90) * Math.PI / 180;
     
-    // Add petal curve extension
-    const petalExtension = outerRadius * 0.15;
+    // Add petal curve extension - inner petals extend more for layering effect
+    const baseExtension = 0.15 + (layerIndex * 0.02);
+    const petalExtension = outerRadius * baseExtension;
     const extendedRadius = outerRadius + petalExtension;
     
     // Inner arc points
@@ -75,8 +76,11 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
   const wedges = [];
   const gradients = [];
   
-  // Create concentric rings for each level
-  levels.forEach((level, levelIndex) => {
+  // Create concentric rings for each level - render from outer to inner (Expert to Beginner)
+  // so that inner petals overlap outer ones
+  const reversedLevels = [...levels].reverse();
+  reversedLevels.forEach((level, reversedIndex) => {
+    const levelIndex = levels.length - 1 - reversedIndex; // Get original index
     const skillsInLevel = levelGroups[level];
     if (skillsInLevel.length === 0) return;
 
@@ -107,17 +111,22 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
         </radialGradient>
       );
 
-      // Create petal
+      // Create petal with layered shadow effect (inner petals cast shadow on outer)
+      const layerDepth = levels.indexOf(level);
+      const shadowIntensity = 0.15 + (layerDepth * 0.05);
+      const strokeWidth = skill.active ? (1.5 + layerDepth * 0.15) : 1;
+      const petalOpacity = skill.active ? (0.92 + layerDepth * 0.02) : 0.35;
+      
       wedges.push(
         <path
           key={`wedge-${level}-${skillIndex}`}
-          d={createPetalPath(startAngle, endAngle, innerRadius, outerRadius)}
+          d={createPetalPath(startAngle, endAngle, innerRadius, outerRadius, layerDepth)}
           fill={skill.active ? `url(#${gradientId})` : 'rgba(180, 180, 180, 0.25)'}
           stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 0.4)'}
-          strokeWidth={skill.active ? "1.5" : "1"}
-          opacity={skill.active ? "0.95" : "0.35"}
+          strokeWidth={strokeWidth}
+          opacity={petalOpacity}
           style={{
-            filter: skill.active ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.25))' : 'none',
+            filter: skill.active ? `drop-shadow(0 ${1 + layerDepth}px ${3 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity}))` : 'none',
             transition: 'all 0.3s ease',
           }}
         >
