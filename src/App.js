@@ -138,10 +138,9 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
   const outerRingWidth = 8;
   const outerRingOuterRadius = outerRingInnerRadius + outerRingWidth;
   
-  // Calculate the arc for the percentage filled
-  const progressAngle = (percentage / 100) * 360;
-  const progressStartAngle = -90; // Start at top
-  const progressEndAngle = progressStartAngle + progressAngle;
+  // Calculate the circumference and progress
+  const progressRadius = outerRingInnerRadius + outerRingWidth / 2;
+  const circumference = 2 * Math.PI * progressRadius;
   
   return (
     <div className="flower-container">
@@ -165,7 +164,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
         <circle
           cx={centerX}
           cy={centerY}
-          r={outerRingInnerRadius + outerRingWidth / 2}
+          r={progressRadius}
           fill="none"
           stroke="rgba(255,255,255,0.2)"
           strokeWidth={outerRingWidth}
@@ -175,16 +174,17 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
         <circle
           cx={centerX}
           cy={centerY}
-          r={outerRingInnerRadius + outerRingWidth / 2}
+          r={progressRadius}
           fill="none"
           stroke="url(#progressGradient)"
           strokeWidth={outerRingWidth}
-          strokeDasharray={`${(2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2) * percentage) / 100} ${2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2)}`}
-          strokeDashoffset={2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2) * 0.25}
+          strokeDasharray={`${circumference}`}
+          strokeDashoffset={circumference - (circumference * percentage) / 100}
           strokeLinecap="butt"
+          transform={`rotate(-90 ${centerX} ${centerY})`}
           style={{
             filter: 'drop-shadow(0 2px 4px rgba(255,255,255,0.3))',
-            transition: 'stroke-dasharray 0.5s ease'
+            transition: 'stroke-dashoffset 0.5s ease'
           }}
         />
         
