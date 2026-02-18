@@ -166,8 +166,8 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       }
       sequentialIndex += skillIndex;
       
-      // Add staggered bloom animation delay - 0.4s per petal for slow sequential bloom
-      const animationDelay = sequentialIndex * 0.4;
+      // Add staggered bloom animation delay - 300ms per petal for slow, visible bloom
+      const animationDelay = sequentialIndex * 0.3;
       
       wedges.push(
         <path
