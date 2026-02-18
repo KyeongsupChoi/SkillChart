@@ -149,16 +149,15 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       const petalSeed = skill.originalIndex * 7.919 + layerDepth * 3.141;
       const strokeVariation = seededRandom(petalSeed + 4.2) * 0.2; // Slight stroke variation
       const strokeWidth = skill.active ? (1.5 + layerDepth * 0.15 + strokeVariation) : (1 + strokeVariation * 0.3);
-      const petalOpacity = skill.active ? (0.92 + layerDepth * 0.02) : 0.35;
       
       wedges.push(
         <path
           key={`wedge-${level}-${skillIndex}`}
           d={createPetalPath(startAngle, endAngle, innerRadius, outerRadius, layerDepth, petalSeed)}
-          fill={skill.active ? `url(#${gradientId})` : 'rgba(180, 180, 180, 0.25)'}
-          stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 0.4)'}
+          fill={skill.active ? `url(#${gradientId})` : 'rgba(180, 180, 180, 1)'}
+          stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 1)'}
           strokeWidth={strokeWidth}
-          opacity={petalOpacity}
+          opacity={1}
           style={{
             filter: skill.active ? `drop-shadow(0 ${1 + layerDepth}px ${3 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity}))` : 'none',
             transition: 'all 0.3s ease',
