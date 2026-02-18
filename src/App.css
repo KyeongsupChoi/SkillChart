@@ -104,14 +104,14 @@ body::-webkit-scrollbar {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 0;
-  min-height: 80px;
+  min-height: 200px;
 }
 
 .header-left {
   display: flex;
   flex-direction: column;
   border-right: 2px solid #e9ecef;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .header-right {
@@ -170,6 +170,62 @@ body::-webkit-scrollbar {
   color: #667eea;
   border-bottom-color: #667eea;
   background: white;
+}
+
+.feature-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: #f8f9fa;
+  justify-content: center;
+}
+
+.feature-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  color: #6c757d;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  opacity: 0.6;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.feature-btn:not(:disabled) {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.feature-btn:not(:disabled):hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+}
+
+.feature-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.feature-disclaimer {
+  padding: 0.75rem 1.25rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #6c757d;
+  font-style: italic;
 }
 
 .flower-container {
@@ -468,6 +524,21 @@ body::-webkit-scrollbar {
     font-size: 0.85rem;
   }
 
+  .feature-buttons {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .feature-btn {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .feature-disclaimer {
+    padding: 0.6rem;
+    font-size: 0.7rem;
+  }
+
   .skills-table-container {
     padding: 1rem;
     overflow-x: auto;
@@ -579,6 +650,24 @@ body::-webkit-scrollbar {
     border-bottom: none;
   }
 
+  .feature-buttons {
+    flex-direction: column;
+    padding: 0.6rem;
+    gap: 0.4rem;
+  }
+
+  .feature-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .feature-disclaimer {
+    padding: 0.6rem;
+    font-size: 0.7rem;
+  }
+
   .header-right {
     padding: 0.75rem;
   }
@@ -678,6 +767,16 @@ body::-webkit-scrollbar {
   .tab-button {
     font-size: 0.8rem;
     padding: 0.5rem;
+  }
+
+  .feature-btn {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  .feature-disclaimer {
+    padding: 0.5rem;
+    font-size: 0.65rem;
   }
 
   .skills-table {

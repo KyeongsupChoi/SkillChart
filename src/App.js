@@ -181,7 +181,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
           strokeWidth={outerRingWidth}
           strokeDasharray={`${(2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2) * percentage) / 100} ${2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2)}`}
           strokeDashoffset={2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2) * 0.25}
-          strokeLinecap="round"
+          strokeLinecap="butt"
           style={{
             filter: 'drop-shadow(0 2px 4px rgba(255,255,255,0.3))',
             transition: 'stroke-dasharray 0.5s ease'
@@ -541,6 +541,29 @@ const App = () => {
                   LLM
                 </button>
               </nav>
+
+              <div className="feature-buttons">
+                <button className="feature-btn" disabled>
+                  <span className="feature-icon">🌐</span>
+                  i18n
+                </button>
+                <button className="feature-btn" disabled>
+                  <span className="feature-icon">🌙</span>
+                  Dark Mode
+                </button>
+                <button className="feature-btn" disabled>
+                  <span className="feature-icon">📄</span>
+                  Export PDF
+                </button>
+                <button className="feature-btn" disabled>
+                  <span className="feature-icon">🖼️</span>
+                  Export IMG
+                </button>
+              </div>
+
+              <div className="feature-disclaimer">
+                Features in development
+              </div>
             </div>
 
             <div className="header-right">
