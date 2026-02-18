@@ -178,29 +178,31 @@ const NightingaleRoseChart = ({ skills }) => {
           skills
         </text>
       </svg>
-      <div className="chart-legend">
-        <div className="legend-item">
-          <span className="legend-color" style={{ backgroundColor: colors.Beginner.base }}></span>
-          <span>Beginner: {stats.Beginner.active}/{stats.Beginner.total}</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-color" style={{ backgroundColor: colors.Intermediate.base }}></span>
-          <span>Intermediate: {stats.Intermediate.active}/{stats.Intermediate.total}</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-color" style={{ backgroundColor: colors.Advanced.base }}></span>
-          <span>Advanced: {stats.Advanced.active}/{stats.Advanced.total}</span>
-        </div>
-        <div className="legend-item">
-          <span className="legend-color" style={{ backgroundColor: colors.Expert.base }}></span>
-          <span>Expert: {stats.Expert.active}/{stats.Expert.total}</span>
-        </div>
-      </div>
     </div>
   );
 };
 
 const App = () => {
+  const [scrolled, setScrolled] = React.useState(false);
+  const [lastScrollY, setLastScrollY] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
+
   const backendSkills = [
     { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, Java, Ruby)', weight: 1, active: false },
     { level: 'Beginner', description: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', weight: 1, active: false },
@@ -438,8 +440,17 @@ const App = () => {
 
   return (
     <div className="app-container">
+      {scrolled && (
+        <button 
+          className="scroll-to-top-btn"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Scroll to top"
+        >
+          ↑
+        </button>
+      )}
       <div className="content-wrapper">
-        <div className="sticky-header">
+        <div className={`sticky-header ${scrolled ? 'hidden' : ''}`}>
           <div className="header-grid">
             <div className="header-left">
               <nav className="skill-tabs">
