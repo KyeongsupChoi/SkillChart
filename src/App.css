@@ -122,6 +122,76 @@ body::-webkit-scrollbar {
   padding: 0.5rem;
 }
 
+.navbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  background: #f8f9fa;
+  border-radius: 12px 12px 0 0;
+  border-bottom: 2px solid #e9ecef;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  margin: 0;
+}
+
+.navbar-toggler {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 10;
+  touch-action: manipulation;
+}
+
+.navbar-toggler:focus {
+  outline: 2px solid rgba(102, 126, 234, 0.3);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.navbar-toggler-icon {
+  width: 100%;
+  height: 3px;
+  background-color: #667eea;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.navbar-toggler:hover .navbar-toggler-icon {
+  background-color: #5568d3;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+.navbar-collapse {
+  display: flex;
+  flex-direction: column;
+  max-height: none;
+  overflow: visible;
+  opacity: 1;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+
 .skill-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -131,17 +201,8 @@ body::-webkit-scrollbar {
   padding: 1rem 1.25rem 0.75rem 1.25rem;
   align-items: center;
   justify-content: center;
-  border-radius: 12px 12px 0 0;
 }
 
-.tab-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #667eea;
-  margin: 0;
-  padding: 0.5rem 1.5rem 0.5rem 0.5rem;
-  white-space: nowrap;
-}
 
 .tab-button {
   flex: 1;
@@ -504,35 +565,69 @@ body::-webkit-scrollbar {
   .header-left {
     border-right: none;
     border-bottom: 2px solid #e9ecef;
+    justify-content: flex-start;
   }
 
   .header-right {
     padding: 1.25rem;
   }
 
-  .skill-tabs {
-    padding: 0.5rem;
-    border-radius: 8px 8px 0 0;
-    gap: 0.25rem;
+  .navbar-toggler {
+    display: flex;
   }
 
-  .tab-title {
-    font-size: 1.15rem;
-    padding: 0.65rem 0.9rem;
+  .navbar-header {
+    padding: 0.75rem 1rem;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+
+  .navbar-collapse {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    background: white;
+  }
+
+  .navbar-collapse.show {
+    max-height: 1000px;
+    opacity: 1;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .skill-tabs {
+    padding: 0.5rem;
+    border-radius: 0;
+    gap: 0.25rem;
+    flex-direction: column;
   }
 
   .tab-button {
-    min-width: 90px;
+    width: 100%;
+    min-width: auto;
     padding: 0.65rem 0.85rem;
     font-size: 0.85rem;
+    border-radius: 6px;
+    border-bottom: none;
+  }
+
+  .tab-button.active {
+    background: rgba(102, 126, 234, 0.1);
   }
 
   .feature-buttons {
     padding: 0.75rem;
     gap: 0.5rem;
+    flex-direction: column;
   }
 
   .feature-btn {
+    width: 100%;
+    justify-content: center;
     padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
   }
@@ -631,20 +726,29 @@ body::-webkit-scrollbar {
     grid-template-columns: 1fr;
   }
 
-  .skill-tabs {
-    flex-direction: column;
+  .navbar-header {
+    padding: 0.6rem 0.75rem;
     border-radius: 6px 6px 0 0;
-    padding: 0.4rem;
-    gap: 0.15rem;
   }
 
-  .tab-title {
+  .navbar-brand {
     font-size: 1.1rem;
-    width: 100%;
-    text-align: center;
-    padding: 0.6rem;
-    border-bottom: 2px solid #e9ecef;
-    margin-bottom: 0.25rem;
+  }
+
+  .navbar-toggler {
+    width: 28px;
+    height: 22px;
+  }
+
+  .navbar-toggler-icon {
+    height: 2.5px;
+  }
+
+  .skill-tabs {
+    flex-direction: column;
+    border-radius: 0;
+    padding: 0.4rem;
+    gap: 0.15rem;
   }
 
   .tab-button {
@@ -772,9 +876,21 @@ body::-webkit-scrollbar {
     top: -11px;
   }
 
-  .tab-title {
-    font-size: 1rem;
+  .navbar-header {
     padding: 0.5rem;
+  }
+
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .navbar-toggler {
+    width: 26px;
+    height: 20px;
+  }
+
+  .navbar-toggler-icon {
+    height: 2px;
   }
 
   .tab-button {

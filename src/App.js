@@ -240,6 +240,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
 const App = () => {
   const [scrolled, setScrolled] = React.useState(false);
   const [lastScrollY, setLastScrollY] = React.useState(0);
+  const [navbarExpanded, setNavbarExpanded] = React.useState(false);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -257,6 +258,10 @@ const App = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
+
+  const toggleNavbar = () => {
+    setNavbarExpanded(!navbarExpanded);
+  };
 
   const backendSkills = [
     { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, Java, Ruby)', weight: 1, active: false },
@@ -457,6 +462,7 @@ const App = () => {
         break;
     }
     setActiveGroup(group);
+    setNavbarExpanded(false); // Close navbar on mobile after selection
   };
 
   const totalScore = skills.reduce((sum, skill) => (skill.active ? sum + skill.weight : sum), 0);
@@ -508,61 +514,76 @@ const App = () => {
         <div className={`sticky-header ${scrolled ? 'hidden' : ''}`}>
           <div className="header-grid">
             <div className="header-left">
-              <nav className="skill-tabs">
-                <h1 className="tab-title">SkillChart</h1>
+              <div className="navbar-header">
+                <h1 className="navbar-brand">SkillChart</h1>
                 <button 
-                  className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
-                  onClick={() => toggleGroup("backend")}
+                  className="navbar-toggler"
+                  onClick={toggleNavbar}
+                  aria-label="Toggle navigation"
+                  aria-expanded={navbarExpanded}
                 >
-                  Backend
-                </button>
-                <button 
-                  className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
-                  onClick={() => toggleGroup("dataScience")}
-                >
-                  Data Science
-                </button>
-                <button 
-                  className={`tab-button ${activeGroup === "python" ? "active" : ""}`}
-                  onClick={() => toggleGroup("python")}
-                >
-                  Python
-                </button>
-                <button 
-                  className={`tab-button ${activeGroup === "sql" ? "active" : ""}`}
-                  onClick={() => toggleGroup("sql")}
-                >
-                  SQL
-                </button>
-                <button 
-                  className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
-                  onClick={() => toggleGroup("llm")}
-                >
-                  LLM
-                </button>
-              </nav>
-
-              <div className="feature-buttons">
-                <button className="feature-btn" disabled>
-                  <span className="feature-icon">🌐</span>
-                  i18n
-                </button>
-                <button className="feature-btn" disabled>
-                  <span className="feature-icon">🌙</span>
-                  Dark Mode
-                </button>
-                <button className="feature-btn" disabled>
-                  <span className="feature-icon">📄</span>
-                  Export PDF
-                </button>
-                <button className="feature-btn" disabled>
-                  <span className="feature-icon">🖼️</span>
-                  Export IMG
+                  <span className="navbar-toggler-icon"></span>
+                  <span className="navbar-toggler-icon"></span>
+                  <span className="navbar-toggler-icon"></span>
                 </button>
               </div>
 
-              <div className="feature-disclaimer">
-                Features in development
+              <div className={`navbar-collapse ${navbarExpanded ? 'show' : ''}`}>
+                <nav className="skill-tabs">
+                  <button 
+                    className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
+                    onClick={() => toggleGroup("backend")}
+                  >
+                    Backend
+                  </button>
+                  <button 
+                    className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
+                    onClick={() => toggleGroup("dataScience")}
+                  >
+                    Data Science
+                  </button>
+                  <button 
+                    className={`tab-button ${activeGroup === "python" ? "active" : ""}`}
+                    onClick={() => toggleGroup("python")}
+                  >
+                    Python
+                  </button>
+                  <button 
+                    className={`tab-button ${activeGroup === "sql" ? "active" : ""}`}
+                    onClick={() => toggleGroup("sql")}
+                  >
+                    SQL
+                  </button>
+                  <button 
+                    className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
+                    onClick={() => toggleGroup("llm")}
+                  >
+                    LLM
+                  </button>
+                </nav>
+
+                <div className="feature-buttons">
+                  <button className="feature-btn" disabled>
+                    <span className="feature-icon">🌐</span>
+                    i18n
+                  </button>
+                  <button className="feature-btn" disabled>
+                    <span className="feature-icon">🌙</span>
+                    Dark Mode
+                  </button>
+                  <button className="feature-btn" disabled>
+                    <span className="feature-icon">📄</span>
+                    Export PDF
+                  </button>
+                  <button className="feature-btn" disabled>
+                    <span className="feature-icon">🖼️</span>
+                    Export IMG
+                  </button>
+                </div>
+
+                <div className="feature-disclaimer">
+                  Features in development
+                </div>
               </div>
             </div>
 
