@@ -85,12 +85,22 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
     
     const largeArc = endAngle - startAngle > 180 ? 1 : 0;
     
-    // Create petal shape with curved outer edge
+    // Control point for smooth left edge curve (midway between inner and outer radius)
+    const leftCurveRadius = innerRadius + (outerRadius - innerRadius) * 0.6;
+    const xLeftControl = centerX + leftCurveRadius * leftWidthVariation * Math.cos(startRad);
+    const yLeftControl = centerY + leftCurveRadius * leftWidthVariation * Math.sin(startRad);
+    
+    // Control point for smooth right edge curve
+    const rightCurveRadius = innerRadius + (outerRadius - innerRadius) * 0.6;
+    const xRightControl = centerX + rightCurveRadius * rightWidthVariation * Math.cos(endRad);
+    const yRightControl = centerY + rightCurveRadius * rightWidthVariation * Math.sin(endRad);
+    
+    // Create petal shape with curved edges
     return `
       M ${x1} ${y1}
-      L ${x2} ${y2}
+      Q ${xLeftControl} ${yLeftControl} ${x2} ${y2}
       Q ${xPetal} ${yPetal} ${x3} ${y3}
-      L ${x4} ${y4}
+      Q ${xRightControl} ${yRightControl} ${x4} ${y4}
       A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1} ${y1}
       Z
     `;
