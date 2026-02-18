@@ -32,7 +32,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
     }
   });
 
-  const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  const levels = ['Expert', 'Advanced', 'Intermediate', 'Beginner'];
 
   const createPetalPath = (startAngle, endAngle, innerRadius, outerRadius) => {
     const startRad = (startAngle - 90) * Math.PI / 180;
