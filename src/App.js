@@ -116,21 +116,22 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
     let currentAngle = 0;
     
     skillsInLevel.forEach((skill, skillIndex) => {
-      // Angle proportional to weight with small gap for petal separation
+      // Angle proportional to weight with overlap for spiral effect
       const angleSize = (skill.weight / totalWeight) * 360;
-      const petalGap = 2; // Small gap between petals
-      const startAngle = currentAngle + petalGap / 2;
-      const endAngle = currentAngle + angleSize - petalGap / 2;
+      const overlapDegrees = 12; // Degrees of overlap with next petal for spiral effect
+      const startAngle = currentAngle;
+      const endAngle = currentAngle + angleSize + overlapDegrees;
       
       const color = colors[level];
       const gradientId = `gradient-${level}-${skillIndex}`;
       
-      // Create gradient for this segment
+      // Create gradient for this segment with more vibrant edges for overlapping
       gradients.push(
-        <radialGradient key={gradientId} id={gradientId} cx="30%" cy="30%">
+        <radialGradient key={gradientId} id={gradientId} cx="35%" cy="35%">
           <stop offset="0%" stopColor={color.veryLight} />
-          <stop offset="50%" stopColor={color.light} />
-          <stop offset="100%" stopColor={color.base} />
+          <stop offset="40%" stopColor={color.light} />
+          <stop offset="80%" stopColor={color.base} />
+          <stop offset="100%" stopColor={color.dark} stopOpacity="0.9" />
         </radialGradient>
       );
 
@@ -141,8 +142,9 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       // Create unique seed for each petal for consistent asymmetry
       const petalSeed = skill.originalIndex * 7.919 + layerDepth * 3.141;
       const strokeVariation = seededRandom(petalSeed + 4.2) * 0.2; // Slight stroke variation
-      const strokeWidth = skill.active ? (1.5 + layerDepth * 0.15 + strokeVariation) : (1 + strokeVariation * 0.3);
-      const petalOpacity = skill.active ? (0.92 + layerDepth * 0.02) : 0.35;
+      const strokeWidth = skill.active ? (1.8 + layerDepth * 0.15 + strokeVariation) : (1.2 + strokeVariation * 0.3);
+      // Slightly reduce opacity to make overlapping more visible
+      const petalOpacity = skill.active ? (0.85 + layerDepth * 0.03) : 0.35;
       
       wedges.push(
         <path
@@ -151,9 +153,10 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
           fill={skill.active ? `url(#${gradientId})` : 'rgba(180, 180, 180, 0.25)'}
           stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 0.4)'}
           strokeWidth={strokeWidth}
+          strokeOpacity={skill.active ? "0.7" : "0.4"}
           opacity={petalOpacity}
           style={{
-            filter: skill.active ? `drop-shadow(0 ${1 + layerDepth}px ${3 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity}))` : 'none',
+            filter: skill.active ? `drop-shadow(1px 2px ${4 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity + 0.15}))` : 'none',
             transition: 'all 0.3s ease',
           }}
         >
