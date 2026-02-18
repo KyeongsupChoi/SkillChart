@@ -34,15 +34,31 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
 
   const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
-  const createPetalPath = (startAngle, endAngle, innerRadius, outerRadius, layerIndex = 0) => {
+  // Simple seeded random function for consistent asymmetry
+  const seededRandom = (seed) => {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  };
+
+  const createPetalPath = (startAngle, endAngle, innerRadius, outerRadius, layerIndex = 0, petalSeed = 0) => {
     const startRad = (startAngle - 90) * Math.PI / 180;
     const endRad = (endAngle - 90) * Math.PI / 180;
     const midRad = ((startAngle + endAngle) / 2 - 90) * Math.PI / 180;
     
-    // Add petal curve extension - inner petals extend more for layering effect
+    // Add natural asymmetry variations based on seed
+    const rand1 = seededRandom(petalSeed);
+    const rand2 = seededRandom(petalSeed + 1.5);
+    const rand3 = seededRandom(petalSeed + 2.7);
+    
+    // Add petal curve extension with slight variation
     const baseExtension = 0.15 + (layerIndex * 0.02);
-    const petalExtension = outerRadius * baseExtension;
+    const extensionVariation = (rand1 - 0.5) * 0.06; // ±3% variation
+    const petalExtension = outerRadius * (baseExtension + extensionVariation);
     const extendedRadius = outerRadius + petalExtension;
+    
+    // Add slight angular offset to the tip for asymmetry
+    const tipAngleOffset = (rand2 - 0.5) * 3; // ±1.5 degrees
+    const asymmetricMidRad = ((startAngle + endAngle) / 2 + tipAngleOffset - 90) * Math.PI / 180;
     
     // Inner arc points
     const x1 = centerX + innerRadius * Math.cos(startRad);
@@ -50,15 +66,18 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
     const x4 = centerX + innerRadius * Math.cos(endRad);
     const y4 = centerY + innerRadius * Math.sin(endRad);
     
-    // Outer points with petal shape
-    const x2 = centerX + outerRadius * Math.cos(startRad);
-    const y2 = centerY + outerRadius * Math.sin(startRad);
-    const x3 = centerX + outerRadius * Math.cos(endRad);
-    const y3 = centerY + outerRadius * Math.sin(endRad);
+    // Outer points with petal shape - add slight width variation
+    const leftWidthVariation = 1 + (rand3 - 0.5) * 0.08; // ±4% width variation
+    const rightWidthVariation = 1 + (seededRandom(petalSeed + 3.3) - 0.5) * 0.08;
     
-    // Petal tip (extended point at the middle)
-    const xPetal = centerX + extendedRadius * Math.cos(midRad);
-    const yPetal = centerY + extendedRadius * Math.sin(midRad);
+    const x2 = centerX + outerRadius * leftWidthVariation * Math.cos(startRad);
+    const y2 = centerY + outerRadius * leftWidthVariation * Math.sin(startRad);
+    const x3 = centerX + outerRadius * rightWidthVariation * Math.cos(endRad);
+    const y3 = centerY + outerRadius * rightWidthVariation * Math.sin(endRad);
+    
+    // Petal tip (extended point at the middle with asymmetric offset)
+    const xPetal = centerX + extendedRadius * Math.cos(asymmetricMidRad);
+    const yPetal = centerY + extendedRadius * Math.sin(asymmetricMidRad);
     
     const largeArc = endAngle - startAngle > 180 ? 1 : 0;
     
@@ -114,13 +133,17 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
       // Create petal with layered shadow effect (inner petals cast shadow on outer)
       const layerDepth = levels.indexOf(level);
       const shadowIntensity = 0.15 + (layerDepth * 0.05);
-      const strokeWidth = skill.active ? (1.5 + layerDepth * 0.15) : 1;
+      
+      // Create unique seed for each petal for consistent asymmetry
+      const petalSeed = skill.originalIndex * 7.919 + layerDepth * 3.141;
+      const strokeVariation = seededRandom(petalSeed + 4.2) * 0.2; // Slight stroke variation
+      const strokeWidth = skill.active ? (1.5 + layerDepth * 0.15 + strokeVariation) : (1 + strokeVariation * 0.3);
       const petalOpacity = skill.active ? (0.92 + layerDepth * 0.02) : 0.35;
       
       wedges.push(
         <path
           key={`wedge-${level}-${skillIndex}`}
-          d={createPetalPath(startAngle, endAngle, innerRadius, outerRadius, layerDepth)}
+          d={createPetalPath(startAngle, endAngle, innerRadius, outerRadius, layerDepth, petalSeed)}
           fill={skill.active ? `url(#${gradientId})` : 'rgba(180, 180, 180, 0.25)'}
           stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 0.4)'}
           strokeWidth={strokeWidth}
