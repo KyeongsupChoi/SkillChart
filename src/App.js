@@ -147,6 +147,11 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       const strokeVariation = seededRandom(petalSeed + 4.2) * 0.2; // Slight stroke variation
       const strokeWidth = skill.active ? (1.5 + layerDepth * 0.15 + strokeVariation) : (1 + strokeVariation * 0.3);
       
+      // Calculate transform origin at the base (inner arc) of the petal
+      const endRad = (endAngle - 90) * Math.PI / 180;
+      const originX = centerX + innerRadius * Math.cos(endRad);
+      const originY = centerY + innerRadius * Math.sin(endRad);
+      
       wedges.push(
         <path
           key={`wedge-${level}-${skillIndex}`}
@@ -155,9 +160,11 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
           stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 1)'}
           strokeWidth={strokeWidth}
           opacity={1}
+          className={skill.active ? 'petal-bloom' : ''}
           style={{
             filter: skill.active ? `drop-shadow(0 ${1 + layerDepth}px ${3 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity}))` : 'none',
-            transition: 'all 0.3s ease',
+            transition: 'filter 0.3s ease, fill 0.3s ease, stroke 0.3s ease',
+            transformOrigin: `${originX}px ${originY}px`,
           }}
         >
           <title>{`${level} (Weight: ${skill.weight}): ${skill.description.substring(0, 60)}...`}</title>
