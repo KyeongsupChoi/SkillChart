@@ -89,7 +89,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
     const yCorner = y1 + (y2 - y1) * cornerRatio;
     
     // Create petal shape with rounded top-left corner
-    return `
+    const path = `
       M ${x1} ${y1}
       L ${xCorner} ${yCorner}
       Q ${x2} ${y2} ${(x2 + xPetal) / 2} ${(y2 + yPetal) / 2}
@@ -98,6 +98,13 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1} ${y1}
       Z
     `;
+    
+    // Return path and transform origin (bottom right corner of petal)
+    return {
+      path,
+      originX: x4,
+      originY: y4
+    };
   };
 
   const wedges = [];
@@ -147,17 +154,27 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       const strokeVariation = seededRandom(petalSeed + 4.2) * 0.2; // Slight stroke variation
       const strokeWidth = skill.active ? (1.5 + layerDepth * 0.15 + strokeVariation) : (1 + strokeVariation * 0.3);
       
+      // Get petal path and transform origin
+      const petalData = createPetalPath(startAngle, endAngle, innerRadius, outerRadius, layerDepth, petalSeed);
+      
+      // Add staggered bloom animation delay based on position
+      const animationDelay = skillIndex * 0.05; // 50ms delay between petals
+      
       wedges.push(
         <path
           key={`wedge-${level}-${skillIndex}`}
-          d={createPetalPath(startAngle, endAngle, innerRadius, outerRadius, layerDepth, petalSeed)}
+          d={petalData.path}
           fill={skill.active ? `url(#${gradientId})` : 'none'}
           stroke={skill.active ? color.dark : 'none'}
           strokeWidth={strokeWidth}
           opacity={skill.active ? 1 : 0}
           style={{
             filter: skill.active ? `drop-shadow(0 ${1 + layerDepth}px ${3 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity}))` : 'none',
-            transition: 'all 0.3s ease',
+            transformOrigin: `${petalData.originX}px ${petalData.originY}px`,
+            transform: skill.active ? 'scale(1) rotate(0deg)' : 'scale(0) rotate(-15deg)',
+            transition: skill.active 
+              ? `all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${animationDelay}s`
+              : 'all 0.3s ease',
             pointerEvents: skill.active ? 'auto' : 'none',
           }}
         >
