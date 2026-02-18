@@ -363,6 +363,9 @@ body::-webkit-scrollbar {
 
 .col-description {
   text-align: left;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .col-weight {
@@ -547,6 +550,8 @@ body::-webkit-scrollbar {
 
   .skills-table {
     font-size: 0.9rem;
+    min-width: 100%;
+    table-layout: fixed;
   }
 
   .skills-table th,
@@ -554,17 +559,22 @@ body::-webkit-scrollbar {
     padding: 0.65rem 0.4rem;
   }
 
+  .col-description {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
   .col-level {
-    width: 90px;
+    width: 95px;
   }
 
   .col-weight {
-    width: 60px;
+    width: 55px;
     font-size: 1rem;
   }
 
   .col-toggle {
-    width: 60px;
+    width: 55px;
   }
 
   .level-badge {
@@ -683,25 +693,28 @@ body::-webkit-scrollbar {
     font-size: 0.8rem;
     width: 100%;
     display: table;
-    min-width: 500px;
+    min-width: 100%;
+    table-layout: fixed;
   }
 
   .skills-table th,
   .skills-table td {
-    padding: 0.5rem 0.3rem;
+    padding: 0.5rem 0.25rem;
   }
 
   .col-description {
-    min-width: 250px;
+    width: auto;
+    word-wrap: break-word;
+    white-space: normal;
   }
 
   .col-level {
-    width: 75px;
+    width: 80px;
   }
 
   .col-weight {
-    width: 50px;
-    font-size: 0.9rem;
+    width: 45px;
+    font-size: 0.85rem;
   }
 
   .col-toggle {
@@ -781,17 +794,20 @@ body::-webkit-scrollbar {
 
   .skills-table {
     font-size: 0.75rem;
-    min-width: 450px;
+    min-width: 100%;
+    table-layout: fixed;
   }
 
   .skills-table th,
   .skills-table td {
-    padding: 0.4rem 0.2rem;
+    padding: 0.4rem 0.15rem;
   }
 
   .col-description {
     font-size: 0.75rem;
-    min-width: 220px;
+    width: auto;
+    word-wrap: break-word;
+    white-space: normal;
   }
 
   .col-level {
@@ -799,7 +815,7 @@ body::-webkit-scrollbar {
   }
 
   .col-weight {
-    width: 45px;
+    width: 40px;
   }
 
   .col-toggle {
