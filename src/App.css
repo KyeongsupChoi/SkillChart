@@ -111,6 +111,7 @@ body::-webkit-scrollbar {
   display: flex;
   flex-direction: column;
   border-right: 2px solid #e9ecef;
+  justify-content: center;
 }
 
 .header-right {
@@ -127,29 +128,30 @@ body::-webkit-scrollbar {
   gap: 0;
   background: #f8f9fa;
   border-bottom: 2px solid #e9ecef;
-  padding: 0.75rem 1rem 0 1rem;
+  padding: 1.5rem 1.25rem;
   align-items: center;
+  justify-content: center;
   border-radius: 12px 12px 0 0;
 }
 
 .tab-title {
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #667eea;
   margin: 0;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   white-space: nowrap;
 }
 
 .tab-button {
   flex: 1;
   min-width: 100px;
-  padding: 0.75rem 1.25rem;
+  padding: 1rem 1.5rem;
   background: transparent;
   border: none;
   border-bottom: 3px solid transparent;
   color: #6c757d;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
