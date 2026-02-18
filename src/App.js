@@ -34,25 +34,38 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
 
   const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
 
-  const createWedgePath = (startAngle, endAngle, innerRadius, outerRadius) => {
+  const createPetalPath = (startAngle, endAngle, innerRadius, outerRadius) => {
     const startRad = (startAngle - 90) * Math.PI / 180;
     const endRad = (endAngle - 90) * Math.PI / 180;
+    const midRad = ((startAngle + endAngle) / 2 - 90) * Math.PI / 180;
     
+    // Add petal curve extension
+    const petalExtension = outerRadius * 0.15;
+    const extendedRadius = outerRadius + petalExtension;
+    
+    // Inner arc points
     const x1 = centerX + innerRadius * Math.cos(startRad);
     const y1 = centerY + innerRadius * Math.sin(startRad);
+    const x4 = centerX + innerRadius * Math.cos(endRad);
+    const y4 = centerY + innerRadius * Math.sin(endRad);
+    
+    // Outer points with petal shape
     const x2 = centerX + outerRadius * Math.cos(startRad);
     const y2 = centerY + outerRadius * Math.sin(startRad);
     const x3 = centerX + outerRadius * Math.cos(endRad);
     const y3 = centerY + outerRadius * Math.sin(endRad);
-    const x4 = centerX + innerRadius * Math.cos(endRad);
-    const y4 = centerY + innerRadius * Math.sin(endRad);
+    
+    // Petal tip (extended point at the middle)
+    const xPetal = centerX + extendedRadius * Math.cos(midRad);
+    const yPetal = centerY + extendedRadius * Math.sin(midRad);
     
     const largeArc = endAngle - startAngle > 180 ? 1 : 0;
     
+    // Create petal shape with curved outer edge
     return `
       M ${x1} ${y1}
       L ${x2} ${y2}
-      A ${outerRadius} ${outerRadius} 0 ${largeArc} 1 ${x3} ${y3}
+      Q ${xPetal} ${yPetal} ${x3} ${y3}
       L ${x4} ${y4}
       A ${innerRadius} ${innerRadius} 0 ${largeArc} 0 ${x1} ${y1}
       Z
@@ -76,10 +89,11 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
     let currentAngle = 0;
     
     skillsInLevel.forEach((skill, skillIndex) => {
-      // Angle proportional to weight
+      // Angle proportional to weight with small gap for petal separation
       const angleSize = (skill.weight / totalWeight) * 360;
-      const startAngle = currentAngle;
-      const endAngle = currentAngle + angleSize;
+      const petalGap = 2; // Small gap between petals
+      const startAngle = currentAngle + petalGap / 2;
+      const endAngle = currentAngle + angleSize - petalGap / 2;
       
       const color = colors[level];
       const gradientId = `gradient-${level}-${skillIndex}`;
@@ -93,17 +107,17 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
         </radialGradient>
       );
 
-      // Create wedge
+      // Create petal
       wedges.push(
         <path
           key={`wedge-${level}-${skillIndex}`}
-          d={createWedgePath(startAngle, endAngle, innerRadius, outerRadius)}
+          d={createPetalPath(startAngle, endAngle, innerRadius, outerRadius)}
           fill={skill.active ? `url(#${gradientId})` : 'rgba(180, 180, 180, 0.25)'}
           stroke={skill.active ? color.dark : 'rgba(120, 120, 120, 0.4)'}
           strokeWidth={skill.active ? "1.5" : "1"}
           opacity={skill.active ? "0.95" : "0.35"}
           style={{
-            filter: skill.active ? 'drop-shadow(0 1px 3px rgba(0,0,0,0.2))' : 'none',
+            filter: skill.active ? 'drop-shadow(0 2px 4px rgba(0,0,0,0.25))' : 'none',
             transition: 'all 0.3s ease',
           }}
         >
@@ -111,7 +125,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
         </path>
       );
       
-      currentAngle = endAngle;
+      currentAngle = currentAngle + angleSize;
     });
   });
 
@@ -148,7 +162,8 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
         <defs>
           {gradients}
           <radialGradient id="centerGradient">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.3)" />
+            <stop offset="0%" stopColor="rgba(255,255,255,0.4)" />
+            <stop offset="40%" stopColor="rgba(255,255,200,0.3)" />
             <stop offset="100%" stopColor="rgba(255,255,255,0.15)" />
           </radialGradient>
           <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -201,14 +216,23 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
           {percentage}%
         </text>
         
-        {/* Center circle */}
+        {/* Center circle - flower center */}
         <circle 
           cx={centerX} 
           cy={centerY} 
           r={centerRadius} 
           fill="url(#centerGradient)"
-          stroke="rgba(255,255,255,0.5)"
-          strokeWidth="2"
+          stroke="rgba(255,255,255,0.6)"
+          strokeWidth="2.5"
+        />
+        
+        {/* Inner flower center detail */}
+        <circle 
+          cx={centerX} 
+          cy={centerY} 
+          r={centerRadius * 0.6} 
+          fill="rgba(255,255,255,0.15)"
+          opacity="0.8"
         />
         
         {/* Center text - show total score */}
@@ -264,7 +288,7 @@ const App = () => {
   };
 
   const backendSkills = [
-    { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, Java, Ruby)', weight: 1, active: false },
+    { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, PHP, Java, C#, Ruby)', weight: 1, active: false },
     { level: 'Beginner', description: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', weight: 1, active: false },
     { level: 'Beginner', description: 'Ability to set up a simple server using frameworks like Flask, Express, or Django.', weight: 1, active: false },
     { level: 'Beginner', description: 'Basic understanding of databases (SQL or NoSQL) and how to perform CRUD operations (Create, Read, Update, Delete).', weight: 1, active: false },
