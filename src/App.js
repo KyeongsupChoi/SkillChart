@@ -157,8 +157,17 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       // Get petal path and transform origin
       const petalData = createPetalPath(startAngle, endAngle, innerRadius, outerRadius, layerDepth, petalSeed);
       
-      // Add staggered bloom animation delay based on position
-      const animationDelay = skillIndex * 0.05; // 50ms delay between petals
+      // Calculate sequential animation index (inner to outer, clockwise)
+      // Count petals in all inner levels + current position
+      let sequentialIndex = 0;
+      for (let i = 0; i < levelIndex; i++) {
+        const innerLevel = levels[i];
+        sequentialIndex += levelGroups[innerLevel].length;
+      }
+      sequentialIndex += skillIndex;
+      
+      // Add staggered bloom animation delay - 40ms per petal for smooth wave
+      const animationDelay = sequentialIndex * 0.04;
       
       wedges.push(
         <path
