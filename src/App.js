@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const NightingaleRoseChart = ({ skills, totalScore }) => {
+const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
   const centerX = 150;
   const centerY = 150;
   const centerRadius = 25;
   const ringWidth = 25;
+  
+  // Calculate percentage
+  const percentage = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
 
   // Color mapping by level with gradients
   const colors = {
@@ -130,15 +133,73 @@ const NightingaleRoseChart = ({ skills, totalScore }) => {
     }
   });
 
+  // Outer progress ring dimensions
+  const outerRingInnerRadius = centerRadius + (4 * ringWidth) + 5; // 5px gap
+  const outerRingWidth = 8;
+  const outerRingOuterRadius = outerRingInnerRadius + outerRingWidth;
+  
+  // Calculate the arc for the percentage filled
+  const progressAngle = (percentage / 100) * 360;
+  const progressStartAngle = -90; // Start at top
+  const progressEndAngle = progressStartAngle + progressAngle;
+  
   return (
     <div className="flower-container">
       <svg width="300" height="300" viewBox="0 0 300 300">
         <defs>
           {gradients}
+          <radialGradient id="centerGradient">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.3)" />
+            <stop offset="100%" stopColor="rgba(255,255,255,0.15)" />
+          </radialGradient>
+          <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0.7" />
+          </linearGradient>
         </defs>
         
         {/* Wedges (rings) */}
         {wedges}
+        
+        {/* Outer progress ring - background */}
+        <circle
+          cx={centerX}
+          cy={centerY}
+          r={outerRingInnerRadius + outerRingWidth / 2}
+          fill="none"
+          stroke="rgba(255,255,255,0.2)"
+          strokeWidth={outerRingWidth}
+        />
+        
+        {/* Outer progress ring - filled portion */}
+        <circle
+          cx={centerX}
+          cy={centerY}
+          r={outerRingInnerRadius + outerRingWidth / 2}
+          fill="none"
+          stroke="url(#progressGradient)"
+          strokeWidth={outerRingWidth}
+          strokeDasharray={`${(2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2) * percentage) / 100} ${2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2)}`}
+          strokeDashoffset={2 * Math.PI * (outerRingInnerRadius + outerRingWidth / 2) * 0.25}
+          strokeLinecap="round"
+          style={{
+            filter: 'drop-shadow(0 2px 4px rgba(255,255,255,0.3))',
+            transition: 'stroke-dasharray 0.5s ease'
+          }}
+        />
+        
+        {/* Percentage text in upper right */}
+        <text
+          x={centerX + outerRingOuterRadius - 15}
+          y={centerY - outerRingOuterRadius + 25}
+          textAnchor="middle"
+          fill="white"
+          fontSize="16"
+          fontWeight="700"
+          style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.3))' }}
+        >
+          {percentage}%
+        </text>
         
         {/* Center circle */}
         <circle 
@@ -149,12 +210,6 @@ const NightingaleRoseChart = ({ skills, totalScore }) => {
           stroke="rgba(255,255,255,0.5)"
           strokeWidth="2"
         />
-        <defs>
-          <radialGradient id="centerGradient">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.3)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0.15)" />
-          </radialGradient>
-        </defs>
         
         {/* Center text - show total score */}
         <text
@@ -489,7 +544,7 @@ const App = () => {
             </div>
 
             <div className="header-right">
-              <NightingaleRoseChart skills={skills} totalScore={totalScore} />
+              <NightingaleRoseChart skills={skills} totalScore={totalScore} maxScore={maxScore} />
             </div>
           </div>
         </div>
