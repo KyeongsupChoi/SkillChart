@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const NightingaleRoseChart = ({ skills }) => {
+const NightingaleRoseChart = ({ skills, totalScore }) => {
   const centerX = 150;
   const centerY = 150;
   const centerRadius = 25;
@@ -156,16 +156,16 @@ const NightingaleRoseChart = ({ skills }) => {
           </radialGradient>
         </defs>
         
-        {/* Center text */}
+        {/* Center text - show total score */}
         <text
           x={centerX}
           y={centerY - 3}
           textAnchor="middle"
           fill="white"
-          fontSize="16"
+          fontSize="18"
           fontWeight="700"
         >
-          {skills.length}
+          {totalScore}
         </text>
         <text
           x={centerX}
@@ -175,7 +175,7 @@ const NightingaleRoseChart = ({ skills }) => {
           fontSize="9"
           fontWeight="600"
         >
-          skills
+          points
         </text>
       </svg>
     </div>
@@ -486,24 +486,10 @@ const App = () => {
                   LLM
                 </button>
               </nav>
-
-              <div className="score-section">
-                <div className="score-info">
-                  <div className="score-label">Your Score</div>
-                  <div className="score-value">{totalScore} / {maxScore}</div>
-                  <div className="score-percentage">{percentage}%</div>
-                </div>
-                <div className="progress-bar">
-                  <div 
-                    className="progress-fill" 
-                    style={{ width: `${percentage}%` }}
-                  ></div>
-                </div>
-              </div>
             </div>
 
             <div className="header-right">
-              <NightingaleRoseChart skills={skills} />
+              <NightingaleRoseChart skills={skills} totalScore={totalScore} />
             </div>
           </div>
         </div>
