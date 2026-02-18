@@ -10,9 +10,6 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
   
   // Calculate percentage
   const percentage = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
-  
-  // Check if no skills are active to show hint
-  const hasActiveSkills = skills.some(skill => skill.active);
 
   // Color mapping by level with gradients
   const colors = {
@@ -258,14 +255,13 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
           {percentage}%
         </text>
         
-        {/* Center button - activate all skills */}
+        {/* Center button - toggle all skills */}
         <g 
           onClick={onActivateAll}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           style={{ 
             cursor: 'pointer',
-            animation: !hasActiveSkills && !isHovering ? 'pulseCenter 2s ease-in-out infinite' : 'none',
             transformOrigin: 'center'
           }}
         >
@@ -320,24 +316,6 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
             points
           </text>
           
-          {/* Hover hint text */}
-          {(isHovering || !hasActiveSkills) && (
-            <text
-              x={centerX}
-              y={centerY + 22}
-              textAnchor="middle"
-              fill={isHovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.6)"}
-              fontSize={isHovering ? "7.5" : "7"}
-              fontWeight="600"
-              style={{ 
-                pointerEvents: 'none',
-                transition: 'all 0.2s ease',
-                animation: !hasActiveSkills && !isHovering ? 'pulseHint 2s ease-in-out infinite' : 'none'
-              }}
-            >
-              {isHovering ? 'click to activate all' : 'click here'}
-            </text>
-          )}
         </g>
       </svg>
     </div>
@@ -606,8 +584,9 @@ const App = () => {
     }
   };
 
-  const activateAllSkills = () => {
-    const updatedSkills = skills.map(skill => ({ ...skill, active: true }));
+  const toggleAllSkills = () => {
+    const allActive = skills.every(skill => skill.active);
+    const updatedSkills = skills.map(skill => ({ ...skill, active: !allActive }));
     setSkills(updatedSkills);
   };
 
@@ -704,7 +683,7 @@ const App = () => {
                 skills={skills} 
                 totalScore={totalScore} 
                 maxScore={maxScore} 
-                onActivateAll={activateAllSkills}
+                onActivateAll={toggleAllSkills}
               />
             </div>
           </div>
