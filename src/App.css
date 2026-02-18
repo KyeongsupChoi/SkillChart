@@ -329,6 +329,36 @@ body::-webkit-scrollbar {
   stroke-width: 2;
 }
 
+.flower-container svg g[style*="cursor: pointer"] {
+  transition: all 0.2s ease;
+}
+
+.flower-container svg g[style*="cursor: pointer"]:hover circle {
+  filter: drop-shadow(0 4px 8px rgba(255, 255, 255, 0.4));
+}
+
+.flower-container svg g[style*="cursor: pointer"]:active {
+  transform: scale(0.95);
+}
+
+@keyframes pulseHint {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseCenter {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 .flower-score-label {
   font-size: 0.75rem;
   font-weight: 600;

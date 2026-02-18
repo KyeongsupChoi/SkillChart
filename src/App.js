@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import './App.css';
 
-const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
+const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) => {
   const centerX = 150;
   const centerY = 150;
   const centerRadius = 25;
   const ringWidth = 25;
+  const [isHovering, setIsHovering] = React.useState(false);
   
   // Calculate percentage
   const percentage = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
+  
+  // Check if no skills are active to show hint
+  const hasActiveSkills = skills.some(skill => skill.active);
 
   // Color mapping by level with gradients
   const colors = {
@@ -248,46 +252,87 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore }) => {
           {percentage}%
         </text>
         
-        {/* Center circle - flower center */}
-        <circle 
-          cx={centerX} 
-          cy={centerY} 
-          r={centerRadius} 
-          fill="url(#centerGradient)"
-          stroke="rgba(255,255,255,0.6)"
-          strokeWidth="2.5"
-        />
-        
-        {/* Inner flower center detail */}
-        <circle 
-          cx={centerX} 
-          cy={centerY} 
-          r={centerRadius * 0.6} 
-          fill="rgba(255,255,255,0.15)"
-          opacity="0.8"
-        />
-        
-        {/* Center text - show total score */}
-        <text
-          x={centerX}
-          y={centerY - 3}
-          textAnchor="middle"
-          fill="white"
-          fontSize="18"
-          fontWeight="700"
+        {/* Center button - activate all skills */}
+        <g 
+          onClick={onActivateAll}
+          onMouseEnter={() => setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
+          style={{ 
+            cursor: 'pointer',
+            animation: !hasActiveSkills && !isHovering ? 'pulseCenter 2s ease-in-out infinite' : 'none',
+            transformOrigin: 'center'
+          }}
         >
-          {totalScore}
-        </text>
-        <text
-          x={centerX}
-          y={centerY + 11}
-          textAnchor="middle"
-          fill="rgba(255,255,255,0.9)"
-          fontSize="9"
-          fontWeight="600"
-        >
-          points
-        </text>
+          {/* Center circle - flower center */}
+          <circle 
+            cx={centerX} 
+            cy={centerY} 
+            r={centerRadius} 
+            fill="url(#centerGradient)"
+            stroke={isHovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.6)"}
+            strokeWidth={isHovering ? "3" : "2.5"}
+            style={{ transition: 'all 0.2s ease' }}
+          />
+          
+          {/* Inner flower center detail */}
+          <circle 
+            cx={centerX} 
+            cy={centerY} 
+            r={centerRadius * 0.6} 
+            fill={isHovering ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.15)"}
+            opacity="0.8"
+            style={{ transition: 'all 0.2s ease' }}
+          />
+          
+          {/* Center text - show total score */}
+          <text
+            x={centerX}
+            y={centerY - 3}
+            textAnchor="middle"
+            fill="white"
+            fontSize={isHovering ? "19" : "18"}
+            fontWeight="700"
+            style={{ 
+              pointerEvents: 'none',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            {totalScore}
+          </text>
+          <text
+            x={centerX}
+            y={centerY + 11}
+            textAnchor="middle"
+            fill={isHovering ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.9)"}
+            fontSize={isHovering ? "10" : "9"}
+            fontWeight="600"
+            style={{ 
+              pointerEvents: 'none',
+              transition: 'all 0.2s ease'
+            }}
+          >
+            points
+          </text>
+          
+          {/* Hover hint text */}
+          {(isHovering || !hasActiveSkills) && (
+            <text
+              x={centerX}
+              y={centerY + 22}
+              textAnchor="middle"
+              fill={isHovering ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.6)"}
+              fontSize={isHovering ? "7.5" : "7"}
+              fontWeight="600"
+              style={{ 
+                pointerEvents: 'none',
+                transition: 'all 0.2s ease',
+                animation: !hasActiveSkills && !isHovering ? 'pulseHint 2s ease-in-out infinite' : 'none'
+              }}
+            >
+              {isHovering ? 'click to activate all' : 'click here'}
+            </text>
+          )}
+        </g>
       </svg>
     </div>
   );
@@ -555,6 +600,11 @@ const App = () => {
     }
   };
 
+  const activateAllSkills = () => {
+    const updatedSkills = skills.map(skill => ({ ...skill, active: true }));
+    setSkills(updatedSkills);
+  };
+
   return (
     <div className="app-container">
       {scrolled && (
@@ -644,7 +694,12 @@ const App = () => {
             </div>
 
             <div className="header-right">
-              <NightingaleRoseChart skills={skills} totalScore={totalScore} maxScore={maxScore} />
+              <NightingaleRoseChart 
+                skills={skills} 
+                totalScore={totalScore} 
+                maxScore={maxScore} 
+                onActivateAll={activateAllSkills}
+              />
             </div>
           </div>
         </div>
