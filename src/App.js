@@ -111,6 +111,9 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
   const wedges = [];
   const gradients = [];
   
+  // Calculate total number of petals for reverse animation
+  const totalPetals = skills.length;
+  
   // Create concentric rings for each level - render from outer to inner (Expert to Beginner)
   // so that inner petals overlap outer ones
   const reversedLevels = [...levels].reverse();
@@ -167,8 +170,12 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       }
       sequentialIndex += skillIndex;
       
+      // Calculate reverse sequential index (outer to inner, for unbloom)
+      const reverseSequentialIndex = totalPetals - 1 - sequentialIndex;
+      
       // Add staggered bloom animation delay - 300ms per petal for slow, visible bloom
-      const animationDelay = sequentialIndex * 0.3;
+      const bloomDelay = sequentialIndex * 0.3;
+      const unbloomDelay = reverseSequentialIndex * 0.25; // Slightly faster unbloom
       
       wedges.push(
         <path
@@ -183,8 +190,8 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
             transformOrigin: `${petalData.originX}px ${petalData.originY}px`,
             transform: skill.active ? 'scale(1) rotate(0deg)' : 'scale(0) rotate(-15deg)',
             transition: skill.active 
-              ? `all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${animationDelay}s`
-              : 'all 0.3s ease',
+              ? `all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) ${bloomDelay}s`
+              : `all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) ${unbloomDelay}s`,
             pointerEvents: skill.active ? 'auto' : 'none',
           }}
         >
