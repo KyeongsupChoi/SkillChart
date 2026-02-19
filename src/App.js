@@ -136,12 +136,13 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       const color = colors[level];
       const gradientId = `gradient-${level}-${skillIndex}`;
       
-      // Create gradient for this segment
+      // Create velvet gradient for this segment - softer, richer transitions
       gradients.push(
-        <radialGradient key={gradientId} id={gradientId} cx="30%" cy="30%">
-          <stop offset="0%" stopColor={color.veryLight} />
-          <stop offset="50%" stopColor={color.light} />
-          <stop offset="100%" stopColor={color.base} />
+        <radialGradient key={gradientId} id={gradientId} cx="35%" cy="35%">
+          <stop offset="0%" stopColor={color.light} stopOpacity="0.95" />
+          <stop offset="30%" stopColor={color.base} stopOpacity="0.98" />
+          <stop offset="70%" stopColor={color.dark} stopOpacity="1" />
+          <stop offset="100%" stopColor={color.dark} stopOpacity="1" />
         </radialGradient>
       );
 
@@ -176,9 +177,11 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
           fill={skill.active ? `url(#${gradientId})` : 'none'}
           stroke={skill.active ? color.dark : 'none'}
           strokeWidth={strokeWidth}
+          strokeOpacity={skill.active ? 0.6 : 0}
           opacity={skill.active ? 1 : 0}
+          filter={skill.active ? "url(#velvetTexture)" : "none"}
           style={{
-            filter: skill.active ? `drop-shadow(0 ${1 + layerDepth}px ${3 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity}))` : 'none',
+            filter: skill.active ? `url(#velvetTexture) drop-shadow(0 ${1 + layerDepth}px ${3 + layerDepth * 2}px rgba(0,0,0,${shadowIntensity * 0.8}))` : 'none',
             transformOrigin: `${petalData.originX}px ${petalData.originY}px`,
             transform: skill.active ? 'scale(1) rotate(0deg)' : 'scale(0) rotate(-15deg)',
             transition: skill.active 
@@ -236,6 +239,30 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
             <stop offset="0%" stopColor="#ffffff" stopOpacity="0.9" />
             <stop offset="100%" stopColor="#ffffff" stopOpacity="0.7" />
           </linearGradient>
+          
+          {/* Velvet texture filter */}
+          <filter id="velvetTexture" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" result="noise" />
+            <feColorMatrix in="noise" type="saturate" values="0" result="desaturatedNoise" />
+            <feComponentTransfer in="desaturatedNoise" result="texture">
+              <feFuncA type="linear" slope="0.06" intercept="0" />
+            </feComponentTransfer>
+            <feBlend in="SourceGraphic" in2="texture" mode="multiply" result="textured" />
+            <feGaussianBlur in="textured" stdDeviation="0.3" result="softened" />
+            <feComposite in="softened" in2="SourceGraphic" operator="atop" />
+          </filter>
+          
+          {/* Matte finish filter */}
+          <filter id="matteFinish">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="0.5" result="blur" />
+            <feOffset in="blur" dx="0" dy="0.5" result="offsetBlur" />
+            <feFlood flood-color="rgba(0,0,0,0.1)" result="color" />
+            <feComposite in="color" in2="offsetBlur" operator="in" result="shadow" />
+            <feMerge>
+              <feMergeNode in="shadow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
         
         {/* Wedges (rings) */}
