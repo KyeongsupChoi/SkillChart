@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) => {
   const centerX = 150;
@@ -649,6 +651,144 @@ const App = () => {
     setSkills(updatedSkills);
   };
 
+  const exportToPDF = async () => {
+    try {
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 15;
+      
+      // Add header
+      pdf.setFontSize(24);
+      pdf.setTextColor(102, 126, 234);
+      pdf.text('SkillChart', margin, 20);
+      
+      // Format category name
+      const categoryNames = {
+        'backend': 'Backend',
+        'frontend': 'Frontend',
+        'dataScience': 'Data Science',
+        'python': 'Python',
+        'sql': 'SQL',
+        'llm': 'LLM'
+      };
+      const categoryName = categoryNames[activeGroup] || activeGroup;
+      
+      pdf.setFontSize(12);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text(`Category: ${categoryName}`, margin, 28);
+      
+      // Add score summary
+      pdf.setFontSize(14);
+      pdf.setTextColor(50, 50, 50);
+      pdf.text(`Total Score: ${totalScore} / ${maxScore} (${percentage}%)`, margin, 38);
+      
+      // Capture the chart
+      const chartElement = document.querySelector('.flower-container svg');
+      if (chartElement) {
+        const canvas = await html2canvas(chartElement, {
+          backgroundColor: null,
+          scale: 2
+        });
+        
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 80;
+        const imgHeight = 80;
+        const xPos = (pageWidth - imgWidth) / 2;
+        
+        pdf.addImage(imgData, 'PNG', xPos, 45, imgWidth, imgHeight);
+      }
+      
+      // Add active skills list
+      let yPos = 135;
+      pdf.setFontSize(16);
+      pdf.setTextColor(50, 50, 50);
+      pdf.text('Active Skills', margin, yPos);
+      yPos += 8;
+      
+      // Group active skills by level
+      const activeByLevel = {
+        'Beginner': [],
+        'Intermediate': [],
+        'Advanced': [],
+        'Expert': []
+      };
+      
+      skills.forEach(skill => {
+        if (skill.active && activeByLevel[skill.level]) {
+          activeByLevel[skill.level].push(skill);
+        }
+      });
+      
+      // Add skills by level
+      const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+      const levelColors = {
+        'Beginner': [134, 239, 172],
+        'Intermediate': [147, 197, 253],
+        'Advanced': [252, 211, 77],
+        'Expert': [252, 165, 165]
+      };
+      
+      levels.forEach(level => {
+        const skillsInLevel = activeByLevel[level];
+        if (skillsInLevel.length > 0) {
+          // Check if we need a new page
+          if (yPos > pageHeight - 40) {
+            pdf.addPage();
+            yPos = 20;
+          }
+          
+          // Level header
+          pdf.setFontSize(12);
+          pdf.setTextColor(...levelColors[level]);
+          pdf.text(`${level} (${skillsInLevel.length} skills)`, margin, yPos);
+          yPos += 6;
+          
+          // Skills in this level
+          pdf.setFontSize(9);
+          pdf.setTextColor(60, 60, 60);
+          
+          skillsInLevel.forEach((skill, index) => {
+            // Check if we need a new page
+            if (yPos > pageHeight - 20) {
+              pdf.addPage();
+              yPos = 20;
+            }
+            
+            // Wrap text to fit within margins
+            const maxWidth = pageWidth - (2 * margin);
+            const lines = pdf.splitTextToSize(`${index + 1}. ${skill.description} (Weight: ${skill.weight})`, maxWidth);
+            
+            lines.forEach(line => {
+              if (yPos > pageHeight - 15) {
+                pdf.addPage();
+                yPos = 20;
+              }
+              pdf.text(line, margin + 3, yPos);
+              yPos += 5;
+            });
+            
+            yPos += 1;
+          });
+          
+          yPos += 3;
+        }
+      });
+      
+      // Add footer
+      const timestamp = new Date().toLocaleDateString();
+      pdf.setFontSize(8);
+      pdf.setTextColor(150, 150, 150);
+      pdf.text(`Generated on ${timestamp}`, margin, pageHeight - 10);
+      
+      // Save the PDF
+      pdf.save(`SkillChart_${categoryName.replace(/\s+/g, '_')}_${timestamp.replace(/\//g, '-')}.pdf`);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Failed to generate PDF. Please try again.');
+    }
+  };
+
   return (
     <div className="app-container">
       {scrolled && (
@@ -727,7 +867,7 @@ const App = () => {
                     <span className="feature-icon">🌙</span>
                     Dark Mode
                   </button>
-                  <button className="feature-btn" disabled>
+                  <button className="feature-btn" onClick={exportToPDF}>
                     <span className="feature-icon">📄</span>
                     Export PDF
                   </button>
