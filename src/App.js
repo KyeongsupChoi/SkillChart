@@ -414,6 +414,34 @@ const App = () => {
     { level: 'Expert', description: 'Leading a backend development team, defining project architecture, and overseeing codebase and deployment strategies.', weight: 8, active: false }
   ];
 
+  const frontendSkills = [
+    { level: 'Beginner', description: 'Knowledge of common HTML elements', weight: 1, active: false },
+    { level: 'Beginner', description: 'Knowledge of common CSS selectors - how to set background colours and borders', weight: 1, active: false },
+    { level: 'Beginner', description: 'Knowledge of flex positioning', weight: 1, active: false },
+    { level: 'Beginner', description: 'Knowledge of Javascript DOM access', weight: 1, active: false },
+    { level: 'Beginner', description: 'Knowledge of Javascript programming - how to use arrays and array methods, and how to use objects and object methods', weight: 1, active: false },
+    { level: 'Beginner', description: 'How to use fetch API, and structure HTTP requests', weight: 1, active: false },
+    { level: 'Beginner', description: 'Basic usage of React / Vue / etc - using state, creating components and hooks', weight: 1, active: false },
+    { level: 'Intermediate', description: 'Using TypeScript', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Understanding React component structure such as smart vs dumb components', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Familiarity with Next.js', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Usage of React/Tanstack Query', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Usage of global state', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Knowledge of responsive CSS rules', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Proficiency with JavaScript fundamental data structures and methods', weight: 2, active: false },
+    { level: 'Intermediate', description: 'JS modules and their structure - importing, different kinds of exports, and their use cases', weight: 2, active: false },
+    { level: 'Intermediate', description: 'Building your app and getting it to run on a server', weight: 2, active: false },
+    { level: 'Advanced', description: 'Understanding contextual usage of global state vs local state', weight: 4, active: false },
+    { level: 'Advanced', description: 'Familiarity with Chrome web app profiling (lighthouse?)', weight: 4, active: false },
+    { level: 'Advanced', description: 'Strong competence with Next.js SSR/SSG features', weight: 4, active: false },
+    { level: 'Advanced', description: 'Competence with HTTP requests and making requests efficiently - batching, splitting requests, minimising refetches', weight: 4, active: false },
+    { level: 'Advanced', description: 'Creating NPM libraries, including NPM library project structure, and registering project to NPM', weight: 4, active: false },
+    { level: 'Advanced', description: 'Lazy loading of code and pages', weight: 4, active: false },
+    { level: 'Expert', description: 'Understanding React rendering flow and placement of state and data fetching', weight: 8, active: false },
+    { level: 'Expert', description: 'Understanding techniques to minimise excess rerenders', weight: 8, active: false },
+    { level: 'Expert', description: 'Competence in using memory profiling and React Dev Tools to inspect and improve app performance', weight: 8, active: false }
+  ];
+
   const dataScienceSkills = [
     { level: 'Beginner', description: 'Basic understanding of statistics and data analysis.', weight: 1, active: false },
     { level: 'Beginner', description: 'Familiarity with spreadsheets or basic data manipulation tools (e.g., Excel).', weight: 1, active: false },
@@ -559,6 +587,9 @@ const App = () => {
       case "backend":
         setSkills(backendSkills);
         break;
+      case "frontend":
+        setSkills(frontendSkills);
+        break;
       case "dataScience":
         setSkills(dataScienceSkills);
         break;
@@ -654,6 +685,12 @@ const App = () => {
                     onClick={() => toggleGroup("backend")}
                   >
                     Backend
+                  </button>
+                  <button 
+                    className={`tab-button ${activeGroup === "frontend" ? "active" : ""}`}
+                    onClick={() => toggleGroup("frontend")}
+                  >
+                    Frontend
                   </button>
                   <button 
                     className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
