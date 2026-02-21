@@ -365,10 +365,19 @@ const App = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setScrolled(true);
+      // On mobile (<=1024px), hide header when scrolling down
+      // On desktop, just set scrolled state for chart shrinking
+      const isMobile = window.innerWidth <= 1024;
+      
+      if (isMobile) {
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          setScrolled(true);
+        } else {
+          setScrolled(false);
+        }
       } else {
-        setScrolled(false);
+        // On desktop, set scrolled state when scrolled down
+        setScrolled(currentScrollY > 50);
       }
       
       setLastScrollY(currentScrollY);
