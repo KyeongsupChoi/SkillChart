@@ -954,6 +954,22 @@ const App = () => {
             <div className="header-left">
               <div className="navbar-header">
                 <h1 className="navbar-brand">SkillChart</h1>
+                
+                <div className="mobile-feature-buttons">
+                  <button className="mobile-feature-btn" disabled title="i18n">
+                    <span className="feature-icon">🌐</span>
+                  </button>
+                  <button className="mobile-feature-btn" disabled title="Dark Mode">
+                    <span className="feature-icon">🌙</span>
+                  </button>
+                  <button className="mobile-feature-btn" onClick={exportToPDF} title="Export PDF">
+                    <span className="feature-icon">📄</span>
+                  </button>
+                  <button className="mobile-feature-btn" onClick={exportToImage} title="Export IMG">
+                    <span className="feature-icon">🖼️</span>
+                  </button>
+                </div>
+
                 <button 
                   className="navbar-toggler"
                   onClick={toggleNavbar}
