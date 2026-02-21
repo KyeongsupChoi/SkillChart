@@ -3,7 +3,7 @@ import './App.css';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, batchActivationTime, activeGroup }) => {
+const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, batchActivationTime }) => {
   const centerX = 150;
   const centerY = 150;
   const centerRadius = 25;
@@ -17,13 +17,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, bat
   const isBatchActivation = batchActivationTime && (Date.now() - batchActivationTime < 100);
 
   // Color mapping by level with gradients
-  // SQL tab uses maroon gradient, others use default colors
-  const colors = activeGroup === 'sql' ? {
-    'Beginner': { base: '#d8a0a0', light: '#e8c4c4', dark: '#c87878', veryLight: '#f5e8e8' },
-    'Intermediate': { base: '#b87878', light: '#d0a0a0', dark: '#a05858', veryLight: '#e8d0d0' },
-    'Advanced': { base: '#985050', light: '#b87070', dark: '#803838', veryLight: '#d0b0b0' },
-    'Expert': { base: '#782828', light: '#984848', dark: '#601818', veryLight: '#b88888' }
-  } : {
+  const colors = {
     'Beginner': { base: '#86efac', light: '#bbf7d0', dark: '#4ade80', veryLight: '#d1fae5' },
     'Intermediate': { base: '#93c5fd', light: '#bfdbfe', dark: '#60a5fa', veryLight: '#dbeafe' },
     'Advanced': { base: '#fcd34d', light: '#fde68a', dark: '#fbbf24', veryLight: '#fef3c7' },
@@ -717,15 +711,10 @@ const App = () => {
           canvas.width = canvasSize;
           canvas.height = canvasSize;
           
-          // Draw gradient background (SQL theme uses light green)
+          // Draw gradient background
           const gradient = ctx.createLinearGradient(0, 0, canvasSize, canvasSize);
-          if (activeGroup === 'sql') {
-            gradient.addColorStop(0, '#d4f4dd');
-            gradient.addColorStop(1, '#a8e6b8');
-          } else {
-            gradient.addColorStop(0, '#667eea');
-            gradient.addColorStop(1, '#764ba2');
-          }
+          gradient.addColorStop(0, '#667eea');
+          gradient.addColorStop(1, '#764ba2');
           ctx.fillStyle = gradient;
           ctx.fillRect(0, 0, canvasSize, canvasSize);
           
@@ -878,15 +867,10 @@ const App = () => {
       canvas.width = canvasSize;
       canvas.height = canvasSize;
 
-      // Draw gradient background (SQL theme uses light green)
+      // Draw gradient background
       const gradient = ctx.createLinearGradient(0, 0, canvasSize, canvasSize);
-      if (activeGroup === 'sql') {
-        gradient.addColorStop(0, '#d4f4dd');
-        gradient.addColorStop(1, '#a8e6b8');
-      } else {
-        gradient.addColorStop(0, '#667eea');
-        gradient.addColorStop(1, '#764ba2');
-      }
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvasSize, canvasSize);
 
@@ -1047,20 +1031,19 @@ const App = () => {
               </div>
             </div>
 
-            <div className={`header-right ${activeGroup === 'sql' ? 'sql-theme' : ''}`}>
+            <div className="header-right">
               <NightingaleRoseChart 
                 skills={skills} 
                 totalScore={totalScore} 
                 maxScore={maxScore} 
                 onActivateAll={toggleAllSkills}
                 batchActivationTime={batchActivationTime}
-                activeGroup={activeGroup}
               />
             </div>
           </div>
         </div>
 
-        <div className={`skills-table-container ${activeGroup === 'sql' ? 'sql-theme' : ''}`}>
+        <div className="skills-table-container">
           <table className="skills-table">
             <thead>
               <tr>
