@@ -49,7 +49,6 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, bat
   const createPetalPath = (startAngle, endAngle, innerRadius, outerRadius, layerIndex = 0, petalSeed = 0) => {
     const startRad = (startAngle - 90) * Math.PI / 180;
     const endRad = (endAngle - 90) * Math.PI / 180;
-    const midRad = ((startAngle + endAngle) / 2 - 90) * Math.PI / 180;
     
     // Add natural asymmetry variations based on seed
     const rand1 = seededRandom(petalSeed);
@@ -697,17 +696,37 @@ const App = () => {
       // Capture the chart
       const chartElement = document.querySelector('.flower-container svg');
       if (chartElement) {
-        const canvas = await html2canvas(chartElement, {
-          backgroundColor: null,
-          scale: 2
-        });
-        
-        const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 80;
-        const imgHeight = 80;
-        const xPos = (pageWidth - imgWidth) / 2;
-        
-        pdf.addImage(imgData, 'PNG', xPos, 45, imgWidth, imgHeight);
+        try {
+          // Clone the SVG to avoid capturing animations
+          const svgClone = chartElement.cloneNode(true);
+          const tempContainer = document.createElement('div');
+          tempContainer.style.position = 'absolute';
+          tempContainer.style.left = '-9999px';
+          tempContainer.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+          tempContainer.style.padding = '20px';
+          tempContainer.style.width = '300px';
+          tempContainer.style.height = '300px';
+          tempContainer.appendChild(svgClone);
+          document.body.appendChild(tempContainer);
+          
+          const canvas = await html2canvas(tempContainer, {
+            backgroundColor: null,
+            scale: 2,
+            logging: false,
+            useCORS: true
+          });
+          
+          document.body.removeChild(tempContainer);
+          
+          const imgData = canvas.toDataURL('image/png');
+          const imgWidth = 80;
+          const imgHeight = 80;
+          const xPos = (pageWidth - imgWidth) / 2;
+          
+          pdf.addImage(imgData, 'PNG', xPos, 45, imgWidth, imgHeight);
+        } catch (chartError) {
+          console.warn('Could not capture chart, continuing without it:', chartError);
+        }
       }
       
       // Add active skills list
@@ -796,7 +815,8 @@ const App = () => {
       pdf.save(`SkillChart_${categoryName.replace(/\s+/g, '_')}_${timestamp.replace(/\//g, '-')}.pdf`);
     } catch (error) {
       console.error('Error generating PDF:', error);
-      alert('Failed to generate PDF. Please try again.');
+      console.error('Error details:', error.message, error.stack);
+      alert(`Failed to generate PDF: ${error.message || 'Unknown error'}. Please check the console for details.`);
     }
   };
 
