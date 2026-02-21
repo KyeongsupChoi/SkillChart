@@ -697,28 +697,41 @@ const App = () => {
       const chartElement = document.querySelector('.flower-container svg');
       if (chartElement) {
         try {
+          // Get the SVG's viewBox dimensions
+          const viewBox = chartElement.getAttribute('viewBox').split(' ');
+          const svgWidth = parseFloat(viewBox[2]);
+          const svgHeight = parseFloat(viewBox[3]);
+          
           // Serialize SVG to string
           const svgData = new XMLSerializer().serializeToString(chartElement);
           
-          // Create a canvas to draw the SVG
+          // Create a canvas with padding for the chart
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
-          const img = new Image();
+          const padding = 40;
+          const canvasSize = 600;
           
-          // Set canvas size (2x for quality)
-          canvas.width = 600;
-          canvas.height = 600;
+          canvas.width = canvasSize;
+          canvas.height = canvasSize;
           
           // Draw gradient background
-          const gradient = ctx.createLinearGradient(0, 0, 600, 600);
+          const gradient = ctx.createLinearGradient(0, 0, canvasSize, canvasSize);
           gradient.addColorStop(0, '#667eea');
           gradient.addColorStop(1, '#764ba2');
           ctx.fillStyle = gradient;
-          ctx.fillRect(0, 0, 600, 600);
+          ctx.fillRect(0, 0, canvasSize, canvasSize);
+          
+          // Load and draw SVG centered on canvas
+          const img = new Image();
           
           await new Promise((resolve, reject) => {
             img.onload = () => {
-              ctx.drawImage(img, 0, 0, 600, 600);
+              // Calculate centered position
+              const drawSize = canvasSize - (padding * 2);
+              const xOffset = padding;
+              const yOffset = padding;
+              
+              ctx.drawImage(img, xOffset, yOffset, drawSize, drawSize);
               resolve();
             };
             img.onerror = reject;
