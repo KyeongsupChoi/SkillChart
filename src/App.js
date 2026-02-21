@@ -963,7 +963,7 @@ const App = () => {
                     <span className="feature-icon">🌙</span>
                   </button>
                   <button className="mobile-feature-btn" onClick={exportToPDF} title="Export PDF">
-                    <span className="feature-icon">📄</span>
+                    <span className="feature-icon pdf-icon">PDF</span>
                   </button>
                   <button className="mobile-feature-btn" onClick={exportToImage} title="Export IMG">
                     <span className="feature-icon">🖼️</span>
@@ -1032,7 +1032,7 @@ const App = () => {
                     Dark Mode
                   </button>
                   <button className="feature-btn" onClick={exportToPDF}>
-                    <span className="feature-icon">📄</span>
+                    <span className="feature-icon pdf-icon-desktop">PDF</span>
                     Export PDF
                   </button>
                   <button className="feature-btn" onClick={exportToImage}>
