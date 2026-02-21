@@ -138,7 +138,11 @@ body::-webkit-scrollbar {
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 0.5rem;
-  transition: padding 0.3s ease;
+  transition: padding 0.3s ease, background 0.3s ease;
+}
+
+.header-right.sql-theme {
+  background: linear-gradient(135deg, #d4f4dd 0%, #a8e6b8 100%);
 }
 
 .navbar-header {
@@ -464,6 +468,23 @@ body::-webkit-scrollbar {
   background-color: #fef2f2;
 }
 
+/* SQL theme - light green background with maroon accents */
+.skills-table-container.sql-theme .skill-row.level-beginner-row {
+  background-color: #f5fef7;
+}
+
+.skills-table-container.sql-theme .skill-row.level-intermediate-row {
+  background-color: #edfef2;
+}
+
+.skills-table-container.sql-theme .skill-row.level-advanced-row {
+  background-color: #e5feed;
+}
+
+.skills-table-container.sql-theme .skill-row.level-expert-row {
+  background-color: #ddfee8;
+}
+
 .skills-table td {
   padding: 1rem;
 }
@@ -521,6 +542,27 @@ body::-webkit-scrollbar {
 .level-expert {
   background: #f8d7da;
   color: #721c24;
+}
+
+/* SQL theme - maroon gradient from light to dark */
+.skills-table-container.sql-theme .level-beginner {
+  background: #f5e8e8;
+  color: #8b4545;
+}
+
+.skills-table-container.sql-theme .level-intermediate {
+  background: #e8d0d0;
+  color: #7a3030;
+}
+
+.skills-table-container.sql-theme .level-advanced {
+  background: #d0b0b0;
+  color: #5d2020;
+}
+
+.skills-table-container.sql-theme .level-expert {
+  background: #b88888;
+  color: #3d0f0f;
 }
 
 .checkbox-wrapper {
