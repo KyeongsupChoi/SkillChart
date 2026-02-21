@@ -693,30 +693,41 @@ const App = () => {
       pdf.setTextColor(50, 50, 50);
       pdf.text(`Total Score: ${totalScore} / ${maxScore} (${percentage}%)`, margin, 38);
       
-      // Capture the chart
+      // Capture the chart using SVG to data URL conversion
       const chartElement = document.querySelector('.flower-container svg');
       if (chartElement) {
         try {
-          // Clone the SVG to avoid capturing animations
-          const svgClone = chartElement.cloneNode(true);
-          const tempContainer = document.createElement('div');
-          tempContainer.style.position = 'absolute';
-          tempContainer.style.left = '-9999px';
-          tempContainer.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-          tempContainer.style.padding = '20px';
-          tempContainer.style.width = '300px';
-          tempContainer.style.height = '300px';
-          tempContainer.appendChild(svgClone);
-          document.body.appendChild(tempContainer);
+          // Serialize SVG to string
+          const svgData = new XMLSerializer().serializeToString(chartElement);
           
-          const canvas = await html2canvas(tempContainer, {
-            backgroundColor: null,
-            scale: 2,
-            logging: false,
-            useCORS: true
+          // Create a canvas to draw the SVG
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          const img = new Image();
+          
+          // Set canvas size (2x for quality)
+          canvas.width = 600;
+          canvas.height = 600;
+          
+          // Draw gradient background
+          const gradient = ctx.createLinearGradient(0, 0, 600, 600);
+          gradient.addColorStop(0, '#667eea');
+          gradient.addColorStop(1, '#764ba2');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, 600, 600);
+          
+          await new Promise((resolve, reject) => {
+            img.onload = () => {
+              ctx.drawImage(img, 0, 0, 600, 600);
+              resolve();
+            };
+            img.onerror = reject;
+            
+            // Convert SVG to data URL
+            const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(svgBlob);
+            img.src = url;
           });
-          
-          document.body.removeChild(tempContainer);
           
           const imgData = canvas.toDataURL('image/png');
           const imgWidth = 80;
