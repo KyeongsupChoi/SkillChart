@@ -853,6 +853,102 @@ const App = () => {
     }
   };
 
+  const exportToImage = async () => {
+    try {
+      const chartElement = document.querySelector('.flower-container svg');
+      if (!chartElement) {
+        alert('Chart not found. Please try again.');
+        return;
+      }
+
+      // Get the SVG's viewBox dimensions
+      const viewBox = chartElement.getAttribute('viewBox').split(' ');
+      const svgWidth = parseFloat(viewBox[2]);
+      const svgHeight = parseFloat(viewBox[3]);
+
+      // Serialize SVG to string
+      const svgData = new XMLSerializer().serializeToString(chartElement);
+
+      // Create a high-resolution canvas
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const scale = 2; // For higher resolution
+      const padding = 80;
+      const canvasSize = 1200 * scale;
+
+      canvas.width = canvasSize;
+      canvas.height = canvasSize;
+
+      // Draw gradient background
+      const gradient = ctx.createLinearGradient(0, 0, canvasSize, canvasSize);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+      // Load and draw SVG centered on canvas
+      const img = new Image();
+
+      await new Promise((resolve, reject) => {
+        img.onload = () => {
+          // Calculate centered position
+          const drawSize = canvasSize - (padding * 2 * scale);
+          const xOffset = padding * scale;
+          const yOffset = padding * scale;
+
+          ctx.drawImage(img, xOffset, yOffset, drawSize, drawSize);
+          resolve();
+        };
+        img.onerror = reject;
+
+        // Convert SVG to data URL
+        const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+        img.src = url;
+      });
+
+      // Add text overlay
+      ctx.fillStyle = 'white';
+      ctx.font = `bold ${48 * scale}px Arial`;
+      ctx.textAlign = 'center';
+      ctx.fillText('SkillChart', canvasSize / 2, 60 * scale);
+
+      // Format category name
+      const categoryNames = {
+        'backend': 'Backend',
+        'frontend': 'Frontend',
+        'dataScience': 'Data Science',
+        'python': 'Python',
+        'sql': 'SQL',
+        'llm': 'LLM'
+      };
+      const categoryName = categoryNames[activeGroup] || activeGroup;
+
+      ctx.font = `${32 * scale}px Arial`;
+      ctx.fillText(categoryName, canvasSize / 2, 110 * scale);
+
+      // Add score text
+      ctx.font = `${28 * scale}px Arial`;
+      ctx.fillText(`${totalScore} / ${maxScore} (${percentage}%)`, canvasSize / 2, canvasSize - 40 * scale);
+
+      // Convert canvas to blob and download
+      canvas.toBlob((blob) => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        const timestamp = new Date().toLocaleDateString().replace(/\//g, '-');
+        link.download = `SkillChart_${categoryName.replace(/\s+/g, '_')}_${timestamp}.png`;
+        link.href = url;
+        link.click();
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+
+    } catch (error) {
+      console.error('Error generating image:', error);
+      console.error('Error details:', error.message, error.stack);
+      alert(`Failed to generate image: ${error.message || 'Unknown error'}. Please check the console for details.`);
+    }
+  };
+
   return (
     <div className="app-container">
       {scrolled && (
@@ -935,14 +1031,14 @@ const App = () => {
                     <span className="feature-icon">📄</span>
                     Export PDF
                   </button>
-                  <button className="feature-btn" disabled>
+                  <button className="feature-btn" onClick={exportToImage}>
                     <span className="feature-icon">🖼️</span>
                     Export IMG
                   </button>
                 </div>
 
                 <div className="feature-disclaimer">
-                  Features in development
+                  i18n & Dark Mode coming soon
                 </div>
               </div>
             </div>
