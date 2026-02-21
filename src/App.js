@@ -3,7 +3,7 @@ import './App.css';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) => {
+const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, batchActivationTime }) => {
   const centerX = 150;
   const centerY = 150;
   const centerRadius = 25;
@@ -12,6 +12,9 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
   
   // Calculate percentage
   const percentage = maxScore > 0 ? Math.round((totalScore / maxScore) * 100) : 0;
+  
+  // Check if this is a recent batch activation (within last 100ms)
+  const isBatchActivation = batchActivationTime && (Date.now() - batchActivationTime < 100);
 
   // Color mapping by level with gradients
   const colors = {
@@ -169,8 +172,9 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll }) =
       }
       sequentialIndex += skillIndex;
       
-      // Add staggered bloom animation delay - 300ms per petal for slow, visible bloom
-      const animationDelay = sequentialIndex * 0.3;
+      // Add staggered bloom animation delay only for batch activation (center button)
+      // Individual skill toggles activate instantly (no delay)
+      const animationDelay = isBatchActivation ? sequentialIndex * 0.3 : 0;
       
       wedges.push(
         <path
@@ -356,6 +360,7 @@ const App = () => {
   const [scrolled, setScrolled] = React.useState(false);
   const [lastScrollY, setLastScrollY] = React.useState(0);
   const [navbarExpanded, setNavbarExpanded] = React.useState(false);
+  const [batchActivationTime, setBatchActivationTime] = React.useState(null);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -649,6 +654,12 @@ const App = () => {
     const allActive = skills.every(skill => skill.active);
     const updatedSkills = skills.map(skill => ({ ...skill, active: !allActive }));
     setSkills(updatedSkills);
+    setBatchActivationTime(Date.now()); // Mark this as a batch activation
+    
+    // Clear the batch activation flag after animation sequence completes
+    setTimeout(() => {
+      setBatchActivationTime(null);
+    }, skills.length * 300 + 1000); // Total animation time + buffer
   };
 
   const exportToPDF = async () => {
@@ -889,6 +900,7 @@ const App = () => {
                 totalScore={totalScore} 
                 maxScore={maxScore} 
                 onActivateAll={toggleAllSkills}
+                batchActivationTime={batchActivationTime}
               />
             </div>
           </div>
