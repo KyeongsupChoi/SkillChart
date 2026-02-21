@@ -94,35 +94,27 @@ body::-webkit-scrollbar {
   opacity: 1;
 }
 
+/* Scrolled state - shrink chart for all screen sizes */
 .sticky-header.hidden {
-  transform: translateY(-100%);
-  opacity: 0;
-  pointer-events: none;
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Desktop scrolled state - shrink chart */
-@media (min-width: 1025px) {
-  .sticky-header.hidden {
-    transform: translateY(0);
-    opacity: 1;
-    pointer-events: auto;
-  }
-  
-  .sticky-header.hidden .header-grid {
-    min-height: 100px;
-    transition: min-height 0.3s ease;
-  }
-  
-  .sticky-header.hidden .flower-container svg {
-    max-width: 50%;
-    max-height: 50%;
-    transition: all 0.3s ease;
-  }
-  
-  .sticky-header.hidden .header-right {
-    padding: 0.5rem;
-    transition: padding 0.3s ease;
-  }
+.sticky-header.hidden .header-grid {
+  min-height: 100px;
+  transition: min-height 0.3s ease;
+}
+
+.sticky-header.hidden .flower-container svg {
+  max-width: 50%;
+  max-height: 50%;
+  transition: all 0.3s ease;
+}
+
+.sticky-header.hidden .header-right {
+  padding: 0.25rem;
+  transition: padding 0.3s ease;
 }
 
 .header-grid {
@@ -605,6 +597,15 @@ body::-webkit-scrollbar {
   .header-right {
     padding: 1.5rem;
   }
+
+  /* Ensure shrink behavior works on mobile when scrolled */
+  .sticky-header.hidden .header-grid {
+    min-height: 80px !important;
+  }
+
+  .sticky-header.hidden .header-right {
+    padding: 0.5rem !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -629,6 +630,15 @@ body::-webkit-scrollbar {
 
   .header-right {
     padding: 1.25rem;
+  }
+
+  /* Ensure shrink behavior works on tablet/mobile when scrolled */
+  .sticky-header.hidden .header-grid {
+    min-height: 70px !important;
+  }
+
+  .sticky-header.hidden .header-right {
+    padding: 0.35rem !important;
   }
 
   .navbar-toggler {
@@ -783,6 +793,15 @@ body::-webkit-scrollbar {
 
   .header-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Ensure shrink behavior works on small mobile when scrolled */
+  .sticky-header.hidden .header-grid {
+    min-height: 60px !important;
+  }
+
+  .sticky-header.hidden .header-right {
+    padding: 0.25rem !important;
   }
 
   .navbar-header {
