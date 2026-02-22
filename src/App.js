@@ -567,20 +567,38 @@ const App = () => {
     { level: "Beginner", description: { en: "Ability to write effective prompts to get desired outputs from LLMs.", ko: "LLM에서 원하는 출력을 얻기 위한 효과적인 프롬프트 작성 능력" }, weight: 1, active: false },
     { level: "Beginner", description: { en: "Familiarity with API-based LLM services (OpenAI API, Anthropic API, etc.).", ko: "API 기반 LLM 서비스(OpenAI API, Anthropic API 등)에 대한 친숙함" }, weight: 1, active: false },
     { level: "Beginner", description: { en: "Understanding of tokens, context windows, and basic API parameters (temperature, max_tokens).", ko: "토큰, 컨텍스트 윈도우 및 기본 API 매개변수(temperature, max_tokens)에 대한 이해" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Basic knowledge of different LLM models and their strengths (GPT-4, Claude, Gemini, Llama).", ko: "다양한 LLM 모델과 강점(GPT-4, Claude, Gemini, Llama)에 대한 기본 지식" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Understanding cost considerations when using LLM APIs (token pricing, request limits).", ko: "LLM API 사용 시 비용 고려 사항(토큰 가격, 요청 제한) 이해" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Awareness of ethical considerations and limitations of LLMs (hallucinations, biases).", ko: "LLM의 윤리적 고려 사항 및 한계(환각, 편향)에 대한 인식" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Ability to test and iterate on prompts to improve output quality.", ko: "출력 품질을 개선하기 위해 프롬프트를 테스트하고 반복하는 능력" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Basic understanding of system prompts and conversation context management.", ko: "시스템 프롬프트 및 대화 컨텍스트 관리에 대한 기본 이해" }, weight: 1, active: false },
     { level: "Intermediate", description: { en: "Experience integrating LLM APIs into applications with proper error handling and rate limiting.", ko: "적절한 오류 처리 및 속도 제한을 통해 LLM API를 애플리케이션에 통합하는 경험" }, weight: 2, active: false },
     { level: "Intermediate", description: { en: "Knowledge of prompt engineering techniques (few-shot learning, chain-of-thought, role prompting).", ko: "프롬프트 엔지니어링 기술(퓨샷 학습, 사고 사슬, 역할 프롬프팅)에 대한 지식" }, weight: 2, active: false },
     { level: "Intermediate", description: { en: "Understanding of embeddings and vector databases for semantic search and RAG (Retrieval-Augmented Generation).", ko: "의미론적 검색 및 RAG(검색 증강 생성)를 위한 임베딩 및 벡터 데이터베이스에 대한 이해" }, weight: 2, active: false },
     { level: "Intermediate", description: { en: "Ability to implement streaming responses and handle long-running LLM requests.", ko: "스트리밍 응답 구현 및 장기 실행 LLM 요청 처리 능력" }, weight: 2, active: false },
     { level: "Intermediate", description: { en: "Experience with function calling / tool use to extend LLM capabilities.", ko: "LLM 기능을 확장하기 위한 함수 호출/도구 사용 경험" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Building chatbots or conversational AI interfaces using LLMs.", ko: "LLM을 사용하여 챗봇 또는 대화형 AI 인터페이스 구축" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Implementing context management for multi-turn conversations.", ko: "다중 턴 대화를 위한 컨텍스트 관리 구현" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Knowledge of prompt caching and optimization strategies to reduce costs.", ko: "비용 절감을 위한 프롬프트 캐싱 및 최적화 전략에 대한 지식" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Understanding different embedding models and their use cases (text, code, multimodal).", ko: "다양한 임베딩 모델 및 사용 사례(텍스트, 코드, 멀티모달) 이해" }, weight: 2, active: false },
     { level: "Advanced", description: { en: "Proficient in building RAG systems with document chunking, embedding strategies, and retrieval optimization.", ko: "문서 청킹, 임베딩 전략 및 검색 최적화를 통한 RAG 시스템 구축에 능숙함" }, weight: 4, active: false },
     { level: "Advanced", description: { en: "Experience fine-tuning or customizing LLMs for specific domains or tasks.", ko: "특정 도메인 또는 작업에 대한 LLM 미세 조정 또는 사용자 정의 경험" }, weight: 4, active: false },
     { level: "Advanced", description: { en: "Knowledge of LLM evaluation metrics, benchmarking, and testing strategies.", ko: "LLM 평가 지표, 벤치마킹 및 테스트 전략에 대한 지식" }, weight: 4, active: false },
     { level: "Advanced", description: { en: "Implementing multi-agent systems or orchestrating multiple LLM calls for complex workflows.", ko: "복잡한 워크플로우를 위한 멀티 에이전트 시스템 구현 또는 여러 LLM 호출 오케스트레이션" }, weight: 4, active: false },
     { level: "Advanced", description: { en: "Understanding of LLM security concerns (prompt injection, data leakage, content filtering).", ko: "LLM 보안 문제(프롬프트 주입, 데이터 유출, 콘텐츠 필터링)에 대한 이해" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Designing and implementing hybrid systems combining LLMs with traditional ML models.", ko: "LLM과 기존 ML 모델을 결합한 하이브리드 시스템 설계 및 구현" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Building LLM-powered agents with memory, planning, and reasoning capabilities.", ko: "메모리, 계획 및 추론 기능을 갖춘 LLM 기반 에이전트 구축" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Implementing prompt optimization through automated testing and A/B testing.", ko: "자동화된 테스트 및 A/B 테스트를 통한 프롬프트 최적화 구현" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Experience with vector search optimization and hybrid search strategies.", ko: "벡터 검색 최적화 및 하이브리드 검색 전략에 대한 경험" }, weight: 4, active: false },
     { level: "Expert", description: { en: "Expertise in LLM architecture, attention mechanisms, and transformer models.", ko: "LLM 아키텍처, 어텐션 메커니즘 및 트랜스포머 모델에 대한 전문 지식" }, weight: 8, active: false },
     { level: "Expert", description: { en: "Experience with local LLM deployment, quantization, and optimization techniques.", ko: "로컬 LLM 배포, 양자화 및 최적화 기술에 대한 경험" }, weight: 8, active: false },
     { level: "Expert", description: { en: "Building production-grade LLM applications with monitoring, cost optimization, and scalability.", ko: "모니터링, 비용 최적화 및 확장성을 갖춘 프로덕션급 LLM 애플리케이션 구축" }, weight: 8, active: false },
     { level: "Expert", description: { en: "Contributing to open-source LLM frameworks or developing custom LLM solutions.", ko: "오픈소스 LLM 프레임워크에 기여하거나 맞춤형 LLM 솔루션 개발" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Deep understanding of training techniques (supervised fine-tuning, RLHF, DPO).", ko: "학습 기술(지도 미세 조정, RLHF, DPO)에 대한 깊은 이해" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Architecting enterprise LLM infrastructure with governance, compliance, and security.", ko: "거버넌스, 컴플라이언스 및 보안을 갖춘 엔터프라이즈 LLM 인프라 설계" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Leading LLM research initiatives or developing novel LLM applications and techniques.", ko: "LLM 연구 이니셔티브를 주도하거나 새로운 LLM 애플리케이션 및 기술 개발" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Expertise in distributed LLM inference and serving at scale.", ko: "분산 LLM 추론 및 대규모 서빙에 대한 전문 지식" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Advanced knowledge of model compression, distillation, and efficiency optimization.", ko: "모델 압축, 증류 및 효율성 최적화에 대한 고급 지식" }, weight: 8, active: false },
   ];
 
   const [activeGroup, setActiveGroup] = useState("backend");
@@ -672,7 +690,13 @@ const App = () => {
       beginner: 'Beginner',
       intermediate: 'Intermediate',
       advanced: 'Advanced',
-      expert: 'Expert'
+      expert: 'Expert',
+      backend: 'Backend',
+      frontend: 'Frontend',
+      dataScience: 'Data Science',
+      python: 'Python',
+      sql: 'SQL',
+      llm: 'LLM'
     },
     ko: {
       level: '레벨',
@@ -682,7 +706,13 @@ const App = () => {
       beginner: '초급',
       intermediate: '중급',
       advanced: '고급',
-      expert: '전문가'
+      expert: '전문가',
+      backend: '백엔드',
+      frontend: '프론트엔드',
+      dataScience: '데이터 사이언스',
+      python: '파이썬',
+      sql: 'SQL',
+      llm: 'LLM'
     }
   };
 
@@ -710,15 +740,7 @@ const App = () => {
       pdf.text('SkillChart', margin, 20);
       
       // Format category name
-      const categoryNames = {
-        'backend': 'Backend',
-        'frontend': 'Frontend',
-        'dataScience': 'Data Science',
-        'python': 'Python',
-        'sql': 'SQL',
-        'llm': 'LLM'
-      };
-      const categoryName = categoryNames[activeGroup] || activeGroup;
+      const categoryName = getTranslation(activeGroup);
       
       pdf.setFontSize(12);
       pdf.setTextColor(100, 100, 100);
@@ -941,15 +963,7 @@ const App = () => {
       ctx.fillText('SkillChart', canvasSize / 2, 60 * scale);
 
       // Format category name
-      const categoryNames = {
-        'backend': 'Backend',
-        'frontend': 'Frontend',
-        'dataScience': 'Data Science',
-        'python': 'Python',
-        'sql': 'SQL',
-        'llm': 'LLM'
-      };
-      const categoryName = categoryNames[activeGroup] || activeGroup;
+      const categoryName = getTranslation(activeGroup);
 
       ctx.font = `${32 * scale}px Arial`;
       ctx.fillText(categoryName, canvasSize / 2, 110 * scale);
@@ -1031,37 +1045,37 @@ const App = () => {
                     className={`tab-button ${activeGroup === "backend" ? "active" : ""}`}
                     onClick={() => toggleGroup("backend")}
                   >
-                    Backend
+                    {getTranslation('backend')}
                   </button>
                   <button 
                     className={`tab-button ${activeGroup === "frontend" ? "active" : ""}`}
                     onClick={() => toggleGroup("frontend")}
                   >
-                    Frontend
+                    {getTranslation('frontend')}
                   </button>
                   <button 
                     className={`tab-button ${activeGroup === "dataScience" ? "active" : ""}`}
                     onClick={() => toggleGroup("dataScience")}
                   >
-                    Data Science
+                    {getTranslation('dataScience')}
                   </button>
                   <button 
                     className={`tab-button ${activeGroup === "python" ? "active" : ""}`}
                     onClick={() => toggleGroup("python")}
                   >
-                    Python
+                    {getTranslation('python')}
                   </button>
                   <button 
                     className={`tab-button ${activeGroup === "sql" ? "active" : ""}`}
                     onClick={() => toggleGroup("sql")}
                   >
-                    SQL
+                    {getTranslation('sql')}
                   </button>
                   <button 
                     className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
                     onClick={() => toggleGroup("llm")}
                   >
-                    LLM
+                    {getTranslation('llm')}
                   </button>
                 </nav>
 
