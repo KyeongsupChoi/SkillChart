@@ -1478,15 +1478,6 @@ body::-webkit-scrollbar {
   fill: #e0e0e0;
 }
 
-.dark-mode .flower-container svg circle {
-  stroke: #4a4a4a;
-  fill: #2d2d2d;
-}
-
-.dark-mode .flower-container svg g[style*="cursor: pointer"]:hover circle {
-  fill: #3a3a3a;
-}
-
 .dark-mode .mobile-feature-btn {
   background: #3a3a3a;
   border: 1px solid #4a4a4a;
