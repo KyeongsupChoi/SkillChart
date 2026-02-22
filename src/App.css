@@ -210,6 +210,14 @@ body::-webkit-scrollbar {
   letter-spacing: 0.5px;
 }
 
+.mobile-feature-btn .lang-icon {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.3px;
+  font-family: 'Arial', sans-serif;
+}
+
 .mobile-feature-btn .feature-icon {
   display: flex;
   align-items: center;
@@ -351,7 +359,8 @@ body::-webkit-scrollbar {
   box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
 }
 
-.feature-btn:not(:disabled):hover .pdf-icon-desktop {
+.feature-btn:not(:disabled):hover .pdf-icon-desktop,
+.feature-btn:not(:disabled):hover .lang-icon {
   color: white;
   background: rgba(255, 255, 255, 0.2);
 }
@@ -369,6 +378,17 @@ body::-webkit-scrollbar {
   padding: 0.15rem 0.35rem;
   background: rgba(102, 126, 234, 0.1);
   border-radius: 4px;
+}
+
+.lang-icon {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #667eea;
+  letter-spacing: 0.5px;
+  padding: 0.15rem 0.3rem;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 4px;
+  font-family: 'Arial', sans-serif;
 }
 
 .feature-disclaimer {
@@ -748,7 +768,8 @@ body::-webkit-scrollbar {
     font-size: 1rem;
   }
 
-  .mobile-feature-btn .pdf-icon {
+  .mobile-feature-btn .pdf-icon,
+  .mobile-feature-btn .lang-icon {
     font-size: 0.6rem;
   }
 
@@ -936,7 +957,8 @@ body::-webkit-scrollbar {
     font-size: 0.9rem;
   }
 
-  .mobile-feature-btn .pdf-icon {
+  .mobile-feature-btn .pdf-icon,
+  .mobile-feature-btn .lang-icon {
     font-size: 0.55rem;
   }
 
@@ -1114,7 +1136,8 @@ body::-webkit-scrollbar {
     font-size: 0.85rem;
   }
 
-  .mobile-feature-btn .pdf-icon {
+  .mobile-feature-btn .pdf-icon,
+  .mobile-feature-btn .lang-icon {
     font-size: 0.5rem;
   }
 

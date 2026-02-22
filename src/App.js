@@ -419,168 +419,168 @@ const App = () => {
   ];
 
   const frontendSkills = [
-    { level: 'Beginner', description: 'Knowledge of common HTML elements', weight: 1, active: false },
-    { level: 'Beginner', description: 'Knowledge of common CSS selectors - how to set background colours and borders', weight: 1, active: false },
-    { level: 'Beginner', description: 'Knowledge of flex positioning', weight: 1, active: false },
-    { level: 'Beginner', description: 'Knowledge of Javascript DOM access', weight: 1, active: false },
-    { level: 'Beginner', description: 'Knowledge of Javascript programming - how to use arrays and array methods, and how to use objects and object methods', weight: 1, active: false },
-    { level: 'Beginner', description: 'How to use fetch API, and structure HTTP requests', weight: 1, active: false },
-    { level: 'Beginner', description: 'Basic usage of React / Vue / etc - using state, creating components and hooks', weight: 1, active: false },
-    { level: 'Intermediate', description: 'Using TypeScript', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Understanding React component structure such as smart vs dumb components', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Familiarity with Next.js', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Usage of React/Tanstack Query', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Usage of global state', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Knowledge of responsive CSS rules', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Proficiency with JavaScript fundamental data structures and methods', weight: 2, active: false },
-    { level: 'Intermediate', description: 'JS modules and their structure - importing, different kinds of exports, and their use cases', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Building your app and getting it to run on a server', weight: 2, active: false },
-    { level: 'Advanced', description: 'Understanding contextual usage of global state vs local state', weight: 4, active: false },
-    { level: 'Advanced', description: 'Familiarity with Chrome web app profiling (lighthouse?)', weight: 4, active: false },
-    { level: 'Advanced', description: 'Strong competence with Next.js SSR/SSG features', weight: 4, active: false },
-    { level: 'Advanced', description: 'Competence with HTTP requests and making requests efficiently - batching, splitting requests, minimising refetches', weight: 4, active: false },
-    { level: 'Advanced', description: 'Creating NPM libraries, including NPM library project structure, and registering project to NPM', weight: 4, active: false },
-    { level: 'Advanced', description: 'Lazy loading of code and pages', weight: 4, active: false },
-    { level: 'Expert', description: 'Understanding React rendering flow and placement of state and data fetching', weight: 8, active: false },
-    { level: 'Expert', description: 'Understanding techniques to minimise excess rerenders', weight: 8, active: false },
-    { level: 'Expert', description: 'Competence in using memory profiling and React Dev Tools to inspect and improve app performance', weight: 8, active: false }
+    { level: 'Beginner', description: { en: 'Knowledge of common HTML elements', ko: '일반적인 HTML 요소에 대한 지식' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Knowledge of common CSS selectors - how to set background colours and borders', ko: '일반적인 CSS 선택자에 대한 지식 - 배경색 및 테두리 설정 방법' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Knowledge of flex positioning', ko: 'Flex 포지셔닝에 대한 지식' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Knowledge of Javascript DOM access', ko: 'Javascript DOM 접근에 대한 지식' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Knowledge of Javascript programming - how to use arrays and array methods, and how to use objects and object methods', ko: 'Javascript 프로그래밍 지식 - 배열 및 배열 메서드 사용 방법, 객체 및 객체 메서드 사용 방법' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'How to use fetch API, and structure HTTP requests', ko: 'Fetch API 사용 방법 및 HTTP 요청 구조화' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Basic usage of React / Vue / etc - using state, creating components and hooks', ko: 'React / Vue 등의 기본 사용법 - 상태 사용, 컴포넌트 및 훅 생성' }, weight: 1, active: false },
+    { level: 'Intermediate', description: { en: 'Using TypeScript', ko: 'TypeScript 사용' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Understanding React component structure such as smart vs dumb components', ko: '스마트 컴포넌트와 덤 컴포넌트와 같은 React 컴포넌트 구조 이해' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Familiarity with Next.js', ko: 'Next.js에 대한 친숙함' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Usage of React/Tanstack Query', ko: 'React/Tanstack Query 사용' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Usage of global state', ko: '전역 상태 사용' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Knowledge of responsive CSS rules', ko: '반응형 CSS 규칙에 대한 지식' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Proficiency with JavaScript fundamental data structures and methods', ko: 'JavaScript 기본 데이터 구조 및 메서드에 대한 숙련도' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'JS modules and their structure - importing, different kinds of exports, and their use cases', ko: 'JS 모듈 및 구조 - 가져오기, 다양한 종류의 내보내기 및 사용 사례' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Building your app and getting it to run on a server', ko: '앱을 빌드하고 서버에서 실행하기' }, weight: 2, active: false },
+    { level: 'Advanced', description: { en: 'Understanding contextual usage of global state vs local state', ko: '전역 상태 대 로컬 상태의 상황별 사용 이해' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Familiarity with Chrome web app profiling (lighthouse?)', ko: 'Chrome 웹 앱 프로파일링(Lighthouse)에 대한 친숙함' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Strong competence with Next.js SSR/SSG features', ko: 'Next.js SSR/SSG 기능에 대한 강력한 역량' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Competence with HTTP requests and making requests efficiently - batching, splitting requests, minimising refetches', ko: 'HTTP 요청 및 효율적인 요청 작성 역량 - 배칭, 요청 분할, 재요청 최소화' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Creating NPM libraries, including NPM library project structure, and registering project to NPM', ko: 'NPM 라이브러리 프로젝트 구조를 포함한 NPM 라이브러리 생성 및 NPM에 프로젝트 등록' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Lazy loading of code and pages', ko: '코드 및 페이지의 지연 로딩' }, weight: 4, active: false },
+    { level: 'Expert', description: { en: 'Understanding React rendering flow and placement of state and data fetching', ko: 'React 렌더링 흐름 및 상태와 데이터 가져오기 배치 이해' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Understanding techniques to minimise excess rerenders', ko: '과도한 리렌더링을 최소화하는 기술 이해' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Competence in using memory profiling and React Dev Tools to inspect and improve app performance', ko: '메모리 프로파일링 및 React Dev Tools를 사용하여 앱 성능을 검사하고 개선하는 역량' }, weight: 8, active: false }
   ];
 
   const dataScienceSkills = [
-    { level: 'Beginner', description: 'Basic understanding of statistics and data analysis.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Familiarity with spreadsheets or basic data manipulation tools (e.g., Excel).', weight: 1, active: false },
-    { level: 'Beginner', description: 'Ability to use simple data visualization tools (e.g., Excel, Google Sheets, or Python\'s matplotlib and seaborn).', weight: 1, active: false },
-    { level: 'Beginner', description: 'Introductory knowledge of programming (Python or R) and basic libraries (e.g., Pandas, NumPy).', weight: 1, active: false },
-    { level: 'Beginner', description: 'Basic knowledge of data types (structured, semi-structured, and unstructured data).', weight: 1, active: false },
-    { level: 'Beginner', description: 'Plotting simple graphs (bar charts, line graphs) to visualize data.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Calculating mean, median, mode, variance, and other basic statistical metrics.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Loading and cleaning small datasets.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Basic ability to automate repetitive data related tasks with simple scripts in Python or R.', weight: 1, active: false },
-    { level: 'Intermediate', description: 'Proficient in data wrangling: loading, cleaning, and transforming data using libraries like Pandas, NumPy, or R\'s dplyr.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Good understanding of probability, statistical testing (e.g., hypothesis testing, confidence intervals), and distributions.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Basic knowledge of machine learning algorithms (e.g., linear regression, decision trees) and their applications.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Experience with data visualization libraries (e.g., matplotlib, seaborn, or ggplot2).', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Ability to perform exploratory data analysis (EDA) and extract insights from datasets.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Familiarity with supervised and unsupervised learning concepts.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Cleaning and transforming large datasets using Pandas or NumPy.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Implementing and evaluating simple machine learning models like linear regression or K-means clustering.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Performing A/B testing or statistical analysis on datasets.', weight: 2, active: false },
-    { level: 'Advanced', description: 'Proficient in implementing complex machine learning algorithms (e.g., random forests, gradient boosting, neural networks) using libraries like scikit-learn, TensorFlow, or PyTorch.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Strong understanding of feature engineering, hyperparameter tuning, model evaluation, and optimization techniques.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Experience working with large-scale datasets and using cloud platforms for data storage and computation (e.g., AWS, GCP, Azure).', weight: 4, active: false },
-    { level: 'Advanced', description: 'Familiarity with big data tools and frameworks (e.g., Hadoop, Spark).', weight: 4, active: false },
-    { level: 'Advanced', description: 'Ability to work with databases (SQL) and unstructured data (e.g., text data with NLP).', weight: 4, active: false },
-    { level: 'Advanced', description: 'Knowledge of deep learning and more advanced topics like natural language processing (NLP), reinforcement learning, or computer vision.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Building and fine-tuning machine learning models for production.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Creating predictive models using time series analysis or deep learning methods.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Implementing machine learning pipelines for automated model training and deployment.', weight: 4, active: false },
-    { level: 'Expert', description: 'Mastery of complex algorithms and advanced techniques, such as deep learning architectures (e.g., CNNs, RNNs, Transformers) or reinforcement learning.', weight: 8, active: false },
-    { level: 'Expert', description: 'Deep understanding of data science workflows, MLOps (machine learning operations), and the deployment of machine learning models in production environments.', weight: 8, active: false },
-    { level: 'Expert', description: 'Expertise in using cloud platforms, distributed computing, and handling real-time data streams.', weight: 8, active: false },
-    { level: 'Expert', description: 'Strong ability to create custom machine learning models, handle imbalanced data, and apply transfer learning.', weight: 8, active: false },
-    { level: 'Expert', description: 'Leadership experience in designing large-scale data science projects, mentoring teams, and making data-driven business decisions.', weight: 8, active: false },
-    { level: 'Expert', description: 'Designing and implementing custom deep learning architectures for complex problems (e.g., image recognition, natural language understanding).', weight: 8, active: false },
-    { level: 'Expert', description: 'Leading a team of data scientists in building scalable and efficient data pipelines.', weight: 8, active: false },
-    { level: 'Expert', description: 'Managing and deploying machine learning models at scale for real-time or high-impact applications.', weight: 8, active: false },
-    { level: 'Expert', description: 'Developing and deploying end-to-end AI systems and integrating them with business operations.', weight: 8, active: false },
+    { level: 'Beginner', description: { en: 'Basic understanding of statistics and data analysis.', ko: '통계 및 데이터 분석에 대한 기본 이해' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Familiarity with spreadsheets or basic data manipulation tools (e.g., Excel).', ko: '스프레드시트 또는 기본 데이터 조작 도구(예: Excel)에 대한 친숙함' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Ability to use simple data visualization tools (e.g., Excel, Google Sheets, or Python\'s matplotlib and seaborn).', ko: '간단한 데이터 시각화 도구(예: Excel, Google Sheets 또는 Python의 matplotlib 및 seaborn) 사용 능력' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Introductory knowledge of programming (Python or R) and basic libraries (e.g., Pandas, NumPy).', ko: '프로그래밍(Python 또는 R) 및 기본 라이브러리(예: Pandas, NumPy)에 대한 입문 지식' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Basic knowledge of data types (structured, semi-structured, and unstructured data).', ko: '데이터 유형(구조화, 반구조화 및 비구조화 데이터)에 대한 기본 지식' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Plotting simple graphs (bar charts, line graphs) to visualize data.', ko: '데이터를 시각화하기 위한 간단한 그래프(막대 차트, 선 그래프) 그리기' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Calculating mean, median, mode, variance, and other basic statistical metrics.', ko: '평균, 중앙값, 최빈값, 분산 및 기타 기본 통계 지표 계산' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Loading and cleaning small datasets.', ko: '작은 데이터 세트 로드 및 정리' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Basic ability to automate repetitive data related tasks with simple scripts in Python or R.', ko: 'Python 또는 R의 간단한 스크립트로 반복적인 데이터 관련 작업을 자동화하는 기본 능력' }, weight: 1, active: false },
+    { level: 'Intermediate', description: { en: 'Proficient in data wrangling: loading, cleaning, and transforming data using libraries like Pandas, NumPy, or R\'s dplyr.', ko: '데이터 랭글링에 능숙함: Pandas, NumPy 또는 R의 dplyr과 같은 라이브러리를 사용하여 데이터 로드, 정리 및 변환' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Good understanding of probability, statistical testing (e.g., hypothesis testing, confidence intervals), and distributions.', ko: '확률, 통계 테스트(예: 가설 검정, 신뢰 구간) 및 분포에 대한 양호한 이해' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Basic knowledge of machine learning algorithms (e.g., linear regression, decision trees) and their applications.', ko: '머신러닝 알고리즘(예: 선형 회귀, 의사결정 트리) 및 응용 프로그램에 대한 기본 지식' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Experience with data visualization libraries (e.g., matplotlib, seaborn, or ggplot2).', ko: '데이터 시각화 라이브러리(예: matplotlib, seaborn 또는 ggplot2)에 대한 경험' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Ability to perform exploratory data analysis (EDA) and extract insights from datasets.', ko: '탐색적 데이터 분석(EDA)을 수행하고 데이터 세트에서 인사이트를 추출하는 능력' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Familiarity with supervised and unsupervised learning concepts.', ko: '지도 학습 및 비지도 학습 개념에 대한 친숙함' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Cleaning and transforming large datasets using Pandas or NumPy.', ko: 'Pandas 또는 NumPy를 사용하여 대규모 데이터 세트 정리 및 변환' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Implementing and evaluating simple machine learning models like linear regression or K-means clustering.', ko: '선형 회귀 또는 K-평균 클러스터링과 같은 간단한 머신러닝 모델 구현 및 평가' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Performing A/B testing or statistical analysis on datasets.', ko: '데이터 세트에 대한 A/B 테스트 또는 통계 분석 수행' }, weight: 2, active: false },
+    { level: 'Advanced', description: { en: 'Proficient in implementing complex machine learning algorithms (e.g., random forests, gradient boosting, neural networks) using libraries like scikit-learn, TensorFlow, or PyTorch.', ko: 'scikit-learn, TensorFlow 또는 PyTorch와 같은 라이브러리를 사용하여 복잡한 머신러닝 알고리즘(예: 랜덤 포레스트, 그래디언트 부스팅, 신경망) 구현에 능숙함' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Strong understanding of feature engineering, hyperparameter tuning, model evaluation, and optimization techniques.', ko: '피처 엔지니어링, 하이퍼파라미터 튜닝, 모델 평가 및 최적화 기술에 대한 강력한 이해' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Experience working with large-scale datasets and using cloud platforms for data storage and computation (e.g., AWS, GCP, Azure).', ko: '대규모 데이터 세트 작업 및 데이터 저장 및 계산을 위한 클라우드 플랫폼(예: AWS, GCP, Azure) 사용 경험' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Familiarity with big data tools and frameworks (e.g., Hadoop, Spark).', ko: '빅데이터 도구 및 프레임워크(예: Hadoop, Spark)에 대한 친숙함' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Ability to work with databases (SQL) and unstructured data (e.g., text data with NLP).', ko: '데이터베이스(SQL) 및 비구조화 데이터(예: NLP를 사용한 텍스트 데이터) 작업 능력' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Knowledge of deep learning and more advanced topics like natural language processing (NLP), reinforcement learning, or computer vision.', ko: '딥러닝 및 자연어 처리(NLP), 강화 학습 또는 컴퓨터 비전과 같은 고급 주제에 대한 지식' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Building and fine-tuning machine learning models for production.', ko: '프로덕션용 머신러닝 모델 구축 및 미세 조정' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Creating predictive models using time series analysis or deep learning methods.', ko: '시계열 분석 또는 딥러닝 방법을 사용하여 예측 모델 생성' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Implementing machine learning pipelines for automated model training and deployment.', ko: '자동화된 모델 학습 및 배포를 위한 머신러닝 파이프라인 구현' }, weight: 4, active: false },
+    { level: 'Expert', description: { en: 'Mastery of complex algorithms and advanced techniques, such as deep learning architectures (e.g., CNNs, RNNs, Transformers) or reinforcement learning.', ko: '딥러닝 아키텍처(예: CNN, RNN, Transformer) 또는 강화 학습과 같은 복잡한 알고리즘 및 고급 기술 숙달' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Deep understanding of data science workflows, MLOps (machine learning operations), and the deployment of machine learning models in production environments.', ko: '데이터 사이언스 워크플로우, MLOps(머신러닝 운영) 및 프로덕션 환경에서 머신러닝 모델 배포에 대한 깊은 이해' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Expertise in using cloud platforms, distributed computing, and handling real-time data streams.', ko: '클라우드 플랫폼, 분산 컴퓨팅 및 실시간 데이터 스트림 처리 사용에 대한 전문 지식' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Strong ability to create custom machine learning models, handle imbalanced data, and apply transfer learning.', ko: '맞춤형 머신러닝 모델 생성, 불균형 데이터 처리 및 전이 학습 적용에 대한 강력한 능력' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Leadership experience in designing large-scale data science projects, mentoring teams, and making data-driven business decisions.', ko: '대규모 데이터 사이언스 프로젝트 설계, 팀 멘토링 및 데이터 기반 비즈니스 의사결정에 대한 리더십 경험' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Designing and implementing custom deep learning architectures for complex problems (e.g., image recognition, natural language understanding).', ko: '복잡한 문제(예: 이미지 인식, 자연어 이해)를 위한 맞춤형 딥러닝 아키텍처 설계 및 구현' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Leading a team of data scientists in building scalable and efficient data pipelines.', ko: '확장 가능하고 효율적인 데이터 파이프라인 구축에서 데이터 사이언티스트 팀을 이끄는 리더십' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Managing and deploying machine learning models at scale for real-time or high-impact applications.', ko: '실시간 또는 영향력이 큰 애플리케이션을 위해 대규모로 머신러닝 모델 관리 및 배포' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Developing and deploying end-to-end AI systems and integrating them with business operations.', ko: '엔드투엔드 AI 시스템 개발 및 배포, 비즈니스 운영과 통합' }, weight: 8, active: false },
   ];
 
   const pythonSkills = [
-    { level: "Beginner", description: "Basic understanding of Python syntax and data structures (lists, tuples, dictionaries, sets).", weight: 1, active: false },
-    { level: "Beginner", description: "Ability to write simple programs using variables, loops, conditionals, and functions.", weight: 1, active: false },
-    { level: "Beginner", description: "Understanding basic concepts like input/output, string manipulation, and basic error handling.", weight: 1, active: false },
-    { level: "Beginner", description: "Able to import built-in Python modules (e.g., math, os, random) and third-party libraries, using functions from imported modules.", weight: 1, active: false },
-    { level: "Beginner", description: "Writing a program to print Fibonacci numbers.", weight: 1, active: false },
-    { level: "Beginner", description: "Using loops to iterate over data structures.", weight: 1, active: false },
-    { level: "Beginner", description: "Able to create lists using compact syntax for mapping and filtering operations.", weight: 1, active: false },
-    { level: "Beginner", description: "Ability to open, read, write, and close files, including working with text files and handling exceptions related to file operations.", weight: 1, active: false },
-    { level: "Beginner", description: "Understanding slicing in lists and strings, ability to use slice notation to extract portions of lists, tuples, and strings efficiently.", weight: 1, active: false },
-    { level: "Intermediate", description: "Deeper understanding of data structures and algorithms.", weight: 2, active: false },
-    { level: "Intermediate", description: "Familiarity with object-oriented programming (OOP) principles: classes, inheritance, polymorphism, encapsulation.", weight: 2, active: false },
-    { level: "Intermediate", description: "Ability to use third-party libraries and frameworks (e.g., Pandas, NumPy, Flask).", weight: 2, active: false },
-    { level: "Intermediate", description: "Understanding of error handling using exceptions.", weight: 2, active: false },
-    { level: "Intermediate", description: "Familiarity with modules, packages, and Python's standard library.", weight: 2, active: false },
-    { level: "Intermediate", description: "Writing a web scraper using libraries like BeautifulSoup or Scrapy.", weight: 2, active: false },
-    { level: "Intermediate", description: "Creating a simple web application using Flask or Django.", weight: 2, active: false },
-    { level: "Intermediate", description: "Data manipulation and analysis using Pandas and NumPy.", weight: 2, active: false },
-    { level: "Intermediate", description: "Implementing algorithms like sorting or searching.", weight: 2, active: false },
-    { level: "Advanced", description: "Proficient in working with complex data structures (e.g., generators, iterators).", weight: 4, active: false },
-    { level: "Advanced", description: "Expert in OOP, design patterns, and advanced Python concepts (e.g., decorators, context managers).", weight: 4, active: false },
-    { level: "Advanced", description: "Proficiency in performance optimization (e.g., time complexity, memory usage).", weight: 4, active: false },
-    { level: "Advanced", description: "Understanding concurrency and parallelism (using threading, multiprocessing, async/await).", weight: 4, active: false },
-    { level: "Advanced", description: "Experience with debugging, testing (unit tests, integration tests), and version control (e.g., Git).", weight: 4, active: false },
-    { level: "Advanced", description: "Developing a large-scale application with efficient data handling.", weight: 4, active: false },
-    { level: "Advanced", description: "Building and maintaining APIs with complex architectures.", weight: 4, active: false },
-    { level: "Advanced", description: "Writing unit tests and utilizing continuous integration (CI/CD).", weight: 4, active: false },
-    { level: "Advanced", description: "Implementing machine learning models with libraries like TensorFlow or PyTorch.", weight: 4, active: false },
-    { level: "Expert", description: "Mastery of Python internals, such as memory management, garbage collection, and bytecode.", weight: 8, active: false },
-    { level: "Expert", description: "Ability to contribute to Python core development or design custom libraries and tools.", weight: 8, active: false },
-    { level: "Expert", description: "Deep understanding of multithreading, asynchronous programming, and distributed systems.", weight: 8, active: false },
-    { level: "Expert", description: "Familiarity with low-level programming concepts (e.g., interfacing Python with C/C++).", weight: 8, active: false },
-    { level: "Expert", description: "Knowledge of various domains such as web development, machine learning, automation, data science, and scripting.", weight: 8, active: false },
-    { level: "Expert", description: "Designing complex, scalable systems and APIs for production.", weight: 8, active: false },
-    { level: "Expert", description: "Implementing and optimizing large-scale machine learning pipelines.", weight: 8, active: false },
-    { level: "Expert", description: "Contributing to open-source Python projects or writing custom Python extensions.", weight: 8, active: false },
-    { level: "Expert", description: "Identify bottlenecks, profile code, and implement optimizations using tools like cProfile, timeit, and optimizing with techniques such as just-in-time compilation (e.g., using Numba or Cython).", weight: 8, active: false },
+    { level: "Beginner", description: { en: "Basic understanding of Python syntax and data structures (lists, tuples, dictionaries, sets).", ko: "Python 구문 및 데이터 구조(리스트, 튜플, 딕셔너리, 세트)에 대한 기본 이해" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Ability to write simple programs using variables, loops, conditionals, and functions.", ko: "변수, 루프, 조건문 및 함수를 사용하여 간단한 프로그램을 작성하는 능력" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Understanding basic concepts like input/output, string manipulation, and basic error handling.", ko: "입출력, 문자열 조작 및 기본 오류 처리와 같은 기본 개념 이해" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Able to import built-in Python modules (e.g., math, os, random) and third-party libraries, using functions from imported modules.", ko: "내장 Python 모듈(예: math, os, random) 및 타사 라이브러리를 가져오고 가져온 모듈의 함수를 사용하는 능력" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Writing a program to print Fibonacci numbers.", ko: "피보나치 수를 출력하는 프로그램 작성" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Using loops to iterate over data structures.", ko: "루프를 사용하여 데이터 구조 반복" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Able to create lists using compact syntax for mapping and filtering operations.", ko: "매핑 및 필터링 작업을 위한 간결한 구문을 사용하여 리스트 생성 능력" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Ability to open, read, write, and close files, including working with text files and handling exceptions related to file operations.", ko: "파일 열기, 읽기, 쓰기 및 닫기 능력, 텍스트 파일 작업 및 파일 작업 관련 예외 처리 포함" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Understanding slicing in lists and strings, ability to use slice notation to extract portions of lists, tuples, and strings efficiently.", ko: "리스트 및 문자열의 슬라이싱 이해, 슬라이스 표기법을 사용하여 리스트, 튜플 및 문자열의 일부를 효율적으로 추출하는 능력" }, weight: 1, active: false },
+    { level: "Intermediate", description: { en: "Deeper understanding of data structures and algorithms.", ko: "데이터 구조 및 알고리즘에 대한 깊은 이해" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Familiarity with object-oriented programming (OOP) principles: classes, inheritance, polymorphism, encapsulation.", ko: "객체 지향 프로그래밍(OOP) 원칙에 대한 친숙함: 클래스, 상속, 다형성, 캡슐화" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Ability to use third-party libraries and frameworks (e.g., Pandas, NumPy, Flask).", ko: "타사 라이브러리 및 프레임워크(예: Pandas, NumPy, Flask) 사용 능력" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Understanding of error handling using exceptions.", ko: "예외를 사용한 오류 처리에 대한 이해" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Familiarity with modules, packages, and Python's standard library.", ko: "모듈, 패키지 및 Python 표준 라이브러리에 대한 친숙함" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Writing a web scraper using libraries like BeautifulSoup or Scrapy.", ko: "BeautifulSoup 또는 Scrapy와 같은 라이브러리를 사용하여 웹 스크래퍼 작성" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Creating a simple web application using Flask or Django.", ko: "Flask 또는 Django를 사용하여 간단한 웹 애플리케이션 생성" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Data manipulation and analysis using Pandas and NumPy.", ko: "Pandas 및 NumPy를 사용한 데이터 조작 및 분석" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Implementing algorithms like sorting or searching.", ko: "정렬 또는 검색과 같은 알고리즘 구현" }, weight: 2, active: false },
+    { level: "Advanced", description: { en: "Proficient in working with complex data structures (e.g., generators, iterators).", ko: "복잡한 데이터 구조(예: 제너레이터, 반복자) 작업에 능숙함" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Expert in OOP, design patterns, and advanced Python concepts (e.g., decorators, context managers).", ko: "OOP, 디자인 패턴 및 고급 Python 개념(예: 데코레이터, 컨텍스트 매니저)에 대한 전문 지식" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Proficiency in performance optimization (e.g., time complexity, memory usage).", ko: "성능 최적화(예: 시간 복잡도, 메모리 사용량)에 대한 숙련도" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Understanding concurrency and parallelism (using threading, multiprocessing, async/await).", ko: "동시성 및 병렬성 이해(스레딩, 멀티프로세싱, async/await 사용)" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Experience with debugging, testing (unit tests, integration tests), and version control (e.g., Git).", ko: "디버깅, 테스트(단위 테스트, 통합 테스트) 및 버전 관리(예: Git)에 대한 경험" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Developing a large-scale application with efficient data handling.", ko: "효율적인 데이터 처리를 갖춘 대규모 애플리케이션 개발" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Building and maintaining APIs with complex architectures.", ko: "복잡한 아키텍처를 갖춘 API 구축 및 유지 관리" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Writing unit tests and utilizing continuous integration (CI/CD).", ko: "단위 테스트 작성 및 지속적 통합(CI/CD) 활용" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Implementing machine learning models with libraries like TensorFlow or PyTorch.", ko: "TensorFlow 또는 PyTorch와 같은 라이브러리로 머신러닝 모델 구현" }, weight: 4, active: false },
+    { level: "Expert", description: { en: "Mastery of Python internals, such as memory management, garbage collection, and bytecode.", ko: "메모리 관리, 가비지 컬렉션 및 바이트코드와 같은 Python 내부 숙달" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Ability to contribute to Python core development or design custom libraries and tools.", ko: "Python 핵심 개발에 기여하거나 맞춤형 라이브러리 및 도구를 설계하는 능력" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Deep understanding of multithreading, asynchronous programming, and distributed systems.", ko: "멀티스레딩, 비동기 프로그래밍 및 분산 시스템에 대한 깊은 이해" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Familiarity with low-level programming concepts (e.g., interfacing Python with C/C++).", ko: "저수준 프로그래밍 개념(예: Python과 C/C++ 인터페이싱)에 대한 친숙함" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Knowledge of various domains such as web development, machine learning, automation, data science, and scripting.", ko: "웹 개발, 머신러닝, 자동화, 데이터 사이언스 및 스크립팅과 같은 다양한 도메인에 대한 지식" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Designing complex, scalable systems and APIs for production.", ko: "프로덕션을 위한 복잡하고 확장 가능한 시스템 및 API 설계" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Implementing and optimizing large-scale machine learning pipelines.", ko: "대규모 머신러닝 파이프라인 구현 및 최적화" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Contributing to open-source Python projects or writing custom Python extensions.", ko: "오픈소스 Python 프로젝트에 기여하거나 맞춤형 Python 확장 작성" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Identify bottlenecks, profile code, and implement optimizations using tools like cProfile, timeit, and optimizing with techniques such as just-in-time compilation (e.g., using Numba or Cython).", ko: "병목 현상 식별, 코드 프로파일링 및 cProfile, timeit과 같은 도구를 사용한 최적화 구현, JIT 컴파일(예: Numba 또는 Cython 사용)과 같은 기술로 최적화" }, weight: 8, active: false },
   ];
 
   const sqlSkills = [
-    { level: "Beginner", description: "Understanding basic SQL syntax and queries.", weight: 1, active: false },
-    { level: "Beginner", description: "Ability to create simple queries to retrieve data using SELECT, WHERE, and ORDER BY clauses.", weight: 1, active: false },
-    { level: "Beginner", description: "Familiarity with basic data operations like INSERT, UPDATE, and DELETE.", weight: 1, active: false },
-    { level: "Beginner", description: "Basic knowledge of filtering data with operators like =, >, <, LIKE, and IN.", weight: 1, active: false },
-    { level: "Beginner", description: "Writing a query to select data from a table based on specific conditions.", weight: 1, active: false },
-    { level: "Beginner", description: "Sorting and filtering results using ORDER BY and WHERE.", weight: 1, active: false },
-    { level: "Beginner", description: "Inserting new rows into a table.", weight: 1, active: false },
-    { level: "Beginner", description: "Familiarity with one of common SQL connection libraries (e.g., psycopg2, SQLAlchemy, JDBC, mysql).", weight: 1, active: false },
-    { level: "Beginner", description: "Basic ability to automate repetitive data related tasks with simple scripts in Python or R.", weight: 1, active: false },
-    { level: "Intermediate", description: "Proficiency with JOIN operations (INNER, LEFT, RIGHT, FULL OUTER) to combine data from multiple tables.", weight: 2, active: false },
-    { level: "Intermediate", description: "Ability to group and aggregate data using GROUP BY and aggregate functions (COUNT, SUM, AVG, MAX, MIN).", weight: 2, active: false },
-    { level: "Intermediate", description: "Understanding of subqueries and nested queries.", weight: 2, active: false },
-    { level: "Intermediate", description: "Knowledge of database constraints (e.g., primary keys, foreign keys, unique constraints) and indexes.", weight: 2, active: false },
-    { level: "Intermediate", description: "Experience with database normalization and designing relational database schemas.", weight: 2, active: false },
-    { level: "Intermediate", description: "Joining multiple tables to retrieve related data.", weight: 2, active: false },
-    { level: "Intermediate", description: "Writing queries to summarize data using group functions like COUNT or SUM.", weight: 2, active: false },
-    { level: "Intermediate", description: "Creating database tables and defining relationships between them.", weight: 2, active: false },
-    { level: "Intermediate", description: "Can use SSMS, DataGrip and DBeaver to interact with databases, execute queries, and manage database objects. Familiar with their user interfaces, including how to connect to a database, navigate schemas, and run SQL scripts.", weight: 2, active: false },
-    { level: "Advanced", description: "Advanced query optimization techniques to improve query performance (e.g., indexing, query plans).", weight: 4, active: false },
-    { level: "Advanced", description: "Ability to write complex stored procedures, functions, and triggers.", weight: 4, active: false },
-    { level: "Advanced", description: "Proficiency in advanced SQL features like WITH (CTE, Common Table Expressions) and window functions (e.g., ROW_NUMBER(), RANK()).", weight: 4, active: false },
-    { level: "Advanced", description: "Knowledge of database transactions, ACID properties, and handling concurrency and isolation levels.", weight: 4, active: false },
-    { level: "Advanced", description: "Proficient in database security, user roles, and permissions management.", weight: 4, active: false },
-    { level: "Advanced", description: "Ability to design normalized database schemas, ensuring data integrity and optimizing for scalability and performance.", weight: 4, active: false },
-    { level: "Advanced", description: "Optimizing slow queries by analyzing query plans and using appropriate indexing.", weight: 4, active: false },
-    { level: "Advanced", description: "Implementing transaction-safe SQL queries and managing concurrency.", weight: 4, active: false },
-    { level: "Advanced", description: "Proficiency in designing and optimizing extract, transform, load (ETL) processes, and managing data in data warehouses.", weight: 4, active: false },
-    { level: "Expert", description: "Deep understanding of database architecture and internals (e.g., how indexes work, locking mechanisms, execution plans).", weight: 8, active: false },
-    { level: "Expert", description: "Proficiency in advanced optimization techniques and tuning complex queries for performance.", weight: 8, active: false },
-    { level: "Expert", description: "Ability to manage and configure database replication, backup, recovery, and high availability setups.", weight: 8, active: false },
-    { level: "Expert", description: "Designing and implementing highly scalable database architectures for enterprise applications.", weight: 8, active: false },
-    { level: "Expert", description: "Performing complex query optimization and database tuning for high-performance systems.", weight: 8, active: false },
-    { level: "Expert", description: "Configuring and maintaining database clusters and replication systems.", weight: 8, active: false },
-    { level: "Expert", description: "Expertise in handling large-scale databases: Ability to manage, optimize, and maintain large databases with billions of rows, ensuring performance and reliability.", weight: 8, active: false },
-    { level: "Expert", description: "Proficiency in NoSQL databases: Deep understanding of non-relational databases (e.g., MongoDB, Cassandra), and when to use them for different use cases compared to traditional SQL databases.", weight: 8, active: false },
+    { level: "Beginner", description: { en: "Understanding basic SQL syntax and queries.", ko: "기본 SQL 구문 및 쿼리 이해" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Ability to create simple queries to retrieve data using SELECT, WHERE, and ORDER BY clauses.", ko: "SELECT, WHERE 및 ORDER BY 절을 사용하여 데이터를 검색하는 간단한 쿼리 작성 능력" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Familiarity with basic data operations like INSERT, UPDATE, and DELETE.", ko: "INSERT, UPDATE 및 DELETE와 같은 기본 데이터 작업에 대한 친숙함" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Basic knowledge of filtering data with operators like =, >, <, LIKE, and IN.", ko: "=, >, <, LIKE 및 IN과 같은 연산자를 사용한 데이터 필터링에 대한 기본 지식" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Writing a query to select data from a table based on specific conditions.", ko: "특정 조건에 따라 테이블에서 데이터를 선택하는 쿼리 작성" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Sorting and filtering results using ORDER BY and WHERE.", ko: "ORDER BY 및 WHERE를 사용하여 결과 정렬 및 필터링" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Inserting new rows into a table.", ko: "테이블에 새 행 삽입" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Familiarity with one of common SQL connection libraries (e.g., psycopg2, SQLAlchemy, JDBC, mysql).", ko: "일반적인 SQL 연결 라이브러리(예: psycopg2, SQLAlchemy, JDBC, mysql) 중 하나에 대한 친숙함" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Basic ability to automate repetitive data related tasks with simple scripts in Python or R.", ko: "Python 또는 R의 간단한 스크립트로 반복적인 데이터 관련 작업을 자동화하는 기본 능력" }, weight: 1, active: false },
+    { level: "Intermediate", description: { en: "Proficiency with JOIN operations (INNER, LEFT, RIGHT, FULL OUTER) to combine data from multiple tables.", ko: "여러 테이블의 데이터를 결합하기 위한 JOIN 작업(INNER, LEFT, RIGHT, FULL OUTER)에 대한 숙련도" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Ability to group and aggregate data using GROUP BY and aggregate functions (COUNT, SUM, AVG, MAX, MIN).", ko: "GROUP BY 및 집계 함수(COUNT, SUM, AVG, MAX, MIN)를 사용하여 데이터를 그룹화하고 집계하는 능력" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Understanding of subqueries and nested queries.", ko: "서브쿼리 및 중첩 쿼리에 대한 이해" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Knowledge of database constraints (e.g., primary keys, foreign keys, unique constraints) and indexes.", ko: "데이터베이스 제약 조건(예: 기본 키, 외래 키, 고유 제약 조건) 및 인덱스에 대한 지식" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Experience with database normalization and designing relational database schemas.", ko: "데이터베이스 정규화 및 관계형 데이터베이스 스키마 설계 경험" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Joining multiple tables to retrieve related data.", ko: "관련 데이터를 검색하기 위해 여러 테이블 조인" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Writing queries to summarize data using group functions like COUNT or SUM.", ko: "COUNT 또는 SUM과 같은 그룹 함수를 사용하여 데이터를 요약하는 쿼리 작성" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Creating database tables and defining relationships between them.", ko: "데이터베이스 테이블 생성 및 관계 정의" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Can use SSMS, DataGrip and DBeaver to interact with databases, execute queries, and manage database objects. Familiar with their user interfaces, including how to connect to a database, navigate schemas, and run SQL scripts.", ko: "SSMS, DataGrip 및 DBeaver를 사용하여 데이터베이스와 상호 작용하고 쿼리를 실행하며 데이터베이스 객체를 관리할 수 있음. 데이터베이스 연결, 스키마 탐색 및 SQL 스크립트 실행 방법을 포함한 사용자 인터페이스에 익숙함" }, weight: 2, active: false },
+    { level: "Advanced", description: { en: "Advanced query optimization techniques to improve query performance (e.g., indexing, query plans).", ko: "쿼리 성능을 향상시키기 위한 고급 쿼리 최적화 기술(예: 인덱싱, 쿼리 계획)" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Ability to write complex stored procedures, functions, and triggers.", ko: "복잡한 저장 프로시저, 함수 및 트리거 작성 능력" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Proficiency in advanced SQL features like WITH (CTE, Common Table Expressions) and window functions (e.g., ROW_NUMBER(), RANK()).", ko: "WITH(CTE, 공통 테이블 표현식) 및 윈도우 함수(예: ROW_NUMBER(), RANK())와 같은 고급 SQL 기능에 대한 숙련도" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Knowledge of database transactions, ACID properties, and handling concurrency and isolation levels.", ko: "데이터베이스 트랜잭션, ACID 속성 및 동시성 및 격리 수준 처리에 대한 지식" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Proficient in database security, user roles, and permissions management.", ko: "데이터베이스 보안, 사용자 역할 및 권한 관리에 능숙함" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Ability to design normalized database schemas, ensuring data integrity and optimizing for scalability and performance.", ko: "정규화된 데이터베이스 스키마를 설계하고 데이터 무결성을 보장하며 확장성과 성능을 최적화하는 능력" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Optimizing slow queries by analyzing query plans and using appropriate indexing.", ko: "쿼리 계획 분석 및 적절한 인덱싱을 사용하여 느린 쿼리 최적화" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Implementing transaction-safe SQL queries and managing concurrency.", ko: "트랜잭션 안전 SQL 쿼리 구현 및 동시성 관리" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Proficiency in designing and optimizing extract, transform, load (ETL) processes, and managing data in data warehouses.", ko: "ETL(추출, 변환, 로드) 프로세스 설계 및 최적화, 데이터 웨어하우스의 데이터 관리에 대한 숙련도" }, weight: 4, active: false },
+    { level: "Expert", description: { en: "Deep understanding of database architecture and internals (e.g., how indexes work, locking mechanisms, execution plans).", ko: "데이터베이스 아키텍처 및 내부(예: 인덱스 작동 방식, 잠금 메커니즘, 실행 계획)에 대한 깊은 이해" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Proficiency in advanced optimization techniques and tuning complex queries for performance.", ko: "고급 최적화 기술 및 성능을 위한 복잡한 쿼리 튜닝에 대한 숙련도" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Ability to manage and configure database replication, backup, recovery, and high availability setups.", ko: "데이터베이스 복제, 백업, 복구 및 고가용성 설정을 관리하고 구성하는 능력" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Designing and implementing highly scalable database architectures for enterprise applications.", ko: "엔터프라이즈 애플리케이션을 위한 고도로 확장 가능한 데이터베이스 아키텍처 설계 및 구현" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Performing complex query optimization and database tuning for high-performance systems.", ko: "고성능 시스템을 위한 복잡한 쿼리 최적화 및 데이터베이스 튜닝 수행" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Configuring and maintaining database clusters and replication systems.", ko: "데이터베이스 클러스터 및 복제 시스템 구성 및 유지 관리" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Expertise in handling large-scale databases: Ability to manage, optimize, and maintain large databases with billions of rows, ensuring performance and reliability.", ko: "대규모 데이터베이스 처리 전문 지식: 수십억 개의 행이 있는 대규모 데이터베이스를 관리, 최적화 및 유지 관리하여 성능과 안정성을 보장하는 능력" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Proficiency in NoSQL databases: Deep understanding of non-relational databases (e.g., MongoDB, Cassandra), and when to use them for different use cases compared to traditional SQL databases.", ko: "NoSQL 데이터베이스에 대한 숙련도: 비관계형 데이터베이스(예: MongoDB, Cassandra)에 대한 깊은 이해 및 기존 SQL 데이터베이스와 비교하여 다양한 사용 사례에 사용할 시기" }, weight: 8, active: false },
   ];
 
   const llmSkills = [
-    { level: "Beginner", description: "Basic understanding of LLMs, their capabilities, and common use cases (e.g., ChatGPT, Claude, GPT-4).", weight: 1, active: false },
-    { level: "Beginner", description: "Ability to write effective prompts to get desired outputs from LLMs.", weight: 1, active: false },
-    { level: "Beginner", description: "Familiarity with API-based LLM services (OpenAI API, Anthropic API, etc.).", weight: 1, active: false },
-    { level: "Beginner", description: "Understanding of tokens, context windows, and basic API parameters (temperature, max_tokens).", weight: 1, active: false },
-    { level: "Intermediate", description: "Experience integrating LLM APIs into applications with proper error handling and rate limiting.", weight: 2, active: false },
-    { level: "Intermediate", description: "Knowledge of prompt engineering techniques (few-shot learning, chain-of-thought, role prompting).", weight: 2, active: false },
-    { level: "Intermediate", description: "Understanding of embeddings and vector databases for semantic search and RAG (Retrieval-Augmented Generation).", weight: 2, active: false },
-    { level: "Intermediate", description: "Ability to implement streaming responses and handle long-running LLM requests.", weight: 2, active: false },
-    { level: "Intermediate", description: "Experience with function calling / tool use to extend LLM capabilities.", weight: 2, active: false },
-    { level: "Advanced", description: "Proficient in building RAG systems with document chunking, embedding strategies, and retrieval optimization.", weight: 4, active: false },
-    { level: "Advanced", description: "Experience fine-tuning or customizing LLMs for specific domains or tasks.", weight: 4, active: false },
-    { level: "Advanced", description: "Knowledge of LLM evaluation metrics, benchmarking, and testing strategies.", weight: 4, active: false },
-    { level: "Advanced", description: "Implementing multi-agent systems or orchestrating multiple LLM calls for complex workflows.", weight: 4, active: false },
-    { level: "Advanced", description: "Understanding of LLM security concerns (prompt injection, data leakage, content filtering).", weight: 4, active: false },
-    { level: "Expert", description: "Expertise in LLM architecture, attention mechanisms, and transformer models.", weight: 8, active: false },
-    { level: "Expert", description: "Experience with local LLM deployment, quantization, and optimization techniques.", weight: 8, active: false },
-    { level: "Expert", description: "Building production-grade LLM applications with monitoring, cost optimization, and scalability.", weight: 8, active: false },
-    { level: "Expert", description: "Contributing to open-source LLM frameworks or developing custom LLM solutions.", weight: 8, active: false },
+    { level: "Beginner", description: { en: "Basic understanding of LLMs, their capabilities, and common use cases (e.g., ChatGPT, Claude, GPT-4).", ko: "LLM, 기능 및 일반적인 사용 사례(예: ChatGPT, Claude, GPT-4)에 대한 기본 이해" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Ability to write effective prompts to get desired outputs from LLMs.", ko: "LLM에서 원하는 출력을 얻기 위한 효과적인 프롬프트 작성 능력" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Familiarity with API-based LLM services (OpenAI API, Anthropic API, etc.).", ko: "API 기반 LLM 서비스(OpenAI API, Anthropic API 등)에 대한 친숙함" }, weight: 1, active: false },
+    { level: "Beginner", description: { en: "Understanding of tokens, context windows, and basic API parameters (temperature, max_tokens).", ko: "토큰, 컨텍스트 윈도우 및 기본 API 매개변수(temperature, max_tokens)에 대한 이해" }, weight: 1, active: false },
+    { level: "Intermediate", description: { en: "Experience integrating LLM APIs into applications with proper error handling and rate limiting.", ko: "적절한 오류 처리 및 속도 제한을 통해 LLM API를 애플리케이션에 통합하는 경험" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Knowledge of prompt engineering techniques (few-shot learning, chain-of-thought, role prompting).", ko: "프롬프트 엔지니어링 기술(퓨샷 학습, 사고 사슬, 역할 프롬프팅)에 대한 지식" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Understanding of embeddings and vector databases for semantic search and RAG (Retrieval-Augmented Generation).", ko: "의미론적 검색 및 RAG(검색 증강 생성)를 위한 임베딩 및 벡터 데이터베이스에 대한 이해" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Ability to implement streaming responses and handle long-running LLM requests.", ko: "스트리밍 응답 구현 및 장기 실행 LLM 요청 처리 능력" }, weight: 2, active: false },
+    { level: "Intermediate", description: { en: "Experience with function calling / tool use to extend LLM capabilities.", ko: "LLM 기능을 확장하기 위한 함수 호출/도구 사용 경험" }, weight: 2, active: false },
+    { level: "Advanced", description: { en: "Proficient in building RAG systems with document chunking, embedding strategies, and retrieval optimization.", ko: "문서 청킹, 임베딩 전략 및 검색 최적화를 통한 RAG 시스템 구축에 능숙함" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Experience fine-tuning or customizing LLMs for specific domains or tasks.", ko: "특정 도메인 또는 작업에 대한 LLM 미세 조정 또는 사용자 정의 경험" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Knowledge of LLM evaluation metrics, benchmarking, and testing strategies.", ko: "LLM 평가 지표, 벤치마킹 및 테스트 전략에 대한 지식" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Implementing multi-agent systems or orchestrating multiple LLM calls for complex workflows.", ko: "복잡한 워크플로우를 위한 멀티 에이전트 시스템 구현 또는 여러 LLM 호출 오케스트레이션" }, weight: 4, active: false },
+    { level: "Advanced", description: { en: "Understanding of LLM security concerns (prompt injection, data leakage, content filtering).", ko: "LLM 보안 문제(프롬프트 주입, 데이터 유출, 콘텐츠 필터링)에 대한 이해" }, weight: 4, active: false },
+    { level: "Expert", description: { en: "Expertise in LLM architecture, attention mechanisms, and transformer models.", ko: "LLM 아키텍처, 어텐션 메커니즘 및 트랜스포머 모델에 대한 전문 지식" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Experience with local LLM deployment, quantization, and optimization techniques.", ko: "로컬 LLM 배포, 양자화 및 최적화 기술에 대한 경험" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Building production-grade LLM applications with monitoring, cost optimization, and scalability.", ko: "모니터링, 비용 최적화 및 확장성을 갖춘 프로덕션급 LLM 애플리케이션 구축" }, weight: 8, active: false },
+    { level: "Expert", description: { en: "Contributing to open-source LLM frameworks or developing custom LLM solutions.", ko: "오픈소스 LLM 프레임워크에 기여하거나 맞춤형 LLM 솔루션 개발" }, weight: 8, active: false },
   ];
 
   const [activeGroup, setActiveGroup] = useState("backend");
@@ -593,23 +593,18 @@ const App = () => {
         break;
       case "frontend":
         setSkills(frontendSkills);
-        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "dataScience":
         setSkills(dataScienceSkills);
-        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "python":
         setSkills(pythonSkills);
-        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "sql":
         setSkills(sqlSkills);
-        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "llm":
         setSkills(llmSkills);
-        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       default:
         break;
@@ -1003,10 +998,9 @@ const App = () => {
                   <button 
                     className="mobile-feature-btn" 
                     onClick={toggleLanguage}
-                    disabled={activeGroup !== 'backend'}
-                    title={language === 'en' ? 'Switch to Korean' : '영어로 전환'}
+                    title={language === 'en' ? 'Switch to Korean' : 'Switch to English'}
                   >
-                    <span className="feature-icon">{language === 'en' ? '🌐' : '한'}</span>
+                    <span className="feature-icon lang-icon">{language === 'en' ? 'EN' : 'KO'}</span>
                   </button>
                   <button className="mobile-feature-btn" disabled title="Dark Mode">
                     <span className="feature-icon">🌙</span>
@@ -1075,10 +1069,9 @@ const App = () => {
                   <button 
                     className="feature-btn" 
                     onClick={toggleLanguage}
-                    disabled={activeGroup !== 'backend'}
                   >
-                    <span className="feature-icon">{language === 'en' ? '🌐' : '한'}</span>
-                    {language === 'en' ? 'i18n' : '한국어'}
+                    <span className="feature-icon lang-icon">{language === 'en' ? 'EN' : 'KO'}</span>
+                    한국어
                   </button>
                   <button className="feature-btn" disabled>
                     <span className="feature-icon">🌙</span>
@@ -1095,7 +1088,7 @@ const App = () => {
                 </div>
 
                 <div className="feature-disclaimer">
-                  {activeGroup === 'backend' ? 'Dark Mode coming soon' : 'i18n (Backend only) & Dark Mode coming soon'}
+                  Dark Mode coming soon
                 </div>
               </div>
             </div>
@@ -1117,10 +1110,10 @@ const App = () => {
           <table className="skills-table">
             <thead>
               <tr>
-                <th className="col-level">{activeGroup === 'backend' ? getTranslation('level') : 'Level'}</th>
-                <th className="col-description">{activeGroup === 'backend' ? getTranslation('description') : 'Description'}</th>
-                <th className="col-weight">{activeGroup === 'backend' ? getTranslation('weight') : 'Weight'}</th>
-                <th className="col-toggle">{activeGroup === 'backend' ? getTranslation('active') : 'Active'}</th>
+                <th className="col-level">{getTranslation('level')}</th>
+                <th className="col-description">{getTranslation('description')}</th>
+                <th className="col-weight">{getTranslation('weight')}</th>
+                <th className="col-toggle">{getTranslation('active')}</th>
               </tr>
             </thead>
             <tbody>
@@ -1128,7 +1121,7 @@ const App = () => {
                 <tr key={index} className={`skill-row ${getLevelRowClass(skill.level)} ${skill.active ? "" : "inactive"}`}>
                   <td className="col-level">
                     <span className={`level-badge ${getLevelColor(skill.level)}`}>
-                      {activeGroup === 'backend' && language === 'ko' ? getTranslation(skill.level.toLowerCase()) : skill.level}
+                      {language === 'ko' ? getTranslation(skill.level.toLowerCase()) : skill.level}
                     </span>
                   </td>
                   <td className="col-description">{getDescription(skill)}</td>
