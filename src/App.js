@@ -361,6 +361,7 @@ const App = () => {
   const [navbarExpanded, setNavbarExpanded] = React.useState(false);
   const [batchActivationTime, setBatchActivationTime] = React.useState(null);
   const [language, setLanguage] = React.useState('en');
+  const [darkMode, setDarkMode] = React.useState(false);
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -681,6 +682,10 @@ const App = () => {
     setLanguage(prevLang => prevLang === 'en' ? 'ko' : 'en');
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev);
+  };
+
   const translations = {
     en: {
       level: 'Level',
@@ -991,7 +996,7 @@ const App = () => {
   };
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
       {scrolled && (
         <button 
           className="scroll-to-top-btn"
@@ -1016,8 +1021,12 @@ const App = () => {
                   >
                     <span className="feature-icon lang-icon">{language === 'en' ? 'EN' : 'KO'}</span>
                   </button>
-                  <button className="mobile-feature-btn" disabled title="Dark Mode">
-                    <span className="feature-icon">🌙</span>
+                  <button 
+                    className="mobile-feature-btn" 
+                    onClick={toggleDarkMode}
+                    title={darkMode ? 'Light Mode' : 'Dark Mode'}
+                  >
+                    <span className="feature-icon">{darkMode ? '☀️' : '🌙'}</span>
                   </button>
                   <button className="mobile-feature-btn" onClick={exportToPDF} title="Export PDF">
                     <span className="feature-icon pdf-icon">PDF</span>
@@ -1087,9 +1096,12 @@ const App = () => {
                     <span className="feature-icon lang-icon">{language === 'en' ? 'EN' : 'KO'}</span>
                     한국어
                   </button>
-                  <button className="feature-btn" disabled>
-                    <span className="feature-icon">🌙</span>
-                    Dark Mode
+                  <button 
+                    className="feature-btn" 
+                    onClick={toggleDarkMode}
+                  >
+                    <span className="feature-icon">{darkMode ? '☀️' : '🌙'}</span>
+                    {darkMode ? 'Light Mode' : 'Dark Mode'}
                   </button>
                   <button className="feature-btn" onClick={exportToPDF}>
                     <span className="feature-icon pdf-icon-desktop">PDF</span>
@@ -1101,9 +1113,6 @@ const App = () => {
                   </button>
                 </div>
 
-                <div className="feature-disclaimer">
-                  Dark Mode coming soon
-                </div>
               </div>
             </div>
 
