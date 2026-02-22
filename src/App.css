@@ -291,6 +291,7 @@ body::-webkit-scrollbar {
   padding: 1rem 1.25rem 0.75rem 1.25rem;
   align-items: center;
   justify-content: center;
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 
@@ -330,6 +331,7 @@ body::-webkit-scrollbar {
   padding: 1rem 1.25rem;
   background: #f8f9fa;
   justify-content: center;
+  transition: background 0.3s ease;
 }
 
 .feature-btn {
@@ -1251,6 +1253,15 @@ body::-webkit-scrollbar {
 
 .dark-mode .navbar-collapse {
   background: #2d2d2d;
+}
+
+.dark-mode .skill-tabs {
+  background: #252525;
+  border-bottom: 2px solid #3a3a3a;
+}
+
+.dark-mode .feature-buttons {
+  background: #252525;
 }
 
 .dark-mode .tab-button {
