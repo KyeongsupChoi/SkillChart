@@ -1094,7 +1094,7 @@ const App = () => {
                     onClick={toggleLanguage}
                   >
                     <span className="feature-icon lang-icon">{language === 'en' ? 'EN' : 'KO'}</span>
-                    한국어
+                    {language === 'en' ? '한국어' : 'English'}
                   </button>
                   <button 
                     className="feature-btn" 
