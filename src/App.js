@@ -364,18 +364,30 @@ const App = () => {
   const [darkMode, setDarkMode] = React.useState(false);
 
   React.useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // Set scrolled state when scrolled down for chart shrinking
-      setScrolled(currentScrollY > 50);
-      
-      setLastScrollY(currentScrollY);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const shouldBeScrolled = currentScrollY > 50;
+          
+          // Only update state if it actually changed
+          if (shouldBeScrolled !== scrolled) {
+            setScrolled(shouldBeScrolled);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, [scrolled, lastScrollY]);
 
   const toggleNavbar = () => {
     setNavbarExpanded(!navbarExpanded);

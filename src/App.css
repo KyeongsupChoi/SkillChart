@@ -91,7 +91,7 @@ body::-webkit-scrollbar {
   background: white;
   border-radius: 12px 12px 0 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, opacity 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
   transform: translateY(0);
   opacity: 1;
 }
@@ -105,18 +105,15 @@ body::-webkit-scrollbar {
 
 .sticky-header.hidden .header-grid {
   min-height: 100px;
-  transition: min-height 0.3s ease;
 }
 
 .sticky-header.hidden .flower-container svg {
   max-width: 50%;
   max-height: 50%;
-  transition: all 0.3s ease;
 }
 
 .sticky-header.hidden .header-right {
   padding: 0.25rem;
-  transition: padding 0.3s ease;
 }
 
 .header-grid {
@@ -124,7 +121,7 @@ body::-webkit-scrollbar {
   grid-template-columns: 2fr 1fr;
   gap: 0;
   min-height: 200px;
-  transition: min-height 0.3s ease;
+  transition: min-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .header-left {
@@ -141,7 +138,7 @@ body::-webkit-scrollbar {
   justify-content: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 0.5rem;
-  transition: padding 0.3s ease, background 0.3s ease;
+  transition: padding 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
 }
 
 .navbar-header {
@@ -419,7 +416,7 @@ body::-webkit-scrollbar {
 
 .flower-container svg {
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   max-width: 100%;
   max-height: 100%;
   width: 100%;
