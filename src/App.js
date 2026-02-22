@@ -18,7 +18,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, bat
 
   // Color mapping by level with gradients
   const colors = {
-    'Beginner': { base: '#86efac', light: '#bbf7d0', dark: '#4ade80', veryLight: '#d1fae5' },
+    'Beginner': { base: '#f9a8d4', light: '#fbcfe8', dark: '#ec4899', veryLight: '#fce7f3' },
     'Intermediate': { base: '#93c5fd', light: '#bfdbfe', dark: '#60a5fa', veryLight: '#dbeafe' },
     'Advanced': { base: '#fcd34d', light: '#fde68a', dark: '#fbbf24', veryLight: '#fef3c7' },
     'Expert': { base: '#fca5a5', light: '#fecaca', dark: '#f87171', veryLight: '#fee2e2' }

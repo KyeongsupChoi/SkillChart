@@ -516,7 +516,7 @@ body::-webkit-scrollbar {
 }
 
 .skill-row.level-beginner-row {
-  background-color: #f0f9f4;
+  background-color: #fce7f3;
 }
 
 .skill-row.level-intermediate-row {
@@ -571,8 +571,8 @@ body::-webkit-scrollbar {
 }
 
 .level-beginner {
-  background: #d4edda;
-  color: #155724;
+  background: #fce7f3;
+  color: #9d174d;
 }
 
 .level-intermediate {
