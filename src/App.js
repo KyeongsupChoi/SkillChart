@@ -3,7 +3,7 @@ import './App.css';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, batchActivationTime }) => {
+const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, batchActivationTime, getDescription }) => {
   const centerX = 150;
   const centerY = 150;
   const centerRadius = 25;
@@ -18,7 +18,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, bat
 
   // Color mapping by level with gradients
   const colors = {
-    'Beginner': { base: '#f9a8d4', light: '#fbcfe8', dark: '#ec4899', veryLight: '#fce7f3' },
+    'Beginner': { base: '#86efac', light: '#bbf7d0', dark: '#4ade80', veryLight: '#d1fae5' },
     'Intermediate': { base: '#93c5fd', light: '#bfdbfe', dark: '#60a5fa', veryLight: '#dbeafe' },
     'Advanced': { base: '#fcd34d', light: '#fde68a', dark: '#fbbf24', veryLight: '#fef3c7' },
     'Expert': { base: '#fca5a5', light: '#fecaca', dark: '#f87171', veryLight: '#fee2e2' }
@@ -193,7 +193,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, bat
             pointerEvents: skill.active ? 'auto' : 'none',
           }}
         >
-          <title>{`${level} (Weight: ${skill.weight}): ${skill.description.substring(0, 60)}...`}</title>
+          <title>{`${level} (Weight: ${skill.weight}): ${getDescription(skill).substring(0, 60)}...`}</title>
         </path>
       );
       
@@ -360,6 +360,7 @@ const App = () => {
   const [lastScrollY, setLastScrollY] = React.useState(0);
   const [navbarExpanded, setNavbarExpanded] = React.useState(false);
   const [batchActivationTime, setBatchActivationTime] = React.useState(null);
+  const [language, setLanguage] = React.useState('en');
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -380,41 +381,41 @@ const App = () => {
   };
 
   const backendSkills = [
-    { level: 'Beginner', description: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, PHP, Java, C#, Ruby)', weight: 1, active: false },
-    { level: 'Beginner', description: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Ability to set up a simple server using frameworks like Flask, Express, or Django.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Basic understanding of databases (SQL or NoSQL) and how to perform CRUD operations (Create, Read, Update, Delete).', weight: 1, active: false },
-    { level: 'Beginner', description: 'Awareness of RESTful API concepts and how to create simple endpoints.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Setting up a simple web server that responds to HTTP requests.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Implementing basic user authentication and handling form data.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Writing API endpoints that interact with a database.', weight: 1, active: false },
-    { level: 'Beginner', description: 'Implementing data validation and error handling for user input before storing it in the database, ensuring data integrity and security.', weight: 1, active: false },
-    { level: 'Intermediate', description: 'Proficient in designing and implementing RESTful APIs with CRUD functionality.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Understanding of relational databases (e.g., MySQL, PostgreSQL) and NoSQL databases (e.g., MongoDB, Redis), including schema design, relationships, and indexing.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Familiar with middleware, routing, and handling file uploads.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Knowledge of authentication methods like OAuth, JWT, and sessions.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Experience with version control systems (e.g., Git) and basic knowledge of continuous integration and deployment (CI/CD).', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Developing an API for user management (e.g., authentication, authorization).', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Setting up middleware for logging, error handling, and security in a web application.', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Connecting your backend with external services via APIs (e.g., payment gateways, third-party APIs).', weight: 2, active: false },
-    { level: 'Intermediate', description: 'Designing a relational database schema and optimizing queries.', weight: 2, active: false },
-    { level: 'Advanced', description: 'Proficiency in implementing robust authentication and authorization mechanisms, such as Single Sign-On (SSO) and Role-Based Access Control (RBAC), to ensure secure access management.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Knowledge of microservices architecture and ability to design and develop microservices-based applications.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Proficient in using messaging queues (e.g., RabbitMQ, Kafka) for asynchronous processing and communication.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Experience with cloud infrastructure (e.g., AWS, Google Cloud, Azure), containerization (Docker), and orchestration tools (Kubernetes).', weight: 4, active: false },
-    { level: 'Advanced', description: 'Understanding of caching strategies, load balancing, and scaling backend systems to handle high traffic.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Designing and deploying a microservices-based architecture with services that communicate asynchronously.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Setting up continuous integration/continuous deployment (CI/CD) pipelines for automated testing and deployment.', weight: 4, active: false },
-    { level: 'Advanced', description: 'Implementing caching strategies (e.g., Redis, Memcached) to optimize API performance.', weight: 4, active: false },
-    { level: 'Expert', description: 'Mastery of distributed systems, including managing data consistency, eventual consistency, and CAP theorem implications.', weight: 8, active: false },
-    { level: 'Expert', description: 'Expertise in backend architecture patterns (e.g., event-driven architecture, CQRS, serverless) for complex and high-traffic systems.', weight: 8, active: false },
-    { level: 'Expert', description: 'Deep knowledge of security best practices, including encryption, secure communication, and data protection in large-scale applications.', weight: 8, active: false },
-    { level: 'Expert', description: 'Extensive experience with database replication, sharding, and high availability setups.', weight: 8, active: false },
-    { level: 'Expert', description: 'Ability to lead backend development teams, perform code reviews, and ensure code quality standards.', weight: 8, active: false },
-    { level: 'Expert', description: 'Familiarity with DevOps tools and practices, including Infrastructure as Code (IaC) and full automation of deployment pipelines.', weight: 8, active: false },
-    { level: 'Expert', description: 'Architecting large-scale distributed systems with fault-tolerant and highly available components.', weight: 8, active: false },
-    { level: 'Expert', description: 'Implementing advanced security mechanisms like end-to-end encryption and secure API gateways.', weight: 8, active: false },
-    { level: 'Expert', description: 'Leading a backend development team, defining project architecture, and overseeing codebase and deployment strategies.', weight: 8, active: false }
+    { level: 'Beginner', description: { en: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, PHP, Java, C#, Ruby)', ko: '서버 측 프로그래밍 언어에 대한 기본 이해 (예: Python, Node.js, PHP, Java, C#, Ruby)' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', ko: 'HTTP 프로토콜, 요청/응답 주기 및 기본 클라이언트-서버 아키텍처에 대한 이해' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Ability to set up a simple server using frameworks like Flask, Express, or Django.', ko: 'Flask, Express 또는 Django와 같은 프레임워크를 사용하여 간단한 서버를 설정하는 능력' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Basic understanding of databases (SQL or NoSQL) and how to perform CRUD operations (Create, Read, Update, Delete).', ko: '데이터베이스(SQL 또는 NoSQL)에 대한 기본 이해 및 CRUD 작업(생성, 읽기, 업데이트, 삭제) 수행 방법' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Awareness of RESTful API concepts and how to create simple endpoints.', ko: 'RESTful API 개념에 대한 인식 및 간단한 엔드포인트 생성 방법' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Setting up a simple web server that responds to HTTP requests.', ko: 'HTTP 요청에 응답하는 간단한 웹 서버 설정' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Implementing basic user authentication and handling form data.', ko: '기본 사용자 인증 구현 및 양식 데이터 처리' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Writing API endpoints that interact with a database.', ko: '데이터베이스와 상호 작용하는 API 엔드포인트 작성' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Implementing data validation and error handling for user input before storing it in the database, ensuring data integrity and security.', ko: '데이터베이스에 저장하기 전에 사용자 입력에 대한 데이터 검증 및 오류 처리를 구현하여 데이터 무결성과 보안 보장' }, weight: 1, active: false },
+    { level: 'Intermediate', description: { en: 'Proficient in designing and implementing RESTful APIs with CRUD functionality.', ko: 'CRUD 기능을 갖춘 RESTful API 설계 및 구현에 능숙함' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Understanding of relational databases (e.g., MySQL, PostgreSQL) and NoSQL databases (e.g., MongoDB, Redis), including schema design, relationships, and indexing.', ko: '관계형 데이터베이스(예: MySQL, PostgreSQL) 및 NoSQL 데이터베이스(예: MongoDB, Redis)에 대한 이해, 스키마 설계, 관계 및 인덱싱 포함' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Familiar with middleware, routing, and handling file uploads.', ko: '미들웨어, 라우팅 및 파일 업로드 처리에 익숙함' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Knowledge of authentication methods like OAuth, JWT, and sessions.', ko: 'OAuth, JWT 및 세션과 같은 인증 방법에 대한 지식' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Experience with version control systems (e.g., Git) and basic knowledge of continuous integration and deployment (CI/CD).', ko: '버전 관리 시스템(예: Git)에 대한 경험과 지속적 통합 및 배포(CI/CD)에 대한 기본 지식' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Developing an API for user management (e.g., authentication, authorization).', ko: '사용자 관리를 위한 API 개발(예: 인증, 권한 부여)' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Setting up middleware for logging, error handling, and security in a web application.', ko: '웹 애플리케이션에서 로깅, 오류 처리 및 보안을 위한 미들웨어 설정' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Connecting your backend with external services via APIs (e.g., payment gateways, third-party APIs).', ko: 'API를 통해 백엔드를 외부 서비스(예: 결제 게이트웨이, 타사 API)와 연결' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Designing a relational database schema and optimizing queries.', ko: '관계형 데이터베이스 스키마 설계 및 쿼리 최적화' }, weight: 2, active: false },
+    { level: 'Advanced', description: { en: 'Proficiency in implementing robust authentication and authorization mechanisms, such as Single Sign-On (SSO) and Role-Based Access Control (RBAC), to ensure secure access management.', ko: '단일 로그인(SSO) 및 역할 기반 액세스 제어(RBAC)와 같은 강력한 인증 및 권한 부여 메커니즘 구현에 능숙하여 안전한 액세스 관리 보장' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Knowledge of microservices architecture and ability to design and develop microservices-based applications.', ko: '마이크로서비스 아키텍처에 대한 지식과 마이크로서비스 기반 애플리케이션을 설계 및 개발하는 능력' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Proficient in using messaging queues (e.g., RabbitMQ, Kafka) for asynchronous processing and communication.', ko: '비동기 처리 및 통신을 위해 메시지 큐(예: RabbitMQ, Kafka) 사용에 능숙함' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Experience with cloud infrastructure (e.g., AWS, Google Cloud, Azure), containerization (Docker), and orchestration tools (Kubernetes).', ko: '클라우드 인프라(예: AWS, Google Cloud, Azure), 컨테이너화(Docker) 및 오케스트레이션 도구(Kubernetes)에 대한 경험' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Understanding of caching strategies, load balancing, and scaling backend systems to handle high traffic.', ko: '캐싱 전략, 로드 밸런싱 및 높은 트래픽을 처리하기 위한 백엔드 시스템 확장에 대한 이해' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Designing and deploying a microservices-based architecture with services that communicate asynchronously.', ko: '비동기적으로 통신하는 서비스를 사용하여 마이크로서비스 기반 아키텍처 설계 및 배포' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Setting up continuous integration/continuous deployment (CI/CD) pipelines for automated testing and deployment.', ko: '자동화된 테스트 및 배포를 위한 지속적 통합/지속적 배포(CI/CD) 파이프라인 설정' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Implementing caching strategies (e.g., Redis, Memcached) to optimize API performance.', ko: 'API 성능을 최적화하기 위한 캐싱 전략(예: Redis, Memcached) 구현' }, weight: 4, active: false },
+    { level: 'Expert', description: { en: 'Mastery of distributed systems, including managing data consistency, eventual consistency, and CAP theorem implications.', ko: '데이터 일관성, 최종 일관성 및 CAP 정리의 의미를 관리하는 것을 포함한 분산 시스템 숙달' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Expertise in backend architecture patterns (e.g., event-driven architecture, CQRS, serverless) for complex and high-traffic systems.', ko: '복잡하고 트래픽이 많은 시스템을 위한 백엔드 아키텍처 패턴(예: 이벤트 중심 아키텍처, CQRS, 서버리스)에 대한 전문 지식' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Deep knowledge of security best practices, including encryption, secure communication, and data protection in large-scale applications.', ko: '대규모 애플리케이션에서 암호화, 보안 통신 및 데이터 보호를 포함한 보안 모범 사례에 대한 깊은 지식' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Extensive experience with database replication, sharding, and high availability setups.', ko: '데이터베이스 복제, 샤딩 및 고가용성 설정에 대한 광범위한 경험' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Ability to lead backend development teams, perform code reviews, and ensure code quality standards.', ko: '백엔드 개발 팀을 이끌고 코드 검토를 수행하며 코드 품질 표준을 보장하는 능력' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Familiarity with DevOps tools and practices, including Infrastructure as Code (IaC) and full automation of deployment pipelines.', ko: 'Infrastructure as Code(IaC) 및 배포 파이프라인의 완전 자동화를 포함한 DevOps 도구 및 관행에 대한 친숙함' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Architecting large-scale distributed systems with fault-tolerant and highly available components.', ko: '내결함성과 고가용성 구성 요소를 갖춘 대규모 분산 시스템 설계' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Implementing advanced security mechanisms like end-to-end encryption and secure API gateways.', ko: '종단 간 암호화 및 보안 API 게이트웨이와 같은 고급 보안 메커니즘 구현' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Leading a backend development team, defining project architecture, and overseeing codebase and deployment strategies.', ko: '백엔드 개발 팀을 이끌고 프로젝트 아키텍처를 정의하며 코드베이스 및 배포 전략을 감독' }, weight: 8, active: false }
   ];
 
   const frontendSkills = [
@@ -592,18 +593,23 @@ const App = () => {
         break;
       case "frontend":
         setSkills(frontendSkills);
+        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "dataScience":
         setSkills(dataScienceSkills);
+        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "python":
         setSkills(pythonSkills);
+        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "sql":
         setSkills(sqlSkills);
+        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       case "llm":
         setSkills(llmSkills);
+        setLanguage('en'); // Reset to English for non-backend tabs
         break;
       default:
         break;
@@ -656,6 +662,44 @@ const App = () => {
     setTimeout(() => {
       setBatchActivationTime(null);
     }, skills.length * 300 + 1000); // Total animation time + buffer
+  };
+
+  const toggleLanguage = () => {
+    setLanguage(prevLang => prevLang === 'en' ? 'ko' : 'en');
+  };
+
+  const translations = {
+    en: {
+      level: 'Level',
+      description: 'Description',
+      weight: 'Weight',
+      active: 'Active',
+      beginner: 'Beginner',
+      intermediate: 'Intermediate',
+      advanced: 'Advanced',
+      expert: 'Expert'
+    },
+    ko: {
+      level: '레벨',
+      description: '설명',
+      weight: '가중치',
+      active: '활성',
+      beginner: '초급',
+      intermediate: '중급',
+      advanced: '고급',
+      expert: '전문가'
+    }
+  };
+
+  const getDescription = (skill) => {
+    if (typeof skill.description === 'object') {
+      return skill.description[language] || skill.description.en;
+    }
+    return skill.description;
+  };
+
+  const getTranslation = (key) => {
+    return translations[language][key] || key;
   };
 
   const exportToPDF = async () => {
@@ -808,7 +852,7 @@ const App = () => {
             
             // Wrap text to fit within margins
             const maxWidth = pageWidth - (2 * margin);
-            const lines = pdf.splitTextToSize(`${index + 1}. ${skill.description} (Weight: ${skill.weight})`, maxWidth);
+            const lines = pdf.splitTextToSize(`${index + 1}. ${getDescription(skill)} (Weight: ${skill.weight})`, maxWidth);
             
             lines.forEach(line => {
               if (yPos > pageHeight - 15) {
@@ -956,8 +1000,13 @@ const App = () => {
                 <h1 className="navbar-brand">SkillChart</h1>
                 
                 <div className="mobile-feature-buttons">
-                  <button className="mobile-feature-btn" disabled title="i18n">
-                    <span className="feature-icon">🌐</span>
+                  <button 
+                    className="mobile-feature-btn" 
+                    onClick={toggleLanguage}
+                    disabled={activeGroup !== 'backend'}
+                    title={language === 'en' ? 'Switch to Korean' : '영어로 전환'}
+                  >
+                    <span className="feature-icon">{language === 'en' ? '🌐' : '한'}</span>
                   </button>
                   <button className="mobile-feature-btn" disabled title="Dark Mode">
                     <span className="feature-icon">🌙</span>
@@ -1023,9 +1072,13 @@ const App = () => {
                 </nav>
 
                 <div className="feature-buttons">
-                  <button className="feature-btn" disabled>
-                    <span className="feature-icon">🌐</span>
-                    i18n
+                  <button 
+                    className="feature-btn" 
+                    onClick={toggleLanguage}
+                    disabled={activeGroup !== 'backend'}
+                  >
+                    <span className="feature-icon">{language === 'en' ? '🌐' : '한'}</span>
+                    {language === 'en' ? 'i18n' : '한국어'}
                   </button>
                   <button className="feature-btn" disabled>
                     <span className="feature-icon">🌙</span>
@@ -1042,7 +1095,7 @@ const App = () => {
                 </div>
 
                 <div className="feature-disclaimer">
-                  i18n & Dark Mode coming soon
+                  {activeGroup === 'backend' ? 'Dark Mode coming soon' : 'i18n (Backend only) & Dark Mode coming soon'}
                 </div>
               </div>
             </div>
@@ -1054,6 +1107,7 @@ const App = () => {
                 maxScore={maxScore} 
                 onActivateAll={toggleAllSkills}
                 batchActivationTime={batchActivationTime}
+                getDescription={getDescription}
               />
             </div>
           </div>
@@ -1063,10 +1117,10 @@ const App = () => {
           <table className="skills-table">
             <thead>
               <tr>
-                <th className="col-level">Level</th>
-                <th className="col-description">Description</th>
-                <th className="col-weight">Weight</th>
-                <th className="col-toggle">Active</th>
+                <th className="col-level">{activeGroup === 'backend' ? getTranslation('level') : 'Level'}</th>
+                <th className="col-description">{activeGroup === 'backend' ? getTranslation('description') : 'Description'}</th>
+                <th className="col-weight">{activeGroup === 'backend' ? getTranslation('weight') : 'Weight'}</th>
+                <th className="col-toggle">{activeGroup === 'backend' ? getTranslation('active') : 'Active'}</th>
               </tr>
             </thead>
             <tbody>
@@ -1074,10 +1128,10 @@ const App = () => {
                 <tr key={index} className={`skill-row ${getLevelRowClass(skill.level)} ${skill.active ? "" : "inactive"}`}>
                   <td className="col-level">
                     <span className={`level-badge ${getLevelColor(skill.level)}`}>
-                      {skill.level}
+                      {activeGroup === 'backend' && language === 'ko' ? getTranslation(skill.level.toLowerCase()) : skill.level}
                     </span>
                   </td>
-                  <td className="col-description">{skill.description}</td>
+                  <td className="col-description">{getDescription(skill)}</td>
                   <td className="col-weight">{skill.weight}</td>
                   <td className="col-toggle">
                     <label className="checkbox-wrapper">

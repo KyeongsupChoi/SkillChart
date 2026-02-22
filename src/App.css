@@ -210,6 +210,12 @@ body::-webkit-scrollbar {
   letter-spacing: 0.5px;
 }
 
+.mobile-feature-btn .feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .navbar-toggler {
   display: none;
   flex-direction: column;
@@ -516,7 +522,7 @@ body::-webkit-scrollbar {
 }
 
 .skill-row.level-beginner-row {
-  background-color: #fce7f3;
+  background-color: #f0f9f4;
 }
 
 .skill-row.level-intermediate-row {
@@ -571,8 +577,8 @@ body::-webkit-scrollbar {
 }
 
 .level-beginner {
-  background: #fce7f3;
-  color: #9d174d;
+  background: #d4edda;
+  color: #155724;
 }
 
 .level-intermediate {
