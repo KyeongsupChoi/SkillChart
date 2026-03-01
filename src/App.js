@@ -746,172 +746,148 @@ const App = () => {
 
   const exportToPDF = async () => {
     try {
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const margin = 15;
-      
-      // Add header
-      pdf.setFontSize(24);
-      pdf.setTextColor(102, 126, 234);
-      pdf.text('SkillChart', margin, 20);
-      
-      // Format category name
+      const isKorean = language === 'ko';
       const categoryName = getTranslation(activeGroup);
-      
-      pdf.setFontSize(12);
-      pdf.setTextColor(100, 100, 100);
-      pdf.text(`Category: ${categoryName}`, margin, 28);
-      
-      // Add score summary
-      pdf.setFontSize(14);
-      pdf.setTextColor(50, 50, 50);
-      pdf.text(`Total Score: ${totalScore} / ${maxScore} (${percentage}%)`, margin, 38);
-      
-      // Capture the chart using SVG to data URL conversion
+
+      // --- Build PDF content as HTML so the browser renders all text (including Korean) ---
+      const container = document.createElement('div');
+      container.style.cssText =
+        'position:fixed;left:-9999px;top:0;width:595px;background:#fff;' +
+        'padding:40px 40px 20px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Malgun Gothic","맑은 고딕",sans-serif;color:#333;';
+      document.body.appendChild(container);
+
+      let html = '';
+
+      // Header
+      html += '<h1 style="color:#667eea;margin:0 0 4px;font-size:28px;">SkillChart</h1>';
+      html += `<p style="color:#666;margin:0 0 8px;font-size:14px;">${isKorean ? '카테고리' : 'Category'}: ${categoryName}</p>`;
+      html += `<p style="color:#333;margin:0 0 16px;font-size:16px;font-weight:600;">${isKorean ? '총점' : 'Total Score'}: ${totalScore} / ${maxScore} (${percentage}%)</p>`;
+
+      // Capture chart as data-URL and embed in the HTML
       const chartElement = document.querySelector('.flower-container svg');
       if (chartElement) {
         try {
-          // Get the SVG's viewBox dimensions
-          const viewBox = chartElement.getAttribute('viewBox').split(' ');
-          const svgWidth = parseFloat(viewBox[2]);
-          const svgHeight = parseFloat(viewBox[3]);
-          
-          // Serialize SVG to string
           const svgData = new XMLSerializer().serializeToString(chartElement);
-          
-          // Create a canvas with padding for the chart
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
+          const chartCanvas = document.createElement('canvas');
+          const ctx = chartCanvas.getContext('2d');
           const padding = 40;
           const canvasSize = 600;
-          
-          canvas.width = canvasSize;
-          canvas.height = canvasSize;
-          
-          // Draw gradient background
+          chartCanvas.width = canvasSize;
+          chartCanvas.height = canvasSize;
+
           const gradient = ctx.createLinearGradient(0, 0, canvasSize, canvasSize);
           gradient.addColorStop(0, '#667eea');
           gradient.addColorStop(1, '#764ba2');
           ctx.fillStyle = gradient;
           ctx.fillRect(0, 0, canvasSize, canvasSize);
-          
-          // Load and draw SVG centered on canvas
+
           const img = new Image();
-          
           await new Promise((resolve, reject) => {
             img.onload = () => {
-              // Calculate centered position
-              const drawSize = canvasSize - (padding * 2);
-              const xOffset = padding;
-              const yOffset = padding;
-              
-              ctx.drawImage(img, xOffset, yOffset, drawSize, drawSize);
+              const drawSize = canvasSize - padding * 2;
+              ctx.drawImage(img, padding, padding, drawSize, drawSize);
               resolve();
             };
             img.onerror = reject;
-            
-            // Convert SVG to data URL
             const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-            const url = URL.createObjectURL(svgBlob);
-            img.src = url;
+            img.src = URL.createObjectURL(svgBlob);
           });
-          
-          const imgData = canvas.toDataURL('image/png');
-          const imgWidth = 80;
-          const imgHeight = 80;
-          const xPos = (pageWidth - imgWidth) / 2;
-          
-          pdf.addImage(imgData, 'PNG', xPos, 45, imgWidth, imgHeight);
+
+          const chartDataUrl = chartCanvas.toDataURL('image/png');
+          html += `<div style="text-align:center;margin:8px 0 16px;"><img src="${chartDataUrl}" style="width:240px;height:240px;" /></div>`;
         } catch (chartError) {
           console.warn('Could not capture chart, continuing without it:', chartError);
         }
       }
-      
-      // Add active skills list
-      let yPos = 135;
-      pdf.setFontSize(16);
-      pdf.setTextColor(50, 50, 50);
-      pdf.text('Active Skills', margin, yPos);
-      yPos += 8;
-      
-      // Group active skills by level
-      const activeByLevel = {
-        'Beginner': [],
-        'Intermediate': [],
-        'Advanced': [],
-        'Expert': []
-      };
-      
+
+      // Active skills section
+      html += `<h2 style="font-size:18px;margin:12px 0 8px;color:#333;">${isKorean ? '활성 스킬' : 'Active Skills'}</h2>`;
+
+      const activeByLevel = { Beginner: [], Intermediate: [], Advanced: [], Expert: [] };
       skills.forEach(skill => {
         if (skill.active && activeByLevel[skill.level]) {
           activeByLevel[skill.level].push(skill);
         }
       });
-      
-      // Add skills by level
-      const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
-      const levelColors = {
-        'Beginner': [134, 239, 172],
-        'Intermediate': [147, 197, 253],
-        'Advanced': [252, 211, 77],
-        'Expert': [252, 165, 165]
+
+      const levelTranslations = {
+        Beginner: isKorean ? '초급' : 'Beginner',
+        Intermediate: isKorean ? '중급' : 'Intermediate',
+        Advanced: isKorean ? '고급' : 'Advanced',
+        Expert: isKorean ? '전문가' : 'Expert',
       };
-      
-      levels.forEach(level => {
+      const levelColorMap = {
+        Beginner: '#86efac',
+        Intermediate: '#93c5fd',
+        Advanced: '#fcd34d',
+        Expert: '#fca5a5',
+      };
+      const skillsWord = isKorean ? '개 스킬' : 'skills';
+      const weightWord = isKorean ? '가중치' : 'Weight';
+
+      ['Beginner', 'Intermediate', 'Advanced', 'Expert'].forEach(level => {
         const skillsInLevel = activeByLevel[level];
         if (skillsInLevel.length > 0) {
-          // Check if we need a new page
-          if (yPos > pageHeight - 40) {
-            pdf.addPage();
-            yPos = 20;
-          }
-          
-          // Level header
-          pdf.setFontSize(12);
-          pdf.setTextColor(...levelColors[level]);
-          pdf.text(`${level} (${skillsInLevel.length} skills)`, margin, yPos);
-          yPos += 6;
-          
-          // Skills in this level
-          pdf.setFontSize(9);
-          pdf.setTextColor(60, 60, 60);
-          
+          html += `<h3 style="font-size:14px;color:${levelColorMap[level]};margin:10px 0 4px;">${levelTranslations[level]} (${skillsInLevel.length} ${skillsWord})</h3>`;
           skillsInLevel.forEach((skill, index) => {
-            // Check if we need a new page
-            if (yPos > pageHeight - 20) {
-              pdf.addPage();
-              yPos = 20;
-            }
-            
-            // Wrap text to fit within margins
-            const maxWidth = pageWidth - (2 * margin);
-            const lines = pdf.splitTextToSize(`${index + 1}. ${getDescription(skill)} (Weight: ${skill.weight})`, maxWidth);
-            
-            lines.forEach(line => {
-              if (yPos > pageHeight - 15) {
-                pdf.addPage();
-                yPos = 20;
-              }
-              pdf.text(line, margin + 3, yPos);
-              yPos += 5;
-            });
-            
-            yPos += 1;
+            html += `<p style="font-size:11px;color:#3c3c3c;margin:2px 0 2px 8px;">${index + 1}. ${getDescription(skill)} (${weightWord}: ${skill.weight})</p>`;
           });
-          
-          yPos += 3;
         }
       });
-      
-      // Add footer
-      const timestamp = new Date().toLocaleDateString();
-      pdf.setFontSize(8);
-      pdf.setTextColor(150, 150, 150);
-      pdf.text(`Generated on ${timestamp}`, margin, pageHeight - 10);
-      
-      // Save the PDF
-      pdf.save(`SkillChart_${categoryName.replace(/\s+/g, '_')}_${timestamp.replace(/\//g, '-')}.pdf`);
+
+      // Footer
+      const timestamp = new Date().toLocaleDateString(isKorean ? 'ko-KR' : undefined);
+      html += `<p style="color:#999;font-size:9px;margin-top:20px;">${isKorean ? '생성일' : 'Generated on'}: ${timestamp}</p>`;
+
+      container.innerHTML = html;
+
+      // --- Render the HTML container to a canvas via html2canvas ---
+      const rendered = await html2canvas(container, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
+
+      document.body.removeChild(container);
+
+      // --- Slice the canvas into A4 pages and add to jsPDF ---
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 15;
+      const contentWidth = pageWidth - 2 * margin;
+      const scale = contentWidth / rendered.width; // mm per canvas-pixel
+      const contentHeight = pageHeight - 2 * margin;
+      const sliceHeight = Math.floor(contentHeight / scale); // canvas-pixels per page
+
+      let yOffset = 0;
+      let pageNum = 0;
+
+      while (yOffset < rendered.height) {
+        if (pageNum > 0) pdf.addPage();
+
+        const remaining = rendered.height - yOffset;
+        const currentSlice = Math.min(sliceHeight, remaining);
+
+        // Create a canvas for this page slice
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = rendered.width;
+        pageCanvas.height = currentSlice;
+        const pctx = pageCanvas.getContext('2d');
+        pctx.drawImage(rendered, 0, yOffset, rendered.width, currentSlice, 0, 0, rendered.width, currentSlice);
+
+        const pageImgData = pageCanvas.toDataURL('image/png');
+        pdf.addImage(pageImgData, 'PNG', margin, margin, contentWidth, currentSlice * scale);
+
+        yOffset += sliceHeight;
+        pageNum++;
+      }
+
+      // Save with a filename safe for any locale
+      const safeCategory = categoryName.replace(/[^\w\s\u3131-\uD7AF-]/g, '').replace(/\s+/g, '_') || 'export';
+      const safeTimestamp = timestamp.replace(/[\/\.]/g, '-');
+      pdf.save(`SkillChart_${safeCategory}_${safeTimestamp}.pdf`);
     } catch (error) {
       console.error('Error generating PDF:', error);
       console.error('Error details:', error.message, error.stack);
