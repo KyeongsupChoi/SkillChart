@@ -1,15 +1,21 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SkillChart",
+  "name": "SkillChart - Developer Skills Evaluator",
+  "description": "Evaluate and communicate your development skills across Backend, Data Science, Python, SQL, and LLM/AI.",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "sclogo.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "sclogo.png",
+      "sizes": "707x668",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#667eea",
+  "background_color": "#667eea"
 }
