@@ -1512,3 +1512,282 @@ body::-webkit-scrollbar {
 .dark-mode .mobile-feature-btn .pdf-icon {
   color: #d0d0d0;
 }
+
+/* ============ Share Modal ============ */
+
+.share-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.share-modal {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 420px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.share-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.share-modal-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.share-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0 0.3rem;
+  line-height: 1;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.share-modal-close:hover {
+  color: #333;
+  background: #f0f0f0;
+}
+
+.share-preview {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.share-preview-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.share-preview-category {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.share-preview-score {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.share-platforms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.share-platform-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #444;
+  transition: all 0.2s ease;
+}
+
+.share-platform-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.share-platform-btn.twitter {
+  color: #000;
+}
+
+.share-platform-btn.twitter:hover {
+  background: #000;
+  color: white;
+  border-color: #000;
+}
+
+.share-platform-btn.linkedin {
+  color: #0A66C2;
+}
+
+.share-platform-btn.linkedin:hover {
+  background: #0A66C2;
+  color: white;
+  border-color: #0A66C2;
+}
+
+.share-platform-btn.facebook {
+  color: #1877F2;
+}
+
+.share-platform-btn.facebook:hover {
+  background: #1877F2;
+  color: white;
+  border-color: #1877F2;
+}
+
+.share-platform-btn.reddit {
+  color: #FF4500;
+}
+
+.share-platform-btn.reddit:hover {
+  background: #FF4500;
+  color: white;
+  border-color: #FF4500;
+}
+
+.share-platform-btn svg {
+  flex-shrink: 0;
+}
+
+.share-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.share-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  background: #f8f9fa;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  transition: all 0.2s ease;
+}
+
+.share-action-btn:hover {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  transform: translateY(-1px);
+}
+
+.share-action-btn.native-share {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-color: transparent;
+}
+
+.share-action-btn.native-share:hover {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Share button accent */
+.share-btn,
+.feature-btn .feature-icon:last-child {
+  /* inherits existing styles */
+}
+
+/* ============ Dark Mode - Share Modal ============ */
+
+.dark-mode .share-modal {
+  background: #2a2a2a;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .share-modal-header h3 {
+  color: #e0e0e0;
+}
+
+.dark-mode .share-modal-close {
+  color: #888;
+}
+
+.dark-mode .share-modal-close:hover {
+  color: #e0e0e0;
+  background: #3a3a3a;
+}
+
+.dark-mode .share-platform-btn {
+  background: #3a3a3a;
+  border-color: #4a4a4a;
+  color: #ccc;
+}
+
+.dark-mode .share-platform-btn.twitter:hover {
+  background: #e0e0e0;
+  color: #000;
+  border-color: #e0e0e0;
+}
+
+.dark-mode .share-platform-btn.linkedin:hover {
+  background: #0A66C2;
+  color: white;
+  border-color: #0A66C2;
+}
+
+.dark-mode .share-platform-btn.facebook:hover {
+  background: #1877F2;
+  color: white;
+  border-color: #1877F2;
+}
+
+.dark-mode .share-platform-btn.reddit:hover {
+  background: #FF4500;
+  color: white;
+  border-color: #FF4500;
+}
+
+.dark-mode .share-action-btn {
+  background: #3a3a3a;
+  border-color: #4a4a4a;
+  color: #ccc;
+}
+
+.dark-mode .share-action-btn:hover {
+  background: #8b9cff;
+  border-color: #8b9cff;
+  color: white;
+}
+
+.dark-mode .share-action-btn.native-share {
+  background: linear-gradient(135deg, #8b9cff 0%, #a78bfa 100%);
+  border-color: transparent;
+}
+
+.dark-mode .share-action-btn.native-share:hover {
+  box-shadow: 0 4px 12px rgba(139, 156, 255, 0.4);
+}

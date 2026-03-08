@@ -362,6 +362,7 @@ const App = () => {
   const [batchActivationTime, setBatchActivationTime] = React.useState(null);
   const [language, setLanguage] = React.useState('en');
   const [darkMode, setDarkMode] = React.useState(false);
+  const [shareModalOpen, setShareModalOpen] = React.useState(false);
 
   React.useEffect(() => {
     let ticking = false;
@@ -983,6 +984,215 @@ const App = () => {
     }
   };
 
+  const generateShareImage = async () => {
+    const chartElement = document.querySelector('.flower-container svg');
+    if (!chartElement) return null;
+
+    const svgData = new XMLSerializer().serializeToString(chartElement);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const scale = 2;
+
+    // Social media optimized: 1200x630 (Twitter/LinkedIn/Facebook OG)
+    canvas.width = 1200 * scale;
+    canvas.height = 630 * scale;
+
+    // Draw gradient background
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0, '#667eea');
+    gradient.addColorStop(1, '#764ba2');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Load and draw SVG on the left side
+    const img = new Image();
+    await new Promise((resolve, reject) => {
+      img.onload = () => {
+        const chartSize = 500 * scale;
+        const xOffset = 40 * scale;
+        const yOffset = (630 * scale - chartSize) / 2;
+        ctx.drawImage(img, xOffset, yOffset, chartSize, chartSize);
+        resolve();
+      };
+      img.onerror = reject;
+      const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
+      img.src = URL.createObjectURL(svgBlob);
+    });
+
+    // Right side text content
+    const textX = 600 * scale;
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'left';
+
+    // Title
+    ctx.font = `bold ${42 * scale}px Arial`;
+    ctx.fillText('SkillChart', textX, 150 * scale);
+
+    // Category
+    const categoryName = getTranslation(activeGroup);
+    ctx.font = `${28 * scale}px Arial`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+    ctx.fillText(categoryName, textX, 210 * scale);
+
+    // Score
+    ctx.fillStyle = 'white';
+    ctx.font = `bold ${64 * scale}px Arial`;
+    ctx.fillText(`${percentage}%`, textX, 330 * scale);
+
+    // Score detail
+    ctx.font = `${22 * scale}px Arial`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    ctx.fillText(`${totalScore} / ${maxScore} points`, textX, 380 * scale);
+
+    // Active skills count
+    const activeCount = skills.filter(s => s.active).length;
+    ctx.font = `${20 * scale}px Arial`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+    ctx.fillText(`${activeCount} / ${skills.length} skills activated`, textX, 430 * scale);
+
+    // URL watermark
+    ctx.font = `${16 * scale}px Arial`;
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.textAlign = 'right';
+    ctx.fillText('skillchart.onrender.com', (1200 - 30) * scale, (630 - 25) * scale);
+
+    return canvas;
+  };
+
+  const handleShare = async (platform) => {
+    const shareUrl = 'https://skillchart.onrender.com';
+    const categoryName = getTranslation(activeGroup);
+    const shareText = language === 'ko'
+      ? `SkillChart로 나의 ${categoryName} 역량을 평가했습니다: ${percentage}% (${totalScore}/${maxScore})`
+      : `I scored ${percentage}% (${totalScore}/${maxScore}) on ${categoryName} skills using SkillChart`;
+
+    if (platform === 'copy') {
+      try {
+        await navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+        alert(language === 'ko' ? '클립보드에 복사되었습니다!' : 'Copied to clipboard!');
+      } catch {
+        alert('Failed to copy to clipboard');
+      }
+      return;
+    }
+
+    if (platform === 'download') {
+      try {
+        const canvas = await generateShareImage();
+        if (!canvas) return;
+        canvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          const timestamp = new Date().toLocaleDateString().replace(/\//g, '-');
+          link.download = `SkillChart_${categoryName.replace(/\s+/g, '_')}_social_${timestamp}.png`;
+          link.href = url;
+          link.click();
+          URL.revokeObjectURL(url);
+        }, 'image/png');
+      } catch (error) {
+        console.error('Error generating share image:', error);
+        alert('Failed to generate image');
+      }
+      return;
+    }
+
+    if (platform === 'native') {
+      try {
+        const canvas = await generateShareImage();
+        if (!canvas) return;
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const file = new File([blob], 'skillchart.png', { type: 'image/png' });
+        await navigator.share({
+          title: 'SkillChart',
+          text: shareText,
+          url: shareUrl,
+          files: [file],
+        });
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error('Share failed:', error);
+        }
+      }
+      setShareModalOpen(false);
+      return;
+    }
+
+    const encodedText = encodeURIComponent(shareText);
+    const encodedUrl = encodeURIComponent(shareUrl);
+
+    const urls = {
+      twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,
+      reddit: `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedText}`,
+    };
+
+    if (urls[platform]) {
+      window.open(urls[platform], '_blank', 'width=600,height=500,noopener,noreferrer');
+    }
+    setShareModalOpen(false);
+  };
+
+  const ShareModal = () => {
+    if (!shareModalOpen) return null;
+
+    const canNativeShare = typeof navigator.share === 'function';
+
+    return (
+      <div className="share-modal-overlay" onClick={() => setShareModalOpen(false)}>
+        <div className="share-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="share-modal-header">
+            <h3>{language === 'ko' ? '소셜 미디어에 공유' : 'Share to Social Media'}</h3>
+            <button className="share-modal-close" onClick={() => setShareModalOpen(false)}>&times;</button>
+          </div>
+
+          <div className="share-preview">
+            <div className="share-preview-text">
+              <span className="share-preview-category">{getTranslation(activeGroup)}</span>
+              <span className="share-preview-score">{percentage}% ({totalScore}/{maxScore})</span>
+            </div>
+          </div>
+
+          <div className="share-platforms">
+            <button className="share-platform-btn twitter" onClick={() => handleShare('twitter')}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              <span>X (Twitter)</span>
+            </button>
+            <button className="share-platform-btn linkedin" onClick={() => handleShare('linkedin')}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              <span>LinkedIn</span>
+            </button>
+            <button className="share-platform-btn facebook" onClick={() => handleShare('facebook')}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              <span>Facebook</span>
+            </button>
+            <button className="share-platform-btn reddit" onClick={() => handleShare('reddit')}>
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+              <span>Reddit</span>
+            </button>
+          </div>
+
+          <div className="share-actions">
+            <button className="share-action-btn" onClick={() => handleShare('download')}>
+              <span>&#x1F4E5;</span>
+              {language === 'ko' ? '소셜 이미지 다운로드' : 'Download Social Image'}
+            </button>
+            <button className="share-action-btn" onClick={() => handleShare('copy')}>
+              <span>&#x1F4CB;</span>
+              {language === 'ko' ? '링크 복사' : 'Copy Link & Text'}
+            </button>
+            {canNativeShare && (
+              <button className="share-action-btn native-share" onClick={() => handleShare('native')}>
+                <span>&#x1F4E4;</span>
+                {language === 'ko' ? '기기에서 공유' : 'Share via Device'}
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className={`app-container ${darkMode ? 'dark-mode' : ''}`}>
       {scrolled && (
@@ -1021,6 +1231,9 @@ const App = () => {
                   </button>
                   <button className="mobile-feature-btn" onClick={exportToImage} title="Export IMG">
                     <span className="feature-icon">🖼️</span>
+                  </button>
+                  <button className="mobile-feature-btn share-btn" onClick={() => setShareModalOpen(true)} title="Share">
+                    <span className="feature-icon">&#x1F310;</span>
                   </button>
                 </div>
 
@@ -1099,6 +1312,10 @@ const App = () => {
                     <span className="feature-icon">🖼️</span>
                     Export IMG
                   </button>
+                  <button className="feature-btn" onClick={() => setShareModalOpen(true)}>
+                    <span className="feature-icon">&#x1F310;</span>
+                    Share
+                  </button>
                 </div>
 
               </div>
@@ -1157,6 +1374,7 @@ const App = () => {
           </table>
         </div>
       </div>
+      <ShareModal />
     </div>
   );
 };
