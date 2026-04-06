@@ -433,31 +433,32 @@ const App = () => {
   ];
 
   const frontendSkills = [
-    { level: 'Beginner', description: { en: 'Knowledge of common HTML elements', ko: '일반적인 HTML 요소에 대한 지식' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Knowledge of common CSS selectors - how to set background colours and borders', ko: '일반적인 CSS 선택자에 대한 지식 - 배경색 및 테두리 설정 방법' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Knowledge of flex positioning', ko: 'Flex 포지셔닝에 대한 지식' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Knowledge of Javascript DOM access', ko: 'Javascript DOM 접근에 대한 지식' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Knowledge of Javascript programming - how to use arrays and array methods, and how to use objects and object methods', ko: 'Javascript 프로그래밍 지식 - 배열 및 배열 메서드 사용 방법, 객체 및 객체 메서드 사용 방법' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'How to use fetch API, and structure HTTP requests', ko: 'Fetch API 사용 방법 및 HTTP 요청 구조화' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Basic usage of React / Vue / etc - using state, creating components and hooks', ko: 'React / Vue 등의 기본 사용법 - 상태 사용, 컴포넌트 및 훅 생성' }, weight: 1, active: false },
-    { level: 'Intermediate', description: { en: 'Using TypeScript', ko: 'TypeScript 사용' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Understanding React component structure such as smart vs dumb components', ko: '스마트 컴포넌트와 덤 컴포넌트와 같은 React 컴포넌트 구조 이해' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Familiarity with Next.js', ko: 'Next.js에 대한 친숙함' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Usage of React/Tanstack Query', ko: 'React/Tanstack Query 사용' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Usage of global state', ko: '전역 상태 사용' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Knowledge of responsive CSS rules', ko: '반응형 CSS 규칙에 대한 지식' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Proficiency with JavaScript fundamental data structures and methods', ko: 'JavaScript 기본 데이터 구조 및 메서드에 대한 숙련도' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'JS modules and their structure - importing, different kinds of exports, and their use cases', ko: 'JS 모듈 및 구조 - 가져오기, 다양한 종류의 내보내기 및 사용 사례' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Building your app and getting it to run on a server', ko: '앱을 빌드하고 서버에서 실행하기' }, weight: 2, active: false },
-    { level: 'Advanced', description: { en: 'Understanding contextual usage of global state vs local state', ko: '전역 상태 대 로컬 상태의 상황별 사용 이해' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Familiarity with Chrome web app profiling (lighthouse?)', ko: 'Chrome 웹 앱 프로파일링(Lighthouse)에 대한 친숙함' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Strong competence with Next.js SSR/SSG features', ko: 'Next.js SSR/SSG 기능에 대한 강력한 역량' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Competence with HTTP requests and making requests efficiently - batching, splitting requests, minimising refetches', ko: 'HTTP 요청 및 효율적인 요청 작성 역량 - 배칭, 요청 분할, 재요청 최소화' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Creating NPM libraries, including NPM library project structure, and registering project to NPM', ko: 'NPM 라이브러리 프로젝트 구조를 포함한 NPM 라이브러리 생성 및 NPM에 프로젝트 등록' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Lazy loading of code and pages', ko: '코드 및 페이지의 지연 로딩' }, weight: 4, active: false },
-    { level: 'Expert', description: { en: 'Understanding React rendering flow and placement of state and data fetching', ko: 'React 렌더링 흐름 및 상태와 데이터 가져오기 배치 이해' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Understanding techniques to minimise excess rerenders', ko: '과도한 리렌더링을 최소화하는 기술 이해' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Competence in using memory profiling and React Dev Tools to inspect and improve app performance', ko: '메모리 프로파일링 및 React Dev Tools를 사용하여 앱 성능을 검사하고 개선하는 역량' }, weight: 8, active: false }
+    { level: 'Beginner', description: { en: 'Semantic HTML - correct use of headings, forms, links, media elements, and accessibility attributes', ko: '시맨틱 HTML - 제목, 폼, 링크, 미디어 요소 및 접근성 속성의 올바른 사용' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'CSS fundamentals - selectors, specificity, the box model, and common properties such as colour, spacing, and borders', ko: 'CSS 기초 - 선택자, 명시도, 박스 모델, 색상/간격/테두리 등 주요 속성' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Layout with Flexbox and CSS Grid - positioning elements in one and two dimensions', ko: 'Flexbox 및 CSS Grid를 이용한 레이아웃 - 1차원 및 2차원 요소 배치' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'JavaScript DOM manipulation - querying elements, handling events, and updating content dynamically', ko: 'JavaScript DOM 조작 - 요소 쿼리, 이벤트 처리, 동적 콘텐츠 업데이트' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'JavaScript fundamentals - arrays, objects, functions, scope, and the most common built-in methods', ko: 'JavaScript 기초 - 배열, 객체, 함수, 스코프 및 주요 내장 메서드' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Making HTTP requests with the Fetch API - structuring GET/POST requests and handling JSON responses', ko: 'Fetch API를 이용한 HTTP 요청 - GET/POST 요청 구성 및 JSON 응답 처리' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Building UIs with React or Vue - creating components, passing props, and managing local state with hooks', ko: 'React 또는 Vue로 UI 구성 - 컴포넌트 생성, props 전달, 훅으로 로컬 상태 관리' }, weight: 1, active: false },
+    { level: 'Intermediate', description: { en: 'TypeScript - typing props and function signatures, defining interfaces, and using common utility types', ko: 'TypeScript - props 및 함수 시그니처 타이핑, 인터페이스 정의, 유틸리티 타입 활용' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'React component design - separating presentational and container components and composing reusable UI', ko: 'React 컴포넌트 설계 - 프레젠테이션/컨테이너 컴포넌트 분리 및 재사용 가능한 UI 구성' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Next.js fundamentals - file-based routing, pages router, and built-in data fetching methods (getStaticProps, getServerSideProps)', ko: 'Next.js 기초 - 파일 기반 라우팅, 페이지 라우터, 내장 데이터 패칭 메서드' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Data fetching with TanStack Query - caching, background refetching, pagination, and mutation handling', ko: 'TanStack Query로 데이터 패칭 - 캐싱, 백그라운드 리패칭, 페이지네이션, 뮤테이션 처리' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Global state management with Zustand or Redux - structuring stores and knowing when to use global vs local state', ko: 'Zustand 또는 Redux를 이용한 전역 상태 관리 - 스토어 구조화 및 전역/로컬 상태 선택 기준' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Responsive CSS - media queries, fluid typography, mobile-first design, and container queries', ko: '반응형 CSS - 미디어 쿼리, 유동 타이포그래피, 모바일 우선 설계, 컨테이너 쿼리' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'ES modules - named vs default exports, dynamic imports, and how bundlers resolve module graphs', ko: 'ES 모듈 - 기명/기본 내보내기 차이, 동적 임포트, 번들러의 모듈 그래프 해석 방식' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Building and deploying a frontend app - configuring Vite or Webpack, managing environment variables, and deploying to static hosts (Vercel, Netlify) or a Node server', ko: '프론트엔드 앱 빌드 및 배포 - Vite/Webpack 설정, 환경 변수 관리, 정적 호스트(Vercel, Netlify) 또는 Node 서버 배포' }, weight: 2, active: false },
+    { level: 'Advanced', description: { en: 'State architecture decisions - distinguishing server state, client state, URL state, and form state and choosing the right tool for each', ko: '상태 아키텍처 결정 - 서버 상태, 클라이언트 상태, URL 상태, 폼 상태를 구분하고 적합한 도구 선택' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Performance auditing with Chrome DevTools - profiling rendering with the Performance tab and using Lighthouse to audit load speed, accessibility, and SEO', ko: 'Chrome DevTools로 성능 감사 - Performance 탭으로 렌더링 프로파일링, Lighthouse로 로드 속도/접근성/SEO 감사' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Next.js advanced features - App Router, server components, streaming SSR, and incremental static regeneration', ko: 'Next.js 고급 기능 - App Router, 서버 컴포넌트, 스트리밍 SSR, 점진적 정적 재생성' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Efficient data fetching strategies - request deduplication, batching, optimistic updates, and eliminating waterfall requests', ko: '효율적인 데이터 패칭 전략 - 요청 중복 제거, 배칭, 낙관적 업데이트, 워터폴 요청 제거' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Frontend testing - unit and integration testing with React Testing Library, mocking network calls with MSW, and writing meaningful assertions', ko: '프론트엔드 테스트 - React Testing Library로 단위/통합 테스트, MSW로 네트워크 모킹, 의미 있는 단언 작성' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Publishing an NPM package - project structure, TypeScript declaration files, tree-shaking support, and publishing to the NPM registry', ko: 'NPM 패키지 배포 - 프로젝트 구조, TypeScript 선언 파일, 트리 쉐이킹 지원, NPM 레지스트리 배포' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Code splitting and lazy loading - dynamic imports, React.lazy with Suspense, and route-level splitting to reduce initial bundle size', ko: '코드 분할 및 지연 로딩 - 동적 임포트, React.lazy/Suspense, 라우트 수준 분할로 초기 번들 크기 축소' }, weight: 4, active: false },
+    { level: 'Expert', description: { en: 'React rendering internals - understanding the reconciler, fiber architecture, and commit phases to reason about when and why components render', ko: 'React 렌더링 내부 구조 - 재조정기, 파이버 아키텍처, 커밋 단계를 이해하여 컴포넌트 렌더링 시점과 이유 분석' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Re-render optimisation - applying useMemo, useCallback, and React.memo correctly and avoiding referential instability and unnecessary recalculations', ko: '리렌더링 최적화 - useMemo, useCallback, React.memo 올바른 적용 및 참조 불안정성/불필요한 재계산 방지' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Profiling with React DevTools and browser memory tools - identifying memory leaks, excessive allocations, and long render tasks', ko: 'React DevTools 및 브라우저 메모리 도구로 프로파일링 - 메모리 누수, 과도한 할당, 긴 렌더링 작업 식별' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Frontend security - understanding XSS vectors, Content Security Policy headers, CORS, and safely handling untrusted content in the DOM', ko: '프론트엔드 보안 - XSS 벡터, CSP 헤더, CORS 이해 및 DOM에서 신뢰할 수 없는 콘텐츠 안전하게 처리' }, weight: 8, active: false }
   ];
 
   const dataScienceSkills = [
@@ -615,6 +616,37 @@ const App = () => {
     { level: "Expert", description: { en: "Advanced knowledge of model compression, distillation, and efficiency optimization.", ko: "모델 압축, 증류 및 효율성 최적화에 대한 고급 지식" }, weight: 8, active: false },
   ];
 
+  const devopsSkills = [
+    { level: 'Beginner', description: { en: 'What containers are and why they exist - how Docker isolates an application and its dependencies from the host environment', ko: '컨테이너가 무엇이며 왜 존재하는지 - Docker가 애플리케이션과 의존성을 호스트 환경에서 격리하는 방법' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Writing a Dockerfile - FROM, RUN, COPY, EXPOSE, CMD, and building an image with docker build', ko: 'Dockerfile 작성 - FROM, RUN, COPY, EXPOSE, CMD 및 docker build로 이미지 빌드' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Running containers with docker run - mapping ports, passing environment variables, and mounting volumes', ko: 'docker run으로 컨테이너 실행 - 포트 매핑, 환경 변수 전달, 볼륨 마운트' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Docker Compose - defining multi-container applications in docker-compose.yml and managing them with up/down/logs', ko: 'Docker Compose - docker-compose.yml로 멀티 컨테이너 애플리케이션 정의 및 up/down/logs로 관리' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Linux command line for DevOps - file system navigation, permissions, process management, and common tools (grep, curl, ssh)', ko: 'DevOps를 위한 리눅스 커맨드라인 - 파일 시스템 탐색, 권한, 프로세스 관리, grep/curl/ssh 등 주요 도구' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'Version control workflows for teams - branching strategies (trunk-based, Gitflow), pull requests, and code review process', ko: '팀을 위한 버전 관리 워크플로 - 브랜치 전략(트렁크 기반, Gitflow), 풀 리퀘스트, 코드 리뷰 프로세스' }, weight: 1, active: false },
+    { level: 'Beginner', description: { en: 'CI/CD concepts - what a pipeline is, the difference between continuous integration, delivery, and deployment, and why automation matters', ko: 'CI/CD 개념 - 파이프라인이란 무엇인지, 지속적 통합/전달/배포의 차이, 자동화가 중요한 이유' }, weight: 1, active: false },
+    { level: 'Intermediate', description: { en: 'Writing CI/CD pipelines with GitHub Actions or GitLab CI - triggers, jobs, steps, environment variables, and artifact passing', ko: 'GitHub Actions 또는 GitLab CI로 CI/CD 파이프라인 작성 - 트리거, 작업, 단계, 환경 변수, 아티팩트 전달' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Container registries - tagging and versioning images, pushing to Docker Hub or a private registry, and pulling in deployments', ko: '컨테이너 레지스트리 - 이미지 태깅 및 버저닝, Docker Hub 또는 프라이빗 레지스트리 푸시, 배포 시 풀' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Secrets and environment configuration - managing credentials with GitHub Secrets, cloud secret managers, and keeping secrets out of source control', ko: '시크릿 및 환경 설정 관리 - GitHub Secrets, 클라우드 시크릿 매니저로 자격증명 관리, 소스 컨트롤에서 시크릿 제외' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Cloud provider fundamentals (AWS, GCP, or Azure) - compute (EC2/Cloud Run), object storage (S3/GCS), managed databases, and IAM basics', ko: '클라우드 제공자 기초 (AWS, GCP, Azure) - 컴퓨팅, 오브젝트 스토리지, 관리형 데이터베이스, IAM 기초' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Reverse proxies and load balancers - configuring Nginx as a reverse proxy, SSL/TLS termination, and basic load balancing', ko: '리버스 프록시 및 로드밸런서 - Nginx를 리버스 프록시로 설정, SSL/TLS 종료, 기본 로드밸런싱' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Kubernetes fundamentals - pods, deployments, services, ConfigMaps, namespaces, and using kubectl to inspect cluster state', ko: 'Kubernetes 기초 - 파드, 디플로이먼트, 서비스, ConfigMap, 네임스페이스, kubectl로 클러스터 상태 확인' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Monitoring and logging fundamentals - structured logging, centralised log aggregation (ELK or Loki), and basic metrics collection', ko: '모니터링 및 로깅 기초 - 구조화 로깅, 중앙집중식 로그 집계(ELK 또는 Loki), 기본 메트릭 수집' }, weight: 2, active: false },
+    { level: 'Intermediate', description: { en: 'Shell scripting for automation - writing bash scripts, using cron for scheduled tasks, and common patterns for operational automation', ko: '자동화를 위한 셸 스크립팅 - bash 스크립트 작성, 예약 작업을 위한 cron, 운영 자동화의 일반적인 패턴' }, weight: 2, active: false },
+    { level: 'Advanced', description: { en: 'Kubernetes in depth - resource requests and limits, health probes (liveness/readiness), horizontal pod autoscaling, and persistent volumes', ko: 'Kubernetes 심화 - 리소스 요청 및 제한, 헬스 프로브(활성/준비), 수평 파드 오토스케일링, 퍼시스턴트 볼륨' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Helm charts - templating Kubernetes manifests, managing values files for multiple environments, and release lifecycle management', ko: 'Helm 차트 - Kubernetes 매니페스트 템플릿화, 다중 환경 values 파일 관리, 릴리스 라이프사이클 관리' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Infrastructure as Code with Terraform - defining cloud resources declaratively, managing remote state, and organising reusable modules', ko: 'Terraform으로 인프라 코드화 - 클라우드 리소스 선언적 정의, 원격 상태 관리, 재사용 가능한 모듈 구성' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Container and supply chain security - scanning images for vulnerabilities, using minimal base images, enforcing non-root users, and signing images', ko: '컨테이너 및 공급망 보안 - 취약점 이미지 스캔, 최소 베이스 이미지 사용, 비루트 사용자 적용, 이미지 서명' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Observability stack - collecting metrics with Prometheus, visualising with Grafana, writing alerting rules, and understanding SLOs and error budgets', ko: '관찰 가능성 스택 - Prometheus로 메트릭 수집, Grafana로 시각화, 알림 규칙 작성, SLO 및 에러 버짓 이해' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Deployment strategies - blue/green, canary, and rolling update patterns, automated rollback triggers, and feature flags for safe releases', ko: '배포 전략 - 블루/그린, 카나리, 롤링 업데이트 패턴, 자동 롤백 트리거, 안전한 릴리스를 위한 피처 플래그' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Networking in Kubernetes - Ingress controllers, TLS termination, network policies for traffic isolation, and an introduction to service meshes', ko: 'Kubernetes 네트워킹 - 인그레스 컨트롤러, TLS 종료, 트래픽 격리를 위한 네트워크 정책, 서비스 메시 입문' }, weight: 4, active: false },
+    { level: 'Advanced', description: { en: 'Cloud cost optimisation - right-sizing compute, using spot or preemptible instances, identifying idle resources, and tagging for cost allocation', ko: '클라우드 비용 최적화 - 컴퓨팅 적정 규모화, 스팟/선점형 인스턴스 활용, 유휴 리소스 식별, 비용 할당을 위한 태깅' }, weight: 4, active: false },
+    { level: 'Expert', description: { en: 'GitOps - managing Kubernetes deployments declaratively through git with ArgoCD or Flux, and enforcing drift detection and reconciliation', ko: 'GitOps - ArgoCD 또는 Flux로 git을 통해 Kubernetes 배포를 선언적으로 관리, 드리프트 감지 및 조정 적용' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Platform engineering - designing internal developer platforms, golden paths, and self-service infrastructure that improve developer experience at scale', ko: '플랫폼 엔지니어링 - 내부 개발자 플랫폼, 골든 패스, 규모에서 개발자 경험을 향상시키는 셀프서비스 인프라 설계' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Advanced CI/CD patterns - matrix builds, parallel pipelines, environment promotion gates, automated rollback on failure, and pipeline-as-code best practices', ko: '고급 CI/CD 패턴 - 매트릭스 빌드, 병렬 파이프라인, 환경 프로모션 게이트, 실패 시 자동 롤백, 코드형 파이프라인 모범 사례' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Security hardening and compliance - IAM least-privilege design, network segmentation, audit logging, and meeting compliance frameworks such as SOC 2 or ISO 27001', ko: '보안 강화 및 컴플라이언스 - IAM 최소 권한 설계, 네트워크 분리, 감사 로깅, SOC 2 또는 ISO 27001 같은 컴플라이언스 프레임워크 충족' }, weight: 8, active: false },
+    { level: 'Expert', description: { en: 'Multi-cloud and hybrid architecture - designing workloads to avoid provider lock-in, federated identity, and managing infrastructure across environments', ko: '멀티클라우드 및 하이브리드 아키텍처 - 공급자 종속을 피하는 워크로드 설계, 연합 ID 관리, 환경 간 인프라 관리' }, weight: 8, active: false },
+  ];
+
   const [activeGroup, setActiveGroup] = useState("backend");
   const [skills, setSkills] = useState(backendSkills);
 
@@ -637,6 +669,9 @@ const App = () => {
         break;
       case "llm":
         setSkills(llmSkills);
+        break;
+      case "devops":
+        setSkills(devopsSkills);
         break;
       default:
         break;
@@ -714,7 +749,8 @@ const App = () => {
       dataScience: 'Data Science',
       python: 'Python',
       sql: 'SQL',
-      llm: 'LLM'
+      llm: 'LLM',
+      devops: 'DevOps'
     },
     ko: {
       level: '레벨',
@@ -730,7 +766,8 @@ const App = () => {
       dataScience: '데이터 사이언스',
       python: '파이썬',
       sql: 'SQL',
-      llm: 'LLM'
+      llm: 'LLM',
+      devops: 'DevOps'
     }
   };
 
@@ -1281,11 +1318,17 @@ const App = () => {
                   >
                     {getTranslation('sql')}
                   </button>
-                  <button 
+                  <button
                     className={`tab-button ${activeGroup === "llm" ? "active" : ""}`}
                     onClick={() => toggleGroup("llm")}
                   >
                     {getTranslation('llm')}
+                  </button>
+                  <button
+                    className={`tab-button ${activeGroup === "devops" ? "active" : ""}`}
+                    onClick={() => toggleGroup("devops")}
+                  >
+                    {getTranslation('devops')}
                   </button>
                 </nav>
 
