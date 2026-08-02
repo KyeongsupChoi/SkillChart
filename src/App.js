@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import './App.css';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import {
+  backendSkills,
+  frontendSkills,
+  dataScienceSkills,
+  pythonSkills,
+  sqlSkills,
+  llmSkills,
+  devopsSkills,
+} from './data';
+import translations from './data/translations';
+import { LEVELS, LEVEL_COLORS, LEVEL_CSS_CLASSES } from './data/constants';
 
 const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, batchActivationTime, getDescription }) => {
   const centerX = 150;
@@ -16,13 +27,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, bat
   // Check if this is a recent batch activation (within last 100ms)
   const isBatchActivation = batchActivationTime && (Date.now() - batchActivationTime < 100);
 
-  // Color mapping by level with gradients
-  const colors = {
-    'Beginner': { base: '#86efac', light: '#bbf7d0', dark: '#4ade80', veryLight: '#d1fae5' },
-    'Intermediate': { base: '#93c5fd', light: '#bfdbfe', dark: '#60a5fa', veryLight: '#dbeafe' },
-    'Advanced': { base: '#fcd34d', light: '#fde68a', dark: '#fbbf24', veryLight: '#fef3c7' },
-    'Expert': { base: '#fca5a5', light: '#fecaca', dark: '#f87171', veryLight: '#fee2e2' }
-  };
+  const colors = LEVEL_COLORS;
 
   // Group skills by level
   const levelGroups = {
@@ -38,7 +43,7 @@ const NightingaleRoseChart = ({ skills, totalScore, maxScore, onActivateAll, bat
     }
   });
 
-  const levels = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  const levels = LEVELS;
 
   // Simple seeded random function for consistent asymmetry
   const seededRandom = (seed) => {
@@ -394,258 +399,7 @@ const App = () => {
     setNavbarExpanded(!navbarExpanded);
   };
 
-  const backendSkills = [
-    { level: 'Beginner', description: { en: 'Basic understanding of server-side programming languages (e.g., Python, Node.js, PHP, Java, C#, Ruby)', ko: '서버 측 프로그래밍 언어에 대한 기본 이해 (예: Python, Node.js, PHP, Java, C#, Ruby)' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Familiarity with HTTP protocols, request/response cycles, and basic client-server architecture.', ko: 'HTTP 프로토콜, 요청/응답 주기 및 기본 클라이언트-서버 아키텍처에 대한 이해' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Ability to set up a simple server using frameworks like Flask, Express, or Django.', ko: 'Flask, Express 또는 Django와 같은 프레임워크를 사용하여 간단한 서버를 설정하는 능력' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Basic understanding of databases (SQL or NoSQL) and how to perform CRUD operations (Create, Read, Update, Delete).', ko: '데이터베이스(SQL 또는 NoSQL)에 대한 기본 이해 및 CRUD 작업(생성, 읽기, 업데이트, 삭제) 수행 방법' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Awareness of RESTful API concepts and how to create simple endpoints.', ko: 'RESTful API 개념에 대한 인식 및 간단한 엔드포인트 생성 방법' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Setting up a simple web server that responds to HTTP requests.', ko: 'HTTP 요청에 응답하는 간단한 웹 서버 설정' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Implementing basic user authentication and handling form data.', ko: '기본 사용자 인증 구현 및 양식 데이터 처리' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Writing API endpoints that interact with a database.', ko: '데이터베이스와 상호 작용하는 API 엔드포인트 작성' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Implementing data validation and error handling for user input before storing it in the database, ensuring data integrity and security.', ko: '데이터베이스에 저장하기 전에 사용자 입력에 대한 데이터 검증 및 오류 처리를 구현하여 데이터 무결성과 보안 보장' }, weight: 1, active: false },
-    { level: 'Intermediate', description: { en: 'Proficient in designing and implementing RESTful APIs with CRUD functionality.', ko: 'CRUD 기능을 갖춘 RESTful API 설계 및 구현에 능숙함' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Understanding of relational databases (e.g., MySQL, PostgreSQL) and NoSQL databases (e.g., MongoDB, Redis), including schema design, relationships, and indexing.', ko: '관계형 데이터베이스(예: MySQL, PostgreSQL) 및 NoSQL 데이터베이스(예: MongoDB, Redis)에 대한 이해, 스키마 설계, 관계 및 인덱싱 포함' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Familiar with middleware, routing, and handling file uploads.', ko: '미들웨어, 라우팅 및 파일 업로드 처리에 익숙함' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Knowledge of authentication methods like OAuth, JWT, and sessions.', ko: 'OAuth, JWT 및 세션과 같은 인증 방법에 대한 지식' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Experience with version control systems (e.g., Git) and basic knowledge of continuous integration and deployment (CI/CD).', ko: '버전 관리 시스템(예: Git)에 대한 경험과 지속적 통합 및 배포(CI/CD)에 대한 기본 지식' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Developing an API for user management (e.g., authentication, authorization).', ko: '사용자 관리를 위한 API 개발(예: 인증, 권한 부여)' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Setting up middleware for logging, error handling, and security in a web application.', ko: '웹 애플리케이션에서 로깅, 오류 처리 및 보안을 위한 미들웨어 설정' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Connecting your backend with external services via APIs (e.g., payment gateways, third-party APIs).', ko: 'API를 통해 백엔드를 외부 서비스(예: 결제 게이트웨이, 타사 API)와 연결' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Designing a relational database schema and optimizing queries.', ko: '관계형 데이터베이스 스키마 설계 및 쿼리 최적화' }, weight: 2, active: false },
-    { level: 'Advanced', description: { en: 'Proficiency in implementing robust authentication and authorization mechanisms, such as Single Sign-On (SSO) and Role-Based Access Control (RBAC), to ensure secure access management.', ko: '단일 로그인(SSO) 및 역할 기반 액세스 제어(RBAC)와 같은 강력한 인증 및 권한 부여 메커니즘 구현에 능숙하여 안전한 액세스 관리 보장' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Knowledge of microservices architecture and ability to design and develop microservices-based applications.', ko: '마이크로서비스 아키텍처에 대한 지식과 마이크로서비스 기반 애플리케이션을 설계 및 개발하는 능력' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Proficient in using messaging queues (e.g., RabbitMQ, Kafka) for asynchronous processing and communication.', ko: '비동기 처리 및 통신을 위해 메시지 큐(예: RabbitMQ, Kafka) 사용에 능숙함' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Experience with cloud infrastructure (e.g., AWS, Google Cloud, Azure), containerization (Docker), and orchestration tools (Kubernetes).', ko: '클라우드 인프라(예: AWS, Google Cloud, Azure), 컨테이너화(Docker) 및 오케스트레이션 도구(Kubernetes)에 대한 경험' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Understanding of caching strategies, load balancing, and scaling backend systems to handle high traffic.', ko: '캐싱 전략, 로드 밸런싱 및 높은 트래픽을 처리하기 위한 백엔드 시스템 확장에 대한 이해' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Designing and deploying a microservices-based architecture with services that communicate asynchronously.', ko: '비동기적으로 통신하는 서비스를 사용하여 마이크로서비스 기반 아키텍처 설계 및 배포' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Setting up continuous integration/continuous deployment (CI/CD) pipelines for automated testing and deployment.', ko: '자동화된 테스트 및 배포를 위한 지속적 통합/지속적 배포(CI/CD) 파이프라인 설정' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Implementing caching strategies (e.g., Redis, Memcached) to optimize API performance.', ko: 'API 성능을 최적화하기 위한 캐싱 전략(예: Redis, Memcached) 구현' }, weight: 4, active: false },
-    { level: 'Expert', description: { en: 'Mastery of distributed systems, including managing data consistency, eventual consistency, and CAP theorem implications.', ko: '데이터 일관성, 최종 일관성 및 CAP 정리의 의미를 관리하는 것을 포함한 분산 시스템 숙달' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Expertise in backend architecture patterns (e.g., event-driven architecture, CQRS, serverless) for complex and high-traffic systems.', ko: '복잡하고 트래픽이 많은 시스템을 위한 백엔드 아키텍처 패턴(예: 이벤트 중심 아키텍처, CQRS, 서버리스)에 대한 전문 지식' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Deep knowledge of security best practices, including encryption, secure communication, and data protection in large-scale applications.', ko: '대규모 애플리케이션에서 암호화, 보안 통신 및 데이터 보호를 포함한 보안 모범 사례에 대한 깊은 지식' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Extensive experience with database replication, sharding, and high availability setups.', ko: '데이터베이스 복제, 샤딩 및 고가용성 설정에 대한 광범위한 경험' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Ability to lead backend development teams, perform code reviews, and ensure code quality standards.', ko: '백엔드 개발 팀을 이끌고 코드 검토를 수행하며 코드 품질 표준을 보장하는 능력' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Familiarity with DevOps tools and practices, including Infrastructure as Code (IaC) and full automation of deployment pipelines.', ko: 'Infrastructure as Code(IaC) 및 배포 파이프라인의 완전 자동화를 포함한 DevOps 도구 및 관행에 대한 친숙함' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Architecting large-scale distributed systems with fault-tolerant and highly available components.', ko: '내결함성과 고가용성 구성 요소를 갖춘 대규모 분산 시스템 설계' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Implementing advanced security mechanisms like end-to-end encryption and secure API gateways.', ko: '종단 간 암호화 및 보안 API 게이트웨이와 같은 고급 보안 메커니즘 구현' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Leading a backend development team, defining project architecture, and overseeing codebase and deployment strategies.', ko: '백엔드 개발 팀을 이끌고 프로젝트 아키텍처를 정의하며 코드베이스 및 배포 전략을 감독' }, weight: 8, active: false }
-  ];
 
-  const frontendSkills = [
-    { level: 'Beginner', description: { en: 'Semantic HTML - correct use of headings, forms, links, media elements, and accessibility attributes', ko: '시맨틱 HTML - 제목, 폼, 링크, 미디어 요소 및 접근성 속성의 올바른 사용' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'CSS fundamentals - selectors, specificity, the box model, and common properties such as colour, spacing, and borders', ko: 'CSS 기초 - 선택자, 명시도, 박스 모델, 색상/간격/테두리 등 주요 속성' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Layout with Flexbox and CSS Grid - positioning elements in one and two dimensions', ko: 'Flexbox 및 CSS Grid를 이용한 레이아웃 - 1차원 및 2차원 요소 배치' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'JavaScript DOM manipulation - querying elements, handling events, and updating content dynamically', ko: 'JavaScript DOM 조작 - 요소 쿼리, 이벤트 처리, 동적 콘텐츠 업데이트' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'JavaScript fundamentals - arrays, objects, functions, scope, and the most common built-in methods', ko: 'JavaScript 기초 - 배열, 객체, 함수, 스코프 및 주요 내장 메서드' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Making HTTP requests with the Fetch API - structuring GET/POST requests and handling JSON responses', ko: 'Fetch API를 이용한 HTTP 요청 - GET/POST 요청 구성 및 JSON 응답 처리' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Building UIs with React or Vue - creating components, passing props, and managing local state with hooks', ko: 'React 또는 Vue로 UI 구성 - 컴포넌트 생성, props 전달, 훅으로 로컬 상태 관리' }, weight: 1, active: false },
-    { level: 'Intermediate', description: { en: 'TypeScript - typing props and function signatures, defining interfaces, and using common utility types', ko: 'TypeScript - props 및 함수 시그니처 타이핑, 인터페이스 정의, 유틸리티 타입 활용' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'React component design - separating presentational and container components and composing reusable UI', ko: 'React 컴포넌트 설계 - 프레젠테이션/컨테이너 컴포넌트 분리 및 재사용 가능한 UI 구성' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Next.js fundamentals - file-based routing, pages router, and built-in data fetching methods (getStaticProps, getServerSideProps)', ko: 'Next.js 기초 - 파일 기반 라우팅, 페이지 라우터, 내장 데이터 패칭 메서드' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Data fetching with TanStack Query - caching, background refetching, pagination, and mutation handling', ko: 'TanStack Query로 데이터 패칭 - 캐싱, 백그라운드 리패칭, 페이지네이션, 뮤테이션 처리' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Global state management with Zustand or Redux - structuring stores and knowing when to use global vs local state', ko: 'Zustand 또는 Redux를 이용한 전역 상태 관리 - 스토어 구조화 및 전역/로컬 상태 선택 기준' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Responsive CSS - media queries, fluid typography, mobile-first design, and container queries', ko: '반응형 CSS - 미디어 쿼리, 유동 타이포그래피, 모바일 우선 설계, 컨테이너 쿼리' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'ES modules - named vs default exports, dynamic imports, and how bundlers resolve module graphs', ko: 'ES 모듈 - 기명/기본 내보내기 차이, 동적 임포트, 번들러의 모듈 그래프 해석 방식' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Building and deploying a frontend app - configuring Vite or Webpack, managing environment variables, and deploying to static hosts (Vercel, Netlify) or a Node server', ko: '프론트엔드 앱 빌드 및 배포 - Vite/Webpack 설정, 환경 변수 관리, 정적 호스트(Vercel, Netlify) 또는 Node 서버 배포' }, weight: 2, active: false },
-    { level: 'Advanced', description: { en: 'State architecture decisions - distinguishing server state, client state, URL state, and form state and choosing the right tool for each', ko: '상태 아키텍처 결정 - 서버 상태, 클라이언트 상태, URL 상태, 폼 상태를 구분하고 적합한 도구 선택' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Performance auditing with Chrome DevTools - profiling rendering with the Performance tab and using Lighthouse to audit load speed, accessibility, and SEO', ko: 'Chrome DevTools로 성능 감사 - Performance 탭으로 렌더링 프로파일링, Lighthouse로 로드 속도/접근성/SEO 감사' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Next.js advanced features - App Router, server components, streaming SSR, and incremental static regeneration', ko: 'Next.js 고급 기능 - App Router, 서버 컴포넌트, 스트리밍 SSR, 점진적 정적 재생성' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Efficient data fetching strategies - request deduplication, batching, optimistic updates, and eliminating waterfall requests', ko: '효율적인 데이터 패칭 전략 - 요청 중복 제거, 배칭, 낙관적 업데이트, 워터폴 요청 제거' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Frontend testing - unit and integration testing with React Testing Library, mocking network calls with MSW, and writing meaningful assertions', ko: '프론트엔드 테스트 - React Testing Library로 단위/통합 테스트, MSW로 네트워크 모킹, 의미 있는 단언 작성' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Publishing an NPM package - project structure, TypeScript declaration files, tree-shaking support, and publishing to the NPM registry', ko: 'NPM 패키지 배포 - 프로젝트 구조, TypeScript 선언 파일, 트리 쉐이킹 지원, NPM 레지스트리 배포' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Code splitting and lazy loading - dynamic imports, React.lazy with Suspense, and route-level splitting to reduce initial bundle size', ko: '코드 분할 및 지연 로딩 - 동적 임포트, React.lazy/Suspense, 라우트 수준 분할로 초기 번들 크기 축소' }, weight: 4, active: false },
-    { level: 'Expert', description: { en: 'React rendering internals - understanding the reconciler, fiber architecture, and commit phases to reason about when and why components render', ko: 'React 렌더링 내부 구조 - 재조정기, 파이버 아키텍처, 커밋 단계를 이해하여 컴포넌트 렌더링 시점과 이유 분석' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Re-render optimisation - applying useMemo, useCallback, and React.memo correctly and avoiding referential instability and unnecessary recalculations', ko: '리렌더링 최적화 - useMemo, useCallback, React.memo 올바른 적용 및 참조 불안정성/불필요한 재계산 방지' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Profiling with React DevTools and browser memory tools - identifying memory leaks, excessive allocations, and long render tasks', ko: 'React DevTools 및 브라우저 메모리 도구로 프로파일링 - 메모리 누수, 과도한 할당, 긴 렌더링 작업 식별' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Frontend security - understanding XSS vectors, Content Security Policy headers, CORS, and safely handling untrusted content in the DOM', ko: '프론트엔드 보안 - XSS 벡터, CSP 헤더, CORS 이해 및 DOM에서 신뢰할 수 없는 콘텐츠 안전하게 처리' }, weight: 8, active: false }
-  ];
-
-  const dataScienceSkills = [
-    { level: 'Beginner', description: { en: 'Basic understanding of statistics and data analysis.', ko: '통계 및 데이터 분석에 대한 기본 이해' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Familiarity with spreadsheets or basic data manipulation tools (e.g., Excel).', ko: '스프레드시트 또는 기본 데이터 조작 도구(예: Excel)에 대한 친숙함' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Ability to use simple data visualization tools (e.g., Excel, Google Sheets, or Python\'s matplotlib and seaborn).', ko: '간단한 데이터 시각화 도구(예: Excel, Google Sheets 또는 Python의 matplotlib 및 seaborn) 사용 능력' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Introductory knowledge of programming (Python or R) and basic libraries (e.g., Pandas, NumPy).', ko: '프로그래밍(Python 또는 R) 및 기본 라이브러리(예: Pandas, NumPy)에 대한 입문 지식' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Basic knowledge of data types (structured, semi-structured, and unstructured data).', ko: '데이터 유형(구조화, 반구조화 및 비구조화 데이터)에 대한 기본 지식' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Plotting simple graphs (bar charts, line graphs) to visualize data.', ko: '데이터를 시각화하기 위한 간단한 그래프(막대 차트, 선 그래프) 그리기' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Calculating mean, median, mode, variance, and other basic statistical metrics.', ko: '평균, 중앙값, 최빈값, 분산 및 기타 기본 통계 지표 계산' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Loading and cleaning small datasets.', ko: '작은 데이터 세트 로드 및 정리' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Basic ability to automate repetitive data related tasks with simple scripts in Python or R.', ko: 'Python 또는 R의 간단한 스크립트로 반복적인 데이터 관련 작업을 자동화하는 기본 능력' }, weight: 1, active: false },
-    { level: 'Intermediate', description: { en: 'Proficient in data wrangling: loading, cleaning, and transforming data using libraries like Pandas, NumPy, or R\'s dplyr.', ko: '데이터 랭글링에 능숙함: Pandas, NumPy 또는 R의 dplyr과 같은 라이브러리를 사용하여 데이터 로드, 정리 및 변환' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Good understanding of probability, statistical testing (e.g., hypothesis testing, confidence intervals), and distributions.', ko: '확률, 통계 테스트(예: 가설 검정, 신뢰 구간) 및 분포에 대한 양호한 이해' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Basic knowledge of machine learning algorithms (e.g., linear regression, decision trees) and their applications.', ko: '머신러닝 알고리즘(예: 선형 회귀, 의사결정 트리) 및 응용 프로그램에 대한 기본 지식' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Experience with data visualization libraries (e.g., matplotlib, seaborn, or ggplot2).', ko: '데이터 시각화 라이브러리(예: matplotlib, seaborn 또는 ggplot2)에 대한 경험' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Ability to perform exploratory data analysis (EDA) and extract insights from datasets.', ko: '탐색적 데이터 분석(EDA)을 수행하고 데이터 세트에서 인사이트를 추출하는 능력' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Familiarity with supervised and unsupervised learning concepts.', ko: '지도 학습 및 비지도 학습 개념에 대한 친숙함' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Cleaning and transforming large datasets using Pandas or NumPy.', ko: 'Pandas 또는 NumPy를 사용하여 대규모 데이터 세트 정리 및 변환' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Implementing and evaluating simple machine learning models like linear regression or K-means clustering.', ko: '선형 회귀 또는 K-평균 클러스터링과 같은 간단한 머신러닝 모델 구현 및 평가' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Performing A/B testing or statistical analysis on datasets.', ko: '데이터 세트에 대한 A/B 테스트 또는 통계 분석 수행' }, weight: 2, active: false },
-    { level: 'Advanced', description: { en: 'Proficient in implementing complex machine learning algorithms (e.g., random forests, gradient boosting, neural networks) using libraries like scikit-learn, TensorFlow, or PyTorch.', ko: 'scikit-learn, TensorFlow 또는 PyTorch와 같은 라이브러리를 사용하여 복잡한 머신러닝 알고리즘(예: 랜덤 포레스트, 그래디언트 부스팅, 신경망) 구현에 능숙함' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Strong understanding of feature engineering, hyperparameter tuning, model evaluation, and optimization techniques.', ko: '피처 엔지니어링, 하이퍼파라미터 튜닝, 모델 평가 및 최적화 기술에 대한 강력한 이해' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Experience working with large-scale datasets and using cloud platforms for data storage and computation (e.g., AWS, GCP, Azure).', ko: '대규모 데이터 세트 작업 및 데이터 저장 및 계산을 위한 클라우드 플랫폼(예: AWS, GCP, Azure) 사용 경험' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Familiarity with big data tools and frameworks (e.g., Hadoop, Spark).', ko: '빅데이터 도구 및 프레임워크(예: Hadoop, Spark)에 대한 친숙함' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Ability to work with databases (SQL) and unstructured data (e.g., text data with NLP).', ko: '데이터베이스(SQL) 및 비구조화 데이터(예: NLP를 사용한 텍스트 데이터) 작업 능력' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Knowledge of deep learning and more advanced topics like natural language processing (NLP), reinforcement learning, or computer vision.', ko: '딥러닝 및 자연어 처리(NLP), 강화 학습 또는 컴퓨터 비전과 같은 고급 주제에 대한 지식' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Building and fine-tuning machine learning models for production.', ko: '프로덕션용 머신러닝 모델 구축 및 미세 조정' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Creating predictive models using time series analysis or deep learning methods.', ko: '시계열 분석 또는 딥러닝 방법을 사용하여 예측 모델 생성' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Implementing machine learning pipelines for automated model training and deployment.', ko: '자동화된 모델 학습 및 배포를 위한 머신러닝 파이프라인 구현' }, weight: 4, active: false },
-    { level: 'Expert', description: { en: 'Mastery of complex algorithms and advanced techniques, such as deep learning architectures (e.g., CNNs, RNNs, Transformers) or reinforcement learning.', ko: '딥러닝 아키텍처(예: CNN, RNN, Transformer) 또는 강화 학습과 같은 복잡한 알고리즘 및 고급 기술 숙달' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Deep understanding of data science workflows, MLOps (machine learning operations), and the deployment of machine learning models in production environments.', ko: '데이터 사이언스 워크플로우, MLOps(머신러닝 운영) 및 프로덕션 환경에서 머신러닝 모델 배포에 대한 깊은 이해' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Expertise in using cloud platforms, distributed computing, and handling real-time data streams.', ko: '클라우드 플랫폼, 분산 컴퓨팅 및 실시간 데이터 스트림 처리 사용에 대한 전문 지식' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Strong ability to create custom machine learning models, handle imbalanced data, and apply transfer learning.', ko: '맞춤형 머신러닝 모델 생성, 불균형 데이터 처리 및 전이 학습 적용에 대한 강력한 능력' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Leadership experience in designing large-scale data science projects, mentoring teams, and making data-driven business decisions.', ko: '대규모 데이터 사이언스 프로젝트 설계, 팀 멘토링 및 데이터 기반 비즈니스 의사결정에 대한 리더십 경험' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Designing and implementing custom deep learning architectures for complex problems (e.g., image recognition, natural language understanding).', ko: '복잡한 문제(예: 이미지 인식, 자연어 이해)를 위한 맞춤형 딥러닝 아키텍처 설계 및 구현' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Leading a team of data scientists in building scalable and efficient data pipelines.', ko: '확장 가능하고 효율적인 데이터 파이프라인 구축에서 데이터 사이언티스트 팀을 이끄는 리더십' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Managing and deploying machine learning models at scale for real-time or high-impact applications.', ko: '실시간 또는 영향력이 큰 애플리케이션을 위해 대규모로 머신러닝 모델 관리 및 배포' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Developing and deploying end-to-end AI systems and integrating them with business operations.', ko: '엔드투엔드 AI 시스템 개발 및 배포, 비즈니스 운영과 통합' }, weight: 8, active: false },
-  ];
-
-  const pythonSkills = [
-    { level: "Beginner", description: { en: "Basic understanding of Python syntax and data structures (lists, tuples, dictionaries, sets).", ko: "Python 구문 및 데이터 구조(리스트, 튜플, 딕셔너리, 세트)에 대한 기본 이해" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Ability to write simple programs using variables, loops, conditionals, and functions.", ko: "변수, 루프, 조건문 및 함수를 사용하여 간단한 프로그램을 작성하는 능력" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Understanding basic concepts like input/output, string manipulation, and basic error handling.", ko: "입출력, 문자열 조작 및 기본 오류 처리와 같은 기본 개념 이해" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Able to import built-in Python modules (e.g., math, os, random) and third-party libraries, using functions from imported modules.", ko: "내장 Python 모듈(예: math, os, random) 및 타사 라이브러리를 가져오고 가져온 모듈의 함수를 사용하는 능력" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Writing a program to print Fibonacci numbers.", ko: "피보나치 수를 출력하는 프로그램 작성" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Using loops to iterate over data structures.", ko: "루프를 사용하여 데이터 구조 반복" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Able to create lists using compact syntax for mapping and filtering operations.", ko: "매핑 및 필터링 작업을 위한 간결한 구문을 사용하여 리스트 생성 능력" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Ability to open, read, write, and close files, including working with text files and handling exceptions related to file operations.", ko: "파일 열기, 읽기, 쓰기 및 닫기 능력, 텍스트 파일 작업 및 파일 작업 관련 예외 처리 포함" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Understanding slicing in lists and strings, ability to use slice notation to extract portions of lists, tuples, and strings efficiently.", ko: "리스트 및 문자열의 슬라이싱 이해, 슬라이스 표기법을 사용하여 리스트, 튜플 및 문자열의 일부를 효율적으로 추출하는 능력" }, weight: 1, active: false },
-    { level: "Intermediate", description: { en: "Deeper understanding of data structures and algorithms.", ko: "데이터 구조 및 알고리즘에 대한 깊은 이해" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Familiarity with object-oriented programming (OOP) principles: classes, inheritance, polymorphism, encapsulation.", ko: "객체 지향 프로그래밍(OOP) 원칙에 대한 친숙함: 클래스, 상속, 다형성, 캡슐화" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Ability to use third-party libraries and frameworks (e.g., Pandas, NumPy, Flask).", ko: "타사 라이브러리 및 프레임워크(예: Pandas, NumPy, Flask) 사용 능력" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Understanding of error handling using exceptions.", ko: "예외를 사용한 오류 처리에 대한 이해" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Familiarity with modules, packages, and Python's standard library.", ko: "모듈, 패키지 및 Python 표준 라이브러리에 대한 친숙함" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Writing a web scraper using libraries like BeautifulSoup or Scrapy.", ko: "BeautifulSoup 또는 Scrapy와 같은 라이브러리를 사용하여 웹 스크래퍼 작성" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Creating a simple web application using Flask or Django.", ko: "Flask 또는 Django를 사용하여 간단한 웹 애플리케이션 생성" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Data manipulation and analysis using Pandas and NumPy.", ko: "Pandas 및 NumPy를 사용한 데이터 조작 및 분석" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Implementing algorithms like sorting or searching.", ko: "정렬 또는 검색과 같은 알고리즘 구현" }, weight: 2, active: false },
-    { level: "Advanced", description: { en: "Proficient in working with complex data structures (e.g., generators, iterators).", ko: "복잡한 데이터 구조(예: 제너레이터, 반복자) 작업에 능숙함" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Expert in OOP, design patterns, and advanced Python concepts (e.g., decorators, context managers).", ko: "OOP, 디자인 패턴 및 고급 Python 개념(예: 데코레이터, 컨텍스트 매니저)에 대한 전문 지식" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Proficiency in performance optimization (e.g., time complexity, memory usage).", ko: "성능 최적화(예: 시간 복잡도, 메모리 사용량)에 대한 숙련도" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Understanding concurrency and parallelism (using threading, multiprocessing, async/await).", ko: "동시성 및 병렬성 이해(스레딩, 멀티프로세싱, async/await 사용)" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Experience with debugging, testing (unit tests, integration tests), and version control (e.g., Git).", ko: "디버깅, 테스트(단위 테스트, 통합 테스트) 및 버전 관리(예: Git)에 대한 경험" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Developing a large-scale application with efficient data handling.", ko: "효율적인 데이터 처리를 갖춘 대규모 애플리케이션 개발" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Building and maintaining APIs with complex architectures.", ko: "복잡한 아키텍처를 갖춘 API 구축 및 유지 관리" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Writing unit tests and utilizing continuous integration (CI/CD).", ko: "단위 테스트 작성 및 지속적 통합(CI/CD) 활용" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Implementing machine learning models with libraries like TensorFlow or PyTorch.", ko: "TensorFlow 또는 PyTorch와 같은 라이브러리로 머신러닝 모델 구현" }, weight: 4, active: false },
-    { level: "Expert", description: { en: "Mastery of Python internals, such as memory management, garbage collection, and bytecode.", ko: "메모리 관리, 가비지 컬렉션 및 바이트코드와 같은 Python 내부 숙달" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Ability to contribute to Python core development or design custom libraries and tools.", ko: "Python 핵심 개발에 기여하거나 맞춤형 라이브러리 및 도구를 설계하는 능력" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Deep understanding of multithreading, asynchronous programming, and distributed systems.", ko: "멀티스레딩, 비동기 프로그래밍 및 분산 시스템에 대한 깊은 이해" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Familiarity with low-level programming concepts (e.g., interfacing Python with C/C++).", ko: "저수준 프로그래밍 개념(예: Python과 C/C++ 인터페이싱)에 대한 친숙함" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Knowledge of various domains such as web development, machine learning, automation, data science, and scripting.", ko: "웹 개발, 머신러닝, 자동화, 데이터 사이언스 및 스크립팅과 같은 다양한 도메인에 대한 지식" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Designing complex, scalable systems and APIs for production.", ko: "프로덕션을 위한 복잡하고 확장 가능한 시스템 및 API 설계" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Implementing and optimizing large-scale machine learning pipelines.", ko: "대규모 머신러닝 파이프라인 구현 및 최적화" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Contributing to open-source Python projects or writing custom Python extensions.", ko: "오픈소스 Python 프로젝트에 기여하거나 맞춤형 Python 확장 작성" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Identify bottlenecks, profile code, and implement optimizations using tools like cProfile, timeit, and optimizing with techniques such as just-in-time compilation (e.g., using Numba or Cython).", ko: "병목 현상 식별, 코드 프로파일링 및 cProfile, timeit과 같은 도구를 사용한 최적화 구현, JIT 컴파일(예: Numba 또는 Cython 사용)과 같은 기술로 최적화" }, weight: 8, active: false },
-  ];
-
-  const sqlSkills = [
-    { level: "Beginner", description: { en: "Understanding basic SQL syntax and queries.", ko: "기본 SQL 구문 및 쿼리 이해" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Ability to create simple queries to retrieve data using SELECT, WHERE, and ORDER BY clauses.", ko: "SELECT, WHERE 및 ORDER BY 절을 사용하여 데이터를 검색하는 간단한 쿼리 작성 능력" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Familiarity with basic data operations like INSERT, UPDATE, and DELETE.", ko: "INSERT, UPDATE 및 DELETE와 같은 기본 데이터 작업에 대한 친숙함" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Basic knowledge of filtering data with operators like =, >, <, LIKE, and IN.", ko: "=, >, <, LIKE 및 IN과 같은 연산자를 사용한 데이터 필터링에 대한 기본 지식" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Writing a query to select data from a table based on specific conditions.", ko: "특정 조건에 따라 테이블에서 데이터를 선택하는 쿼리 작성" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Sorting and filtering results using ORDER BY and WHERE.", ko: "ORDER BY 및 WHERE를 사용하여 결과 정렬 및 필터링" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Inserting new rows into a table.", ko: "테이블에 새 행 삽입" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Familiarity with one of common SQL connection libraries (e.g., psycopg2, SQLAlchemy, JDBC, mysql).", ko: "일반적인 SQL 연결 라이브러리(예: psycopg2, SQLAlchemy, JDBC, mysql) 중 하나에 대한 친숙함" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Basic ability to automate repetitive data related tasks with simple scripts in Python or R.", ko: "Python 또는 R의 간단한 스크립트로 반복적인 데이터 관련 작업을 자동화하는 기본 능력" }, weight: 1, active: false },
-    { level: "Intermediate", description: { en: "Proficiency with JOIN operations (INNER, LEFT, RIGHT, FULL OUTER) to combine data from multiple tables.", ko: "여러 테이블의 데이터를 결합하기 위한 JOIN 작업(INNER, LEFT, RIGHT, FULL OUTER)에 대한 숙련도" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Ability to group and aggregate data using GROUP BY and aggregate functions (COUNT, SUM, AVG, MAX, MIN).", ko: "GROUP BY 및 집계 함수(COUNT, SUM, AVG, MAX, MIN)를 사용하여 데이터를 그룹화하고 집계하는 능력" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Understanding of subqueries and nested queries.", ko: "서브쿼리 및 중첩 쿼리에 대한 이해" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Knowledge of database constraints (e.g., primary keys, foreign keys, unique constraints) and indexes.", ko: "데이터베이스 제약 조건(예: 기본 키, 외래 키, 고유 제약 조건) 및 인덱스에 대한 지식" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Experience with database normalization and designing relational database schemas.", ko: "데이터베이스 정규화 및 관계형 데이터베이스 스키마 설계 경험" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Joining multiple tables to retrieve related data.", ko: "관련 데이터를 검색하기 위해 여러 테이블 조인" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Writing queries to summarize data using group functions like COUNT or SUM.", ko: "COUNT 또는 SUM과 같은 그룹 함수를 사용하여 데이터를 요약하는 쿼리 작성" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Creating database tables and defining relationships between them.", ko: "데이터베이스 테이블 생성 및 관계 정의" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Can use SSMS, DataGrip and DBeaver to interact with databases, execute queries, and manage database objects. Familiar with their user interfaces, including how to connect to a database, navigate schemas, and run SQL scripts.", ko: "SSMS, DataGrip 및 DBeaver를 사용하여 데이터베이스와 상호 작용하고 쿼리를 실행하며 데이터베이스 객체를 관리할 수 있음. 데이터베이스 연결, 스키마 탐색 및 SQL 스크립트 실행 방법을 포함한 사용자 인터페이스에 익숙함" }, weight: 2, active: false },
-    { level: "Advanced", description: { en: "Advanced query optimization techniques to improve query performance (e.g., indexing, query plans).", ko: "쿼리 성능을 향상시키기 위한 고급 쿼리 최적화 기술(예: 인덱싱, 쿼리 계획)" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Ability to write complex stored procedures, functions, and triggers.", ko: "복잡한 저장 프로시저, 함수 및 트리거 작성 능력" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Proficiency in advanced SQL features like WITH (CTE, Common Table Expressions) and window functions (e.g., ROW_NUMBER(), RANK()).", ko: "WITH(CTE, 공통 테이블 표현식) 및 윈도우 함수(예: ROW_NUMBER(), RANK())와 같은 고급 SQL 기능에 대한 숙련도" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Knowledge of database transactions, ACID properties, and handling concurrency and isolation levels.", ko: "데이터베이스 트랜잭션, ACID 속성 및 동시성 및 격리 수준 처리에 대한 지식" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Proficient in database security, user roles, and permissions management.", ko: "데이터베이스 보안, 사용자 역할 및 권한 관리에 능숙함" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Ability to design normalized database schemas, ensuring data integrity and optimizing for scalability and performance.", ko: "정규화된 데이터베이스 스키마를 설계하고 데이터 무결성을 보장하며 확장성과 성능을 최적화하는 능력" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Optimizing slow queries by analyzing query plans and using appropriate indexing.", ko: "쿼리 계획 분석 및 적절한 인덱싱을 사용하여 느린 쿼리 최적화" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Implementing transaction-safe SQL queries and managing concurrency.", ko: "트랜잭션 안전 SQL 쿼리 구현 및 동시성 관리" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Proficiency in designing and optimizing extract, transform, load (ETL) processes, and managing data in data warehouses.", ko: "ETL(추출, 변환, 로드) 프로세스 설계 및 최적화, 데이터 웨어하우스의 데이터 관리에 대한 숙련도" }, weight: 4, active: false },
-    { level: "Expert", description: { en: "Deep understanding of database architecture and internals (e.g., how indexes work, locking mechanisms, execution plans).", ko: "데이터베이스 아키텍처 및 내부(예: 인덱스 작동 방식, 잠금 메커니즘, 실행 계획)에 대한 깊은 이해" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Proficiency in advanced optimization techniques and tuning complex queries for performance.", ko: "고급 최적화 기술 및 성능을 위한 복잡한 쿼리 튜닝에 대한 숙련도" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Ability to manage and configure database replication, backup, recovery, and high availability setups.", ko: "데이터베이스 복제, 백업, 복구 및 고가용성 설정을 관리하고 구성하는 능력" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Designing and implementing highly scalable database architectures for enterprise applications.", ko: "엔터프라이즈 애플리케이션을 위한 고도로 확장 가능한 데이터베이스 아키텍처 설계 및 구현" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Performing complex query optimization and database tuning for high-performance systems.", ko: "고성능 시스템을 위한 복잡한 쿼리 최적화 및 데이터베이스 튜닝 수행" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Configuring and maintaining database clusters and replication systems.", ko: "데이터베이스 클러스터 및 복제 시스템 구성 및 유지 관리" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Expertise in handling large-scale databases: Ability to manage, optimize, and maintain large databases with billions of rows, ensuring performance and reliability.", ko: "대규모 데이터베이스 처리 전문 지식: 수십억 개의 행이 있는 대규모 데이터베이스를 관리, 최적화 및 유지 관리하여 성능과 안정성을 보장하는 능력" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Proficiency in NoSQL databases: Deep understanding of non-relational databases (e.g., MongoDB, Cassandra), and when to use them for different use cases compared to traditional SQL databases.", ko: "NoSQL 데이터베이스에 대한 숙련도: 비관계형 데이터베이스(예: MongoDB, Cassandra)에 대한 깊은 이해 및 기존 SQL 데이터베이스와 비교하여 다양한 사용 사례에 사용할 시기" }, weight: 8, active: false },
-  ];
-
-  const llmSkills = [
-    { level: "Beginner", description: { en: "Basic understanding of LLMs, their capabilities, and common use cases (e.g., ChatGPT, Claude, GPT-4).", ko: "LLM, 기능 및 일반적인 사용 사례(예: ChatGPT, Claude, GPT-4)에 대한 기본 이해" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Ability to write effective prompts to get desired outputs from LLMs.", ko: "LLM에서 원하는 출력을 얻기 위한 효과적인 프롬프트 작성 능력" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Familiarity with API-based LLM services (OpenAI API, Anthropic API, etc.).", ko: "API 기반 LLM 서비스(OpenAI API, Anthropic API 등)에 대한 친숙함" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Understanding of tokens, context windows, and basic API parameters (temperature, max_tokens).", ko: "토큰, 컨텍스트 윈도우 및 기본 API 매개변수(temperature, max_tokens)에 대한 이해" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Basic knowledge of different LLM models and their strengths (GPT-4, Claude, Gemini, Llama).", ko: "다양한 LLM 모델과 강점(GPT-4, Claude, Gemini, Llama)에 대한 기본 지식" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Understanding cost considerations when using LLM APIs (token pricing, request limits).", ko: "LLM API 사용 시 비용 고려 사항(토큰 가격, 요청 제한) 이해" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Awareness of ethical considerations and limitations of LLMs (hallucinations, biases).", ko: "LLM의 윤리적 고려 사항 및 한계(환각, 편향)에 대한 인식" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Ability to test and iterate on prompts to improve output quality.", ko: "출력 품질을 개선하기 위해 프롬프트를 테스트하고 반복하는 능력" }, weight: 1, active: false },
-    { level: "Beginner", description: { en: "Basic understanding of system prompts and conversation context management.", ko: "시스템 프롬프트 및 대화 컨텍스트 관리에 대한 기본 이해" }, weight: 1, active: false },
-    { level: "Intermediate", description: { en: "Experience integrating LLM APIs into applications with proper error handling and rate limiting.", ko: "적절한 오류 처리 및 속도 제한을 통해 LLM API를 애플리케이션에 통합하는 경험" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Knowledge of prompt engineering techniques (few-shot learning, chain-of-thought, role prompting).", ko: "프롬프트 엔지니어링 기술(퓨샷 학습, 사고 사슬, 역할 프롬프팅)에 대한 지식" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Understanding of embeddings and vector databases for semantic search and RAG (Retrieval-Augmented Generation).", ko: "의미론적 검색 및 RAG(검색 증강 생성)를 위한 임베딩 및 벡터 데이터베이스에 대한 이해" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Ability to implement streaming responses and handle long-running LLM requests.", ko: "스트리밍 응답 구현 및 장기 실행 LLM 요청 처리 능력" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Experience with function calling / tool use to extend LLM capabilities.", ko: "LLM 기능을 확장하기 위한 함수 호출/도구 사용 경험" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Building chatbots or conversational AI interfaces using LLMs.", ko: "LLM을 사용하여 챗봇 또는 대화형 AI 인터페이스 구축" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Implementing context management for multi-turn conversations.", ko: "다중 턴 대화를 위한 컨텍스트 관리 구현" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Knowledge of prompt caching and optimization strategies to reduce costs.", ko: "비용 절감을 위한 프롬프트 캐싱 및 최적화 전략에 대한 지식" }, weight: 2, active: false },
-    { level: "Intermediate", description: { en: "Understanding different embedding models and their use cases (text, code, multimodal).", ko: "다양한 임베딩 모델 및 사용 사례(텍스트, 코드, 멀티모달) 이해" }, weight: 2, active: false },
-    { level: "Advanced", description: { en: "Proficient in building RAG systems with document chunking, embedding strategies, and retrieval optimization.", ko: "문서 청킹, 임베딩 전략 및 검색 최적화를 통한 RAG 시스템 구축에 능숙함" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Experience fine-tuning or customizing LLMs for specific domains or tasks.", ko: "특정 도메인 또는 작업에 대한 LLM 미세 조정 또는 사용자 정의 경험" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Knowledge of LLM evaluation metrics, benchmarking, and testing strategies.", ko: "LLM 평가 지표, 벤치마킹 및 테스트 전략에 대한 지식" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Implementing multi-agent systems or orchestrating multiple LLM calls for complex workflows.", ko: "복잡한 워크플로우를 위한 멀티 에이전트 시스템 구현 또는 여러 LLM 호출 오케스트레이션" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Understanding of LLM security concerns (prompt injection, data leakage, content filtering).", ko: "LLM 보안 문제(프롬프트 주입, 데이터 유출, 콘텐츠 필터링)에 대한 이해" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Designing and implementing hybrid systems combining LLMs with traditional ML models.", ko: "LLM과 기존 ML 모델을 결합한 하이브리드 시스템 설계 및 구현" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Building LLM-powered agents with memory, planning, and reasoning capabilities.", ko: "메모리, 계획 및 추론 기능을 갖춘 LLM 기반 에이전트 구축" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Implementing prompt optimization through automated testing and A/B testing.", ko: "자동화된 테스트 및 A/B 테스트를 통한 프롬프트 최적화 구현" }, weight: 4, active: false },
-    { level: "Advanced", description: { en: "Experience with vector search optimization and hybrid search strategies.", ko: "벡터 검색 최적화 및 하이브리드 검색 전략에 대한 경험" }, weight: 4, active: false },
-    { level: "Expert", description: { en: "Expertise in LLM architecture, attention mechanisms, and transformer models.", ko: "LLM 아키텍처, 어텐션 메커니즘 및 트랜스포머 모델에 대한 전문 지식" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Experience with local LLM deployment, quantization, and optimization techniques.", ko: "로컬 LLM 배포, 양자화 및 최적화 기술에 대한 경험" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Building production-grade LLM applications with monitoring, cost optimization, and scalability.", ko: "모니터링, 비용 최적화 및 확장성을 갖춘 프로덕션급 LLM 애플리케이션 구축" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Contributing to open-source LLM frameworks or developing custom LLM solutions.", ko: "오픈소스 LLM 프레임워크에 기여하거나 맞춤형 LLM 솔루션 개발" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Deep understanding of training techniques (supervised fine-tuning, RLHF, DPO).", ko: "학습 기술(지도 미세 조정, RLHF, DPO)에 대한 깊은 이해" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Architecting enterprise LLM infrastructure with governance, compliance, and security.", ko: "거버넌스, 컴플라이언스 및 보안을 갖춘 엔터프라이즈 LLM 인프라 설계" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Leading LLM research initiatives or developing novel LLM applications and techniques.", ko: "LLM 연구 이니셔티브를 주도하거나 새로운 LLM 애플리케이션 및 기술 개발" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Expertise in distributed LLM inference and serving at scale.", ko: "분산 LLM 추론 및 대규모 서빙에 대한 전문 지식" }, weight: 8, active: false },
-    { level: "Expert", description: { en: "Advanced knowledge of model compression, distillation, and efficiency optimization.", ko: "모델 압축, 증류 및 효율성 최적화에 대한 고급 지식" }, weight: 8, active: false },
-  ];
-
-  const devopsSkills = [
-    { level: 'Beginner', description: { en: 'What containers are and why they exist - how Docker isolates an application and its dependencies from the host environment', ko: '컨테이너가 무엇이며 왜 존재하는지 - Docker가 애플리케이션과 의존성을 호스트 환경에서 격리하는 방법' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Writing a Dockerfile - FROM, RUN, COPY, EXPOSE, CMD, and building an image with docker build', ko: 'Dockerfile 작성 - FROM, RUN, COPY, EXPOSE, CMD 및 docker build로 이미지 빌드' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Running containers with docker run - mapping ports, passing environment variables, and mounting volumes', ko: 'docker run으로 컨테이너 실행 - 포트 매핑, 환경 변수 전달, 볼륨 마운트' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Docker Compose - defining multi-container applications in docker-compose.yml and managing them with up/down/logs', ko: 'Docker Compose - docker-compose.yml로 멀티 컨테이너 애플리케이션 정의 및 up/down/logs로 관리' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Linux command line for DevOps - file system navigation, permissions, process management, and common tools (grep, curl, ssh)', ko: 'DevOps를 위한 리눅스 커맨드라인 - 파일 시스템 탐색, 권한, 프로세스 관리, grep/curl/ssh 등 주요 도구' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'Version control workflows for teams - branching strategies (trunk-based, Gitflow), pull requests, and code review process', ko: '팀을 위한 버전 관리 워크플로 - 브랜치 전략(트렁크 기반, Gitflow), 풀 리퀘스트, 코드 리뷰 프로세스' }, weight: 1, active: false },
-    { level: 'Beginner', description: { en: 'CI/CD concepts - what a pipeline is, the difference between continuous integration, delivery, and deployment, and why automation matters', ko: 'CI/CD 개념 - 파이프라인이란 무엇인지, 지속적 통합/전달/배포의 차이, 자동화가 중요한 이유' }, weight: 1, active: false },
-    { level: 'Intermediate', description: { en: 'Writing CI/CD pipelines with GitHub Actions or GitLab CI - triggers, jobs, steps, environment variables, and artifact passing', ko: 'GitHub Actions 또는 GitLab CI로 CI/CD 파이프라인 작성 - 트리거, 작업, 단계, 환경 변수, 아티팩트 전달' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Container registries - tagging and versioning images, pushing to Docker Hub or a private registry, and pulling in deployments', ko: '컨테이너 레지스트리 - 이미지 태깅 및 버저닝, Docker Hub 또는 프라이빗 레지스트리 푸시, 배포 시 풀' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Secrets and environment configuration - managing credentials with GitHub Secrets, cloud secret managers, and keeping secrets out of source control', ko: '시크릿 및 환경 설정 관리 - GitHub Secrets, 클라우드 시크릿 매니저로 자격증명 관리, 소스 컨트롤에서 시크릿 제외' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Cloud provider fundamentals (AWS, GCP, or Azure) - compute (EC2/Cloud Run), object storage (S3/GCS), managed databases, and IAM basics', ko: '클라우드 제공자 기초 (AWS, GCP, Azure) - 컴퓨팅, 오브젝트 스토리지, 관리형 데이터베이스, IAM 기초' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Reverse proxies and load balancers - configuring Nginx as a reverse proxy, SSL/TLS termination, and basic load balancing', ko: '리버스 프록시 및 로드밸런서 - Nginx를 리버스 프록시로 설정, SSL/TLS 종료, 기본 로드밸런싱' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Kubernetes fundamentals - pods, deployments, services, ConfigMaps, namespaces, and using kubectl to inspect cluster state', ko: 'Kubernetes 기초 - 파드, 디플로이먼트, 서비스, ConfigMap, 네임스페이스, kubectl로 클러스터 상태 확인' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Monitoring and logging fundamentals - structured logging, centralised log aggregation (ELK or Loki), and basic metrics collection', ko: '모니터링 및 로깅 기초 - 구조화 로깅, 중앙집중식 로그 집계(ELK 또는 Loki), 기본 메트릭 수집' }, weight: 2, active: false },
-    { level: 'Intermediate', description: { en: 'Shell scripting for automation - writing bash scripts, using cron for scheduled tasks, and common patterns for operational automation', ko: '자동화를 위한 셸 스크립팅 - bash 스크립트 작성, 예약 작업을 위한 cron, 운영 자동화의 일반적인 패턴' }, weight: 2, active: false },
-    { level: 'Advanced', description: { en: 'Kubernetes in depth - resource requests and limits, health probes (liveness/readiness), horizontal pod autoscaling, and persistent volumes', ko: 'Kubernetes 심화 - 리소스 요청 및 제한, 헬스 프로브(활성/준비), 수평 파드 오토스케일링, 퍼시스턴트 볼륨' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Helm charts - templating Kubernetes manifests, managing values files for multiple environments, and release lifecycle management', ko: 'Helm 차트 - Kubernetes 매니페스트 템플릿화, 다중 환경 values 파일 관리, 릴리스 라이프사이클 관리' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Infrastructure as Code with Terraform - defining cloud resources declaratively, managing remote state, and organising reusable modules', ko: 'Terraform으로 인프라 코드화 - 클라우드 리소스 선언적 정의, 원격 상태 관리, 재사용 가능한 모듈 구성' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Container and supply chain security - scanning images for vulnerabilities, using minimal base images, enforcing non-root users, and signing images', ko: '컨테이너 및 공급망 보안 - 취약점 이미지 스캔, 최소 베이스 이미지 사용, 비루트 사용자 적용, 이미지 서명' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Observability stack - collecting metrics with Prometheus, visualising with Grafana, writing alerting rules, and understanding SLOs and error budgets', ko: '관찰 가능성 스택 - Prometheus로 메트릭 수집, Grafana로 시각화, 알림 규칙 작성, SLO 및 에러 버짓 이해' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Deployment strategies - blue/green, canary, and rolling update patterns, automated rollback triggers, and feature flags for safe releases', ko: '배포 전략 - 블루/그린, 카나리, 롤링 업데이트 패턴, 자동 롤백 트리거, 안전한 릴리스를 위한 피처 플래그' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Networking in Kubernetes - Ingress controllers, TLS termination, network policies for traffic isolation, and an introduction to service meshes', ko: 'Kubernetes 네트워킹 - 인그레스 컨트롤러, TLS 종료, 트래픽 격리를 위한 네트워크 정책, 서비스 메시 입문' }, weight: 4, active: false },
-    { level: 'Advanced', description: { en: 'Cloud cost optimisation - right-sizing compute, using spot or preemptible instances, identifying idle resources, and tagging for cost allocation', ko: '클라우드 비용 최적화 - 컴퓨팅 적정 규모화, 스팟/선점형 인스턴스 활용, 유휴 리소스 식별, 비용 할당을 위한 태깅' }, weight: 4, active: false },
-    { level: 'Expert', description: { en: 'GitOps - managing Kubernetes deployments declaratively through git with ArgoCD or Flux, and enforcing drift detection and reconciliation', ko: 'GitOps - ArgoCD 또는 Flux로 git을 통해 Kubernetes 배포를 선언적으로 관리, 드리프트 감지 및 조정 적용' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Platform engineering - designing internal developer platforms, golden paths, and self-service infrastructure that improve developer experience at scale', ko: '플랫폼 엔지니어링 - 내부 개발자 플랫폼, 골든 패스, 규모에서 개발자 경험을 향상시키는 셀프서비스 인프라 설계' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Advanced CI/CD patterns - matrix builds, parallel pipelines, environment promotion gates, automated rollback on failure, and pipeline-as-code best practices', ko: '고급 CI/CD 패턴 - 매트릭스 빌드, 병렬 파이프라인, 환경 프로모션 게이트, 실패 시 자동 롤백, 코드형 파이프라인 모범 사례' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Security hardening and compliance - IAM least-privilege design, network segmentation, audit logging, and meeting compliance frameworks such as SOC 2 or ISO 27001', ko: '보안 강화 및 컴플라이언스 - IAM 최소 권한 설계, 네트워크 분리, 감사 로깅, SOC 2 또는 ISO 27001 같은 컴플라이언스 프레임워크 충족' }, weight: 8, active: false },
-    { level: 'Expert', description: { en: 'Multi-cloud and hybrid architecture - designing workloads to avoid provider lock-in, federated identity, and managing infrastructure across environments', ko: '멀티클라우드 및 하이브리드 아키텍처 - 공급자 종속을 피하는 워크로드 설계, 연합 ID 관리, 환경 간 인프라 관리' }, weight: 8, active: false },
-  ];
 
   const [activeGroup, setActiveGroup] = useState("backend");
   const [skills, setSkills] = useState(backendSkills);
@@ -684,35 +438,9 @@ const App = () => {
   const maxScore = skills.reduce((sum, skill) => sum + skill.weight, 0);
   const percentage = Math.round((totalScore / maxScore) * 100);
 
-  const getLevelColor = (level) => {
-    switch (level) {
-      case 'Beginner':
-        return 'level-beginner';
-      case 'Intermediate':
-        return 'level-intermediate';
-      case 'Advanced':
-        return 'level-advanced';
-      case 'Expert':
-        return 'level-expert';
-      default:
-        return '';
-    }
-  };
+  const getLevelColor = (level) => LEVEL_CSS_CLASSES[level]?.badge || '';
 
-  const getLevelRowClass = (level) => {
-    switch (level) {
-      case 'Beginner':
-        return 'level-beginner-row';
-      case 'Intermediate':
-        return 'level-intermediate-row';
-      case 'Advanced':
-        return 'level-advanced-row';
-      case 'Expert':
-        return 'level-expert-row';
-      default:
-        return '';
-    }
-  };
+  const getLevelRowClass = (level) => LEVEL_CSS_CLASSES[level]?.row || '';
 
   const toggleAllSkills = () => {
     const allActive = skills.every(skill => skill.active);
@@ -734,42 +462,6 @@ const App = () => {
     setDarkMode(prev => !prev);
   };
 
-  const translations = {
-    en: {
-      level: 'Level',
-      description: 'Description',
-      weight: 'Weight',
-      active: 'Active',
-      beginner: 'Beginner',
-      intermediate: 'Intermediate',
-      advanced: 'Advanced',
-      expert: 'Expert',
-      backend: 'Backend',
-      frontend: 'Frontend',
-      dataScience: 'Data Science',
-      python: 'Python',
-      sql: 'SQL',
-      llm: 'LLM',
-      devops: 'DevOps'
-    },
-    ko: {
-      level: '레벨',
-      description: '설명',
-      weight: '가중치',
-      active: '활성',
-      beginner: '초급',
-      intermediate: '중급',
-      advanced: '고급',
-      expert: '전문가',
-      backend: '백엔드',
-      frontend: '프론트엔드',
-      dataScience: '데이터 사이언스',
-      python: '파이썬',
-      sql: 'SQL',
-      llm: 'LLM',
-      devops: 'DevOps'
-    }
-  };
 
   const getDescription = (skill) => {
     if (typeof skill.description === 'object') {
