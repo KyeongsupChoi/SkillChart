@@ -1,0 +1,38 @@
+const translations = {
+  en: {
+    level: 'Level',
+    description: 'Description',
+    weight: 'Weight',
+    active: 'Active',
+    beginner: 'Beginner',
+    intermediate: 'Intermediate',
+    advanced: 'Advanced',
+    expert: 'Expert',
+    backend: 'Backend',
+    frontend: 'Frontend',
+    dataScience: 'Data Science',
+    python: 'Python',
+    sql: 'SQL',
+    llm: 'LLM',
+    devops: 'DevOps',
+  },
+  ko: {
+    level: '레벨',
+    description: '설명',
+    weight: '가중치',
+    active: '활성',
+    beginner: '초급',
+    intermediate: '중급',
+    advanced: '고급',
+    expert: '전문가',
+    backend: '백엔드',
+    frontend: '프론트엔드',
+    dataScience: '데이터 사이언스',
+    python: '파이썬',
+    sql: 'SQL',
+    llm: 'LLM',
+    devops: 'DevOps',
+  },
+};
+
+export default translations;
